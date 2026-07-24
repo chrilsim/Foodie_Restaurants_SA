@@ -1,1 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family:'Khmer OS Battambang', sans-serif;
+}
+:root {
+  --color-primary: #2563eb;
+  --color-secondary: #7c3aed;
+  --color-success: #16a34a;
+  --color-warning: #f59e0b;
+  --color-danger: #dc2626;
+  --color-info: #0891b2;
+  --color-light: #f8fafc;
+  --color-dark: #0f172a;
+  --bg-gry:#E9E9E9;
+  --bg-gry-hover:#e0e0e0;
+  --bg-green:#006A61;
+  --bg-green-hover:#0D5C4D;
+}

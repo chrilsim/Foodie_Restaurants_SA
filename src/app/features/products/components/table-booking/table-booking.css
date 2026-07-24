@@ -1,0 +1,484 @@
+.main-table-booking {
+    width: 100%;
+    overflow: hidden;
+    padding: 10px;
+}
+
+@media (min-width: 1500px) {
+    .main-table-booking {
+        width: 1500px;
+        margin: 0 auto;
+    }
+}
+
+.main-table-booking h3 {
+    margin-top: 10px;
+    font-size: 22px;
+}
+
+.stab-by-stab {
+    margin-top: 20px;
+}
+
+.stab-by-stab ul li {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.stab-by-stab ul {
+    display: flex;
+    gap: 10px;
+}
+
+.stab-by-stab ul li span {
+    background-color: var(--bg-green);
+    text-align: center;
+    align-content: center;
+    border-radius: 50%;
+    color: aliceblue;
+    width: 30px;
+    height: 30px;
+}
+
+.grid-table {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+@media(max-width:935px){
+    .grid-table {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .right-table{
+     grid-column: span 2;
+}
+}
+
+.left-table {
+    grid-column: span 2;
+
+}
+
+
+.paty-size {
+    padding: 20px;
+    margin-top: 10px;
+    border: 1px solid rgb(224, 224, 224);
+    border-radius: 10px;
+}
+
+.paty-size {
+    margin-top: 20px;
+}
+
+.paty-size ul {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.paty-size ul li {
+    cursor: pointer;
+    font-weight: bold;
+    list-style: none;
+    padding: 5px 25px;
+    border-radius: 5px;
+    color: var(--bg-green);
+    border: 1px solid rgb(224, 224, 224);
+}
+
+.paty-size ul li:hover {
+
+    background-color: var(--bg-gry-hover);
+
+}
+
+.select-paty-size {
+    color: white !important;
+    background-color: var(--bg-green) !important;
+
+}
+
+.select-date {
+    padding: 20px;
+    margin-top: 10px;
+    border: 1px solid rgb(224, 224, 224);
+    border-radius: 10px;
+}
+
+.select-date ul {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+
+
+}
+
+.select-date ul li {
+    border: 1px solid rgb(224, 224, 224);
+    padding: 12px 15px;
+    width: 122px;
+    border-radius: 10px;
+    display: flex;
+    list-style: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+}
+
+.select-date ul li:hover {
+    background-color: var(--bg-gry-hover);
+}
+
+.select-date-only {
+    background-color: var(--bg-green) !important;
+    color: white !important;
+}
+
+.select-time {
+    padding: 20px;
+    margin-top: 10px;
+    border: 1px solid rgb(224, 224, 224);
+    border-radius: 10px;
+}
+
+.select-time-section {
+    margin-top: 10px;
+}
+
+.select-time-section ul {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.select-time-section ul li {
+    cursor: pointer;
+    font-weight: bold;
+    list-style: none;
+    padding: 5px 25px;
+    border-radius: 5px;
+    color: var(--bg-green);
+    border: 1px solid rgb(224, 224, 224);
+
+}
+
+.seating-area {
+    padding: 20px;
+    margin-top: 10px;
+    border: 1px solid rgb(224, 224, 224);
+    border-radius: 10px;
+}
+
+.seating-area ul {
+    gap: 20px;
+    display: flex;
+    margin-top: 20px;
+
+}
+
+.seating-area ul li {
+    overflow: hidden;
+    position: relative;
+    list-style: none;
+    width: 100%;
+    border: 1px solid rgb(224, 224, 224);
+    border-radius: 5px;
+    object-fit: cover;
+    height: 100%;
+    cursor: pointer;
+}
+
+.seating-area ul li img {
+    width: 100%;
+    object-fit: cover;
+}
+
+.seating-area ul li::before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: color-mix(in srgb, var(--bg-green) 40%, transparent);
+}
+
+.seating-area ul li .text-absolud {
+    position: absolute;
+
+    z-index: 100;
+    left: 5px;
+    bottom: 5px;
+    color: white;
+
+}
+
+.check-position {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+.tabl-selection {
+    padding: 20px;
+    margin-top: 10px;
+    border: 1px solid rgb(224, 224, 224);
+    border-radius: 10px;
+}
+
+.tabl-selection ul {
+    margin-top: 15px;
+    gap: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.tabl-selection ul li {
+    list-style: none;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.color-table {
+    width: 18px;
+    height: 18px;
+    border-radius: 5px;
+
+}
+
+.main-table-position {
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    background-color: rgba(218, 218, 218, 0.63);
+    border-radius: 5px;
+}
+
+.main-table-position p {
+    text-align: center;
+}
+
+.table-container {
+    max-width: 900px;
+    margin: auto;
+    border: 1px solid #7b7cff;
+    border-radius: 4px;
+    background: #f8f8f8;
+    padding: 8px;
+}
+
+.entrance {
+    text-align: center;
+    color: #666;
+    font-size: 18px;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.entrance::after {
+    content: "";
+    display: block;
+    border-bottom: 2px dashed #cfcfcf;
+    margin-top: 10px;
+}
+
+.tables {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 18px;
+}
+
+.empty {
+    visibility: hidden;
+}
+
+.table {
+    height: 80px;
+    border-radius: 8px;
+    border: 1px solid #5b8b7c;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: .25s;
+}
+
+.table h3 {
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.table span {
+    font-size: 13px;
+}
+
+.available {
+    background: #9bd5c6;
+    color: #0c4237;
+}
+
+.available:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, .15);
+}
+
+.selected {
+    background: #004f45;
+    color: white;
+    box-shadow: 0 5px 12px rgba(0, 0, 0, .25);
+}
+
+.disabled {
+    background: #ececec;
+    color: #a4a4a4;
+    border-color: #dddddd;
+    cursor: not-allowed;
+}
+
+@media (max-width:768px) {
+    .tables {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width:480px) {
+    .tables {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.contect-infomation {
+    padding: 20px;
+    margin-top: 10px;
+    border: 1px solid rgb(224, 224, 224);
+    border-radius: 10px;
+}
+
+form {
+    margin-top: 20px;
+    width: 100%;
+}
+
+form .phone-name {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+
+}
+
+.in-input {
+    margin-top: 15px;
+    width: 100%;
+
+}
+
+form input {
+    width: 100%;
+    margin-top: 5px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid rgb(216, 216, 216);
+    outline: none;
+
+}
+
+form textarea {
+    margin-top: 10px;
+    border: 1px solid rgb(216, 216, 216);
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    height: 140px;
+}
+
+.main-summary {
+    padding: 20px;
+    margin-top: 20px;
+    border: 1px solid rgb(224, 224, 224);
+    border-radius: 10px;
+}
+.main-summary ul{
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+}
+
+.main-summary ul li .groups {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 5px;
+}
+
+.main-summary ul li {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    gap: 10px;
+}
+
+.main-summary ul li h3 {
+    font-size: 16px;
+}
+.bookink-price{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.main-summary button{
+    padding: 10px;
+    cursor: pointer;
+    margin-top: 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: var(--bg-green);
+    color: white;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+.main-summary button:hover{
+    background-color: var(--bg-green-hover);
+}
+.main-summary .agry{
+    font-size: 12px;
+    margin: 10px 0 10px 0;
+    color: rgb(170, 168, 168);
+}
+.info-dateline{
+    margin-top: 20px;
+    width: auto;
+    display: flex;
+    background-color: #74ccff49;
+    border-radius:10px ;
+    gap: 10px;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px;
+}
+.info-dateline mat-icon{
+    padding: 0;
+  
+}
+.info-dateline p{
+    text-align: start;
+     display: -webkit-box;
+    -webkit-line-clamp: 2; /* Show only 2 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+
+
+}

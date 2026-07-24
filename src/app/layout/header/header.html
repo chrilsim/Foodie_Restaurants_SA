@@ -1,0 +1,32 @@
+<div class="main-header">
+    <div class="main-header-diplay">
+        <div class="logo-menu">
+            <div class="logo">
+                <mat-icon>menu</mat-icon> 
+            </div>
+            <img routerLink="/products/home" src="assets/logo.png" alt="">
+
+        </div>
+        <!-- ------------search-location-cart------------- -->
+        <div class="search-location-cart">
+            <div class="curenlocation"> <mat-icon>my_location</mat-icon>
+                <p>Can not get current location</p>
+            </div>
+            <!-- Desktop -->
+            <mat-form-field appearance="outline" class="search-form-field desktop-search">
+                <mat-icon matPrefix>search</mat-icon>
+                <input matInput placeholder="Search...">
+            </mat-form-field>
+
+            <!-- Mobile -->
+            <button mat-icon-button class="mobile-search">
+                <mat-icon>search</mat-icon>
+            </button>
+
+            <div class="cart">
+                <mat-icon>shopping_cart</mat-icon>
+                <p>Cart</p>
+            </div>
+        </div>
+    </div>
+</div>
