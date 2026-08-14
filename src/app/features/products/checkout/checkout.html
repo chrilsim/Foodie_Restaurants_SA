@@ -1,0 +1,119 @@
+<div class="main-chackout">
+    <div class="main-grid">
+        <div class="select-left">
+            <div class="select-location">
+                <h3> <mat-icon>location_on</mat-icon> របៀបទទួលយក</h3>
+                <ul>
+                    <li>
+                        <mat-icon>moped</mat-icon>
+                        <p>ដឹកជញ្ជូន</p>
+                    </li>
+                    <li>
+                        <mat-icon>storefront</mat-icon>
+                        <p>មកយកផ្ទាល់</p>
+                    </li>
+                </ul>
+                <p style="margin-top: 15px;">អាសយដ្ឋានដឹកជញ្ជូន</p>
+                <div class="agree-location">
+                    <div class="home-text">
+                        <mat-icon>home</mat-icon>
+                        <div class="text-in">
+                            <h4>ផ្ទះលេខ ១២៣, ផ្លូវ ៤៥៦</h4>
+                            <p>បឹងកេងកង ១, ចំការមន, ភ្នំពេញ</p>
+                        </div>
+                    </div>
+                    <div class="" style="cursor: pointer;">
+                        <p>ផ្លាស់ប្តូរ</p>
+                    </div>
+
+                </div>
+                <div class="payments">
+                    <h3> <mat-icon>payments</mat-icon> របៀបបង់ប្រាក់</h3>
+                    <uL>
+                        <label for="payment">
+                            <li>
+
+                                <div class="icon">
+                                    <input type="radio" name="payment" id="payment" checked>
+                                    <mat-icon>payments</mat-icon>
+                                </div>
+                                <div class="text-boby">
+                                    <h3>សាច់ប្រាក់</h3>
+                                    <p>បង់ប្រាក់ពេលទំនិញមកដល់</p>
+                                </div>
+
+
+                            </li>
+                        </label>
+                        <label for="payment1">
+                            <li>
+
+                                <div class="icon">
+                                    <input type="radio" name="payment" id="payment1">
+                                    <mat-icon>account_balance</mat-icon>
+                                </div>
+                                <div class="text-boby">
+                                    <h3>ABA PAY / វ៉ាលេតឌីជីថល</h3>
+                                    <p>បង់ប្រាក់តាមកាតឥណទាន Visa, Mastercard, American Express</p>
+                                </div>
+                            </li>
+                        </label>
+                        <label for="payment2">
+                            <li>
+
+                                <div class="icon">
+                                    <input type="radio" name="payment" id="payment2">
+                                    <mat-icon>credit_card</mat-icon>
+                                </div>
+                                <div class="text-boby">
+                                    <h3>កាតឥណទាន / Visa</h3>
+                                    <p>**** **** **** 4242</p>
+                                </div>
+                            </li>
+                        </label>
+                    </uL>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="select-right">
+            <div class="order-summary">
+                <h3>សេចក្តីសង្ខេបនៃការបញ្ជាទិញ</h3>
+                <div class="items-order">
+                    <div class="img"> <img src="/assets/tranding.jpg" alt=""></div>
+                    <div class="text-order">
+                        <div class="" style="width: 100%; display: flex; justify-content: space-between;">
+                            <h3>ឡុកឡាក់សាច់គោ</h3>
+                            <span>$6.50 / 26,650៛</span>
+                        </div>
+                        
+                        <p>ចំនួន: ១</p>
+                    </div>
+                </div>
+                <hr style="margin: 20px 0; opacity: 0.5;">
+                <div class="total">
+                   <div class="total-line">
+                        <h3>សរុបផលិតផល</h3>
+                        <span>$6.50 / 26,650៛</span>
+                   </div>
+                   <div class="total-line" STYLE="margin-top: 10px;">
+                        <h3>សេវាដឹកជញ្ជូន</h3>
+                        <span>$6.50 / 26,650៛</span>
+                   </div>
+                </div>
+                 <hr style="margin: 20px 0; opacity: 0.5;">
+                  <div class="total-line" STYLE="margin-top: 10px;">
+                        <h3>សរុបរួម</h3>
+                        <span>$6.50 / 26,650៛</span>
+                   </div>
+
+                   <button (click)="openLocation()" >បញ្ជាទិញ</button>  
+                   <p style="color: gray; margin-top: 10px; opacity: 0.7;">ដោយចុចលើប៊ូតុងនេះ អ្នកយល់ព្រមតាមលក្ខខណ្ឌប្រើប្រាស់របស់យើង។</p>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+

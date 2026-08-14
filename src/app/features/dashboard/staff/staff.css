@@ -1,0 +1,653 @@
+
+.main-staff{
+    width: 100%;
+
+    padding: 10px;
+}
+.naveget-add-staff{
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+.text-staff{
+    line-height: 30px;
+}
+.add-staff button{
+    border: none;
+    padding:10px 15px;
+    border-radius: 8px;
+    background-color: var(--bg-green);
+    color: white;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    gap:10px;
+}
+
+.dashboard {
+    margin-top: 10px;
+    width: 100%;
+
+}
+
+
+/* ================= SUMMARY ================= */
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.summary-card {
+    min-height: 86px;
+    border: 1px solid #dce3e0;
+    border-radius: 8px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: #fff;
+}
+
+.summary-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+}
+
+.summary-icon.staff {
+    background: #e8f1ef;
+    color: #075b50;
+
+}
+
+.summary-icon.shift {
+    background: #f1f3fa;
+    color: #5c6881;
+}
+
+.summary-icon.attendance {
+    background: #e8f1ef;
+    color: #075b50;
+}
+
+.summary-icon.request {
+    background: #fbe0dc;
+    color: #704033;
+}
+
+.summary-title {
+    display: block;
+    color: #707a77;
+    font-size: 10px;
+    line-height: 14px;
+    letter-spacing: .6px;
+    margin-bottom: 3px;
+}
+
+.summary-card strong {
+    display: block;
+    font-size: 20px;
+    font-weight: 500;
+    color: #202725;
+}
+
+
+/* ================= STAFF SECTION ================= */
+
+.staff-section {
+    border: 1px solid #dce3e0;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.toolbar {
+    height: 49px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 14px;
+    background: #fafcfb;
+    border-bottom: 1px solid #dce3e0;
+}
+
+.tabs {
+    display: flex;
+    align-items: center;
+    background: #f0f3f1;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.tab {
+    border: none;
+    background: transparent;
+    color: #69716e;
+    font-size: 12px;
+    padding: 8px 15px;
+}
+
+.tab.active {
+    background: white;
+    color: #075b50;
+    border-radius: 4px;
+}
+
+.toolbar-actions {
+    display: flex;
+    gap: 7px;
+}
+
+.toolbar-actions button {
+    height: 27px;
+    padding: 0 10px;
+    background: white;
+    border: 1px solid #d6dedb;
+    border-radius: 5px;
+    color: #56605d;
+    font-size: 12px;
+}
+
+.toolbar-actions i {
+    margin-right: 4px;
+}
+
+
+/* ================= TABLE ================= */
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background: #f0f3f1;
+}
+
+th {
+    height: 33px;
+    text-align: left;
+    padding: 0 18px;
+    color: #69736f;
+    font-size: 10px;
+    letter-spacing: .5px;
+    font-weight: 600;
+    border-bottom: 1px solid #dce3e0;
+}
+
+td {
+    height: 54px;
+    padding: 7px 18px;
+    border-bottom: 1px solid #edf0ef;
+    font-size: 12px;
+}
+
+.staff-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.staff-info strong {
+    display: block;
+    color: #27302d;
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 3px;
+}
+
+.staff-info small {
+    display: block;
+    color: #89918e;
+    font-size: 10px;
+}
+
+.avatar {
+    width: 25px;
+    height: 25px;
+    min-width: 25px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.avatar-1 {
+    background: #40544e;
+}
+
+.avatar-2 {
+    background: #89745b;
+}
+
+.avatar-3 {
+    background: #7c5138;
+}
+
+.avatar-4 {
+    background: #4d5c56;
+}
+
+
+/* ================= ROLE ================= */
+
+.role {
+    display: inline-block;
+    padding: 4px 7px;
+    border-radius: 4px;
+    font-size: 10px;
+    border: 1px solid transparent;
+}
+
+.manager {
+    background: #e9f3f1;
+    color: #075b50;
+    border-color: #c7ded9;
+}
+
+.kitchen {
+    background: #e9eeeb;
+    color: #495551;
+    border-color: #d2d9d5;
+}
+
+.cashier {
+    background: #dfe9fc;
+    color: #536c9e;
+}
+
+.waiter {
+    background: #e8eeeb;
+    color: #53615c;
+}
+
+
+/* ================= STATUS ================= */
+
+.status {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+}
+
+.status .dot {
+    width: 6px;
+    height: 6px;
+    margin-top: 3px;
+    border-radius: 50%;
+}
+
+.dot.green {
+    background: #0bb36b;
+}
+
+.dot.orange {
+    background: #e7a500;
+}
+
+.dot.gray {
+    background: #88908d;
+}
+
+.status span {
+    font-size: 10px;
+    color: #3c4542;
+}
+
+.status small {
+    display: block;
+    color: #8a928f;
+    font-size: 9px;
+    margin-top: 2px;
+}
+
+
+/* ================= ATTENDANCE ================= */
+
+.attendance {
+    width: 72px;
+}
+
+.attendance > span {
+    display: block;
+    margin-bottom: 4px;
+    color: #454e4b;
+    font-size: 10px;
+}
+
+.progress {
+    width: 72px;
+    height: 4px;
+    background: #dce3e0;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress div {
+    height: 100%;
+    background: #075b50;
+    border-radius: 5px;
+}
+
+.attendance.low .progress div {
+    background: #d51d22;
+}
+
+
+/* ================= ACTIONS ================= */
+
+.actions {
+    display: flex;
+    gap: 12px;
+}
+
+.actions button {
+    border: none;
+    background: transparent;
+    color: #68736f;
+    font-size: 15px;
+    padding: 0;
+}
+
+
+/* ================= FOOTER ================= */
+
+.table-footer {
+    height: 40px;
+    padding: 0 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.table-footer > span {
+    color: #7a8581;
+    font-size: 10px;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.pagination button {
+    width: 22px;
+    height: 22px;
+    border: none;
+    background: transparent;
+    border-radius: 4px;
+    font-size: 10px;
+    color: #4d5754;
+}
+
+.pagination button.current {
+    background: #075b50;
+    color: white;
+}
+
+.pagination i {
+    font-size: 10px;
+}
+
+
+/* ================= BOTTOM ================= */
+
+.bottom-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 14px;
+    margin-top: 18px;
+}
+
+
+/* ================= ACTIVITY ================= */
+
+.activity-card,
+.request-card {
+    border: 1px solid #dce3e0;
+    border-radius: 8px;
+    background: white;
+}
+
+.activity-card {
+    padding: 0 14px;
+}
+
+.card-title {
+    height: 43px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e5e9e7;
+}
+
+.card-title h3,
+.request-header h3 {
+    font-size: 12px;
+    font-weight: 500;
+    color: #394440;
+}
+
+.card-title i {
+    margin-right: 6px;
+    color: #075b50;
+}
+
+.activity-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.activity {
+    min-height: 42px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #edf0ef;
+    gap: 9px;
+}
+
+.activity:last-child {
+    border-bottom: none;
+}
+
+.activity-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+}
+
+.activity-icon.login {
+    background: #dcece8;
+    color: #075b50;
+}
+
+.activity-icon.logout {
+    background: #f1e3df;
+    color: #9c5746;
+}
+
+.activity strong {
+    flex: 1;
+    font-size: 10px;
+    font-weight: 600;
+    color: #39413e;
+}
+
+.activity > span {
+    font-size: 10px;
+    color: #727c78;
+}
+
+
+/* ================= REQUEST ================= */
+
+.request-card {
+    padding: 0 14px 12px;
+}
+
+.request-header {
+    height: 43px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.request-count {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #71402f;
+    color: white;
+    font-size: 9px;
+}
+
+.request-box {
+    position: relative;
+    padding: 12px 11px;
+    background: #f2f5f3;
+    border: 1px solid #dce3e0;
+    border-radius: 5px;
+}
+
+.request-label {
+    font-size: 9px;
+    color: #075b50;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.request-box > small {
+    position: absolute;
+    top: 12px;
+    right: 11px;
+    color: #89918e;
+    font-size: 8px;
+}
+
+.request-box h4 {
+    font-size: 12px;
+    line-height: 15px;
+    font-weight: 600;
+    color: #343c39;
+}
+
+.request-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 7px;
+    margin-top: 10px;
+}
+
+.request-buttons button {
+    min-width: 65px;
+    height: 24px;
+    border-radius: 4px;
+    font-size: 10px;
+}
+
+.approve {
+    border: 1px solid #075b50;
+    background: #075b50;
+    color: white;
+}
+
+.deny {
+    border: 1px solid #cfd7d3;
+    background: white;
+    color: #56615d;
+}
+
+.request-card > a {
+    display: block;
+    text-align: center;
+    margin-top: 13px;
+    color: #075b50;
+    font-size: 10px;
+    text-decoration: none;
+}
+
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 850px) {
+
+    .summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .bottom-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .dashboard {
+        padding: 0 8px;
+    }
+
+    .summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .toolbar {
+        height: auto;
+        padding: 10px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .tabs {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .tab {
+        white-space: nowrap;
+    }
+
+    .toolbar-actions {
+        justify-content: flex-end;
+    }
+
+    th,
+    td {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .table-footer {
+        padding: 0 10px;
+    }
+
+    .table-footer > span {
+        font-size: 8px;
+    }
+
+    .activity {
+        flex-wrap: wrap;
+        padding: 8px 0;
+    }
+}

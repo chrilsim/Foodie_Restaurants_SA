@@ -1,0 +1,59 @@
+mat-dialog-content{
+    width: 550px;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-top: 10px;
+    background-color: white;
+}
+
+.current-location{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    cursor: pointer;
+    background: white;
+}
+
+.current-location:hover{
+    background: #f8f8f8;
+}
+
+.current-location mat-icon{
+    font-size: 28px;
+    color: #ff5722;
+}
+
+.current-location h4{
+    margin: 0;
+  
+}
+
+
+.current-location span{
+    color: gray;
+    font-size: 13px;
+}
+
+mat-form-field{
+    width: 100%;
+}
+
+.map-placeholder{
+    height: 300px;
+    border-radius: 12px;
+    border: 2px dashed #ccc;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: gray;
+}
+
+mat-dialog-actions{
+    padding: 16px 20px;
+}

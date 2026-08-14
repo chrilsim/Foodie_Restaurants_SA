@@ -1,0 +1,238 @@
+
+<div class="main">
+    <div class="top-bar">
+        <div class="" style="line-height: 30px;">
+            <h2 style="color: var(--bg-green);">Menu Management</h2>
+            <p>Manage your culinary offerings, pricing, and availability across all stations.</p>
+        </div>
+        <div class="add-item">
+            <button (click)="openAddItem()"><mat-icon>add</mat-icon>Add Food </button>
+        </div>
+    </div>
+    <p>Menu Count: {{ filteredMenuitems.length }}</p>
+    <div class="menu-bar" #menuBar>
+        <ul>
+            <li (click)="filterCategory('all')"> <mat-icon>apps</mat-icon> ទាំងអស់</li>
+            @for (category of categorys; track category._id) {
+
+            <li (click)="filterCategory(category._id!)">
+
+                <mat-icon>
+                    restaurant
+                </mat-icon>
+
+                {{ category.name }}
+
+            </li>
+
+            }
+        </ul>
+    </div>
+
+    <div class="main-grid">
+        @for(item of filteredMenuitems; track item._id){
+        <div class="menu-card">
+            <div class="image-wrapper">
+                <img [src]="item.image" alt="{{ item.name }}">
+                <div class="status" [class.blue]="item.isAvailable" [class.red]="!item.isAvailable">
+                    <span></span>
+                    {{ item.isAvailable ? 'Available' : 'Unavailable' }}
+                </div>
+            </div>
+            <div class="card-content">
+                <div class="title-row">
+                    <div>
+                        <div class="category">
+                            {{item.name}}
+                        </div>
+
+                        <div class="name">
+                            {{item.description}}
+                        </div>
+                    </div>
+
+                    <!-- More -->
+                    <button mat-icon-button [matMenuTriggerFor]="menu" class="more-btn">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+
+                        <button mat-menu-item (click)="openEditDialog(item._id!)">
+                            <mat-icon>edit</mat-icon>
+                            <span>Update</span>
+                        </button>
+                        <button mat-menu-item (click)="deleteItem(item._id)">
+                            <mat-icon>delete</mat-icon>
+                            <span>Delete</span>
+                        </button>
+                    </mat-menu>
+                </div>
+                <div class="price-row">
+                    <div class="price-item">
+                        <div class="label">Sale Price</div>
+                        <div class="price">
+                            {{item.price | currency:'USD'}}
+                        </div>
+                        <div class="riel">
+                            {{ item.price | usdToKhr }}
+                        </div>
+                    </div>
+                    <div class="price-item">
+                        <div class="label">Cost</div>
+                        <div class="price cost">
+                            $4.20 /
+                        </div>
+                        <div class="riel">
+                            17,220៛
+                        </div>
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <div class="card-footer">
+                    <button class="edit-btn">
+                        Edit Details
+                    </button>
+                    <label class="switch">
+                        <input [checked]="item.isAvailable" (change)="toggleAvailability(item)" type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+
+                </div>
+
+            </div>
+
+        </div>
+        }
+        <div (click)="openAddItem()" class="add-item-card">
+
+            <div class="add-icon">
+                <span>+</span>
+            </div>
+
+            <div class="add-title">
+                Add New Item
+            </div>
+
+            <div class="add-description">
+                Create a new menu item
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #addItemDialog>
+    @if (isLoading) {
+  <div class="loading-overlay">
+    <div class="loading-box">
+      <mat-progress-spinner
+        mode="indeterminate"
+        diameter="45">
+      </mat-progress-spinner>
+      <p>Saving item...</p>
+    </div>
+  </div>
+}
+    <h2 mat-dialog-title>Add New Item</h2>
+    <mat-dialog-content>
+        <form [formGroup]="form">
+            <mat-form-field appearance="outline">
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="name">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Description</mat-label>
+                <textarea matInput formControlName="description"></textarea>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Sele Price</mat-label>
+                <input matInput type="number" formControlName="price">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Stock</mat-label>
+                <input matInput type="number" formControlName="stock">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Category</mat-label>
+                <mat-select formControlName="categoryId">
+                    @for (category of categorys; track category._id) {
+
+                    <mat-option [value]="category._id">
+                        {{ category.name }}
+                    </mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+
+            <mat-slide-toggle formControlName="isAvailable">
+                Available
+            </mat-slide-toggle>
+            <input type="file" (change)="onFileChange($event)">
+        </form>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close>
+            Cancel
+        </button>
+        <button mat-raised-button color="primary" (click)="onSubmit()">
+            Save
+        </button>
+    </mat-dialog-actions>
+</ng-template>
+<!-- ===============update============ -->
+
+<ng-template #editItemDialog>
+    <h2 mat-dialog-title>Edit Menu Item</h2>
+
+    <mat-dialog-content>
+        <form [formGroup]="form">
+            <mat-form-field appearance="outline">
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="name">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Description</mat-label>
+                <textarea matInput formControlName="description">
+        </textarea>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Sale Price</mat-label>
+                <input matInput type="number" formControlName="price">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Stock</mat-label>
+                <input matInput type="number" formControlName="stock">
+            </mat-form-field>
+
+            <mat-slide-toggle formControlName="isAvailable">
+                Available
+            </mat-slide-toggle>
+            <mat-form-field appearance="outline">
+                <mat-label>Category</mat-label>
+                <mat-select formControlName="categoryId">
+                    @for (category of categorys; track category._id) {
+
+                    <mat-option [value]="category._id">
+                        {{ category.name }}
+                    </mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+            <br><br>
+            <input type="file" accept="image/*" (change)="onFileChange($event)">
+        </form>
+
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button (click)="closeDialog()" mat-button mat-dialog-close>
+            Cancel
+        </button>
+        <button mat-raised-button color="primary" (click)="onUpdate(selectedItem!)">
+            Update
+        </button>
+    </mat-dialog-actions>
+</ng-template>

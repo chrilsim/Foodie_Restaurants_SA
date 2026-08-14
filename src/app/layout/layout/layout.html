@@ -1,0 +1,14 @@
+<mat-sidenav-container class="container">
+  <mat-sidenav #leftDrawer position="start" mode="over">
+    <app-menu-drawer></app-menu-drawer>
+  </mat-sidenav>
+  <mat-sidenav #drawer position="end" mode="over">
+    <app-cart-drawer></app-cart-drawer>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="home-content componenet-show">
+        <app-header></app-header>
+       <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

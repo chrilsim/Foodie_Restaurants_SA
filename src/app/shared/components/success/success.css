@@ -1,0 +1,90 @@
+
+mat-dialog-content{
+    width: auto;    
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 10px;
+    background-color: white;
+}
+.main-success h2{
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    font-weight: 600;
+    margin-bottom: 10px;
+    height: 80px;
+    padding-top: 20px;
+    
+}
+.main-success  h2 mat-icon{
+    font-size: 60px;
+    color: var(--bg-green);
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    height: 100px;
+}
+
+mat-dialog-content button{
+    width: 100%;
+    border: none;
+    outline: none;
+    background-color: var(--bg-green);
+    color: white;
+    border-radius: 10px;
+    margin-top: 20px;
+    padding: 10px;
+}
+.current-location{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    cursor: pointer;
+    background: white;
+}
+
+.current-location:hover{
+    background: #f8f8f8;
+}
+
+.current-location mat-icon{
+    font-size: 28px;
+    color: #ff5722;
+}
+
+.current-location h4{
+    margin: 0;
+  
+}
+
+
+.current-location span{
+    color: gray;
+    font-size: 13px;
+}
+
+mat-form-field{
+    width: 100%;
+}
+
+.map-placeholder{
+    height: 300px;
+    border-radius: 12px;
+    border: 2px dashed #ccc;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: gray;
+}
+
+mat-dialog-actions{
+    padding: 16px 20px;
+}

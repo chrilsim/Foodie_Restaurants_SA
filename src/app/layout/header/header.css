@@ -5,7 +5,7 @@
     position: fixed;
     top: 0;
     overflow: hidden;
-    z-index: 999;
+    z-index: 998;
     box-shadow: rgb(194, 194, 194) 0px 0px 2px 2px;
 
 }

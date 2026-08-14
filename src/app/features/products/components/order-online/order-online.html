@@ -1,13 +1,22 @@
 <div class="main-order-online">
-    <div class="menu-bar">
-        <ul>
-            <li>ទាំងអស់</li>
-            <li>អាហារសម្រន់ (Appetizers)</li>
-            <li>មុខម្ហូបចម្បង (Main Course)</li>
-            <li>បង្អែម (Desserts)</li>
-            <li>ភេសជ្ជៈ (Drinks)</li>
-        </ul>
+    <div class="menu-wrapper">
+        <button class="nav-btn left" (click)="scrollLeft()">
+            <mat-icon>chevron_left</mat-icon>
+        </button>
+        <div class="menu-bar" #menuBar>
+            <ul>
+                <li> <mat-icon>apps</mat-icon> ទាំងអស់</li>
+                <li> <mat-icon>tapas</mat-icon> អាហារសម្រន់ (Appetizers)</li>
+                <li><mat-icon>dinner_dining</mat-icon>មុខម្ហូបចម្បង (Main Course)</li>
+                <li><mat-icon>icecream</mat-icon>បង្អែម (Desserts)</li>
+                <li><mat-icon>local_bar</mat-icon>ភេសជ្ជៈ (Drinks)</li>
+            </ul>
+        </div>
+        <button class="nav-btn right" (click)="scrollRight()">
+            <mat-icon>chevron_right</mat-icon>
+        </button>
     </div>
+
     <div class="item-grid-all">
         <div class="item-diplay">
             <div class="item-nav">

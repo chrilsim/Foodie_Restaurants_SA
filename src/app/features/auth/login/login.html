@@ -1,0 +1,57 @@
+<div class="main-login">
+    <div class="left">
+        <img src="assets/login-image.png" alt="Login Image" class="login-image">
+        <div class="overly-img">
+            <h4>គ្រប់គ្រងភោជនីយដ្ឋានរបស់អ្នកដោយភាពជឿជាក់</h4>
+            <p>ប្រព័ន្ធគ្រប់គ្រងភោជនីយដ្ឋានទំនើប ដែលជួយសម្រួលដល់រាល់ប្រតិបត្តិការការងាររបស់អ្នកឱ្យកាន់តែមានប្រសិទ្ធភាព។</p>
+        </div>
+    </div>
+    <div class="right">
+        <mat-card class="login-card">
+            <h2><mat-card-title>Login</mat-card-title></h2>
+            <mat-card-content>
+                <form>
+                    <label for="email">អ៊ីមែល ឬ លេខទូរស័ព្ទ</label>
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-icon matPrefix>email</mat-icon>
+                        <mat-label>Email</mat-label>
+                        <input matInput type="email" placeholder="Enter your email">
+                    </mat-form-field>
+                     <label for="password">ពាក្យសម្ងាត់</label>
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-icon matPrefix>lock</mat-icon>
+                        <mat-label>Password</mat-label>
+                        <input matInput type="password" placeholder="Enter your password">
+                    </mat-form-field>
+                    
+                    <div class="full-width-checkbox">
+                        <div class="">
+                            <label for="remember-me" class="remember-me-label">
+                                <input type="checkbox" id="remember-me">
+                                ចងចាំខ្ញុំ
+                            </label>
+                        </div>
+                        <a class="forgot-password">ភ្លេចលេខសម្ងាត់?</a>
+                    </div>
+                    <button mat-raised-button class="full-width-button">
+                        ចូលប្រើ
+                    </button>
+                    <p>-----------------ឬចូលប្រើជាមួយ---------------</p>
+                    <div class="login-option">
+                        <button  class="google-login">
+                            <img src="assets/icon/google.png" alt="Google Logo">
+                            ចូលប្រើជាមួយ Google
+                        </button>
+                        <button class="facebook-login">
+                            <img src="assets/icon/facebook.png" alt="Facebook Logo">
+                            ចូលប្រើជាមួយ Facebook
+                        </button>
+                    </div>
+                    <hr style="border: 1px solid #ccc; margin: 20px 0;">
+                    <p>មិនទាន់មានគណនី? <a routerLink="/register" style="cursor: pointer; color: #007bff; text-decoration: underline;">ចុះឈ្មោះ</a></p>
+
+                </form>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

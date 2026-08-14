@@ -1,0 +1,65 @@
+<div class="main-login">
+    <div class="left">
+        <img src="assets/login-image.png" alt="Login Image" class="login-image">
+        <div class="overly-img">
+            <h4>គ្រប់គ្រងភោជនីយដ្ឋានរបស់អ្នកដោយភាពជឿជាក់</h4>
+            <p>ប្រព័ន្ធគ្រប់គ្រងភោជនីយដ្ឋានទំនើប ដែលជួយសម្រួលដល់រាល់ប្រតិបត្តិការការងាររបស់អ្នកឱ្យកាន់តែមានប្រសិទ្ធភាព។
+            </p>
+        </div>
+    </div>
+    <div class="right">
+        <mat-card class="login-card">
+            <h2><mat-card-title>Register</mat-card-title></h2>
+            
+            <div class="login-option">
+                <button class="google-login">
+                    <img src="assets/icon/google.png" alt="Google Logo">
+                    ចូលប្រើជាមួយ Google
+                </button>
+                <button class="facebook-login">
+                    <img src="assets/icon/facebook.png" alt="Facebook Logo">
+                    ចូលប្រើជាមួយ Facebook
+                </button>
+            </div>
+            <p style="text-align: center;">----------------------ឬបន្តជាមួយអ៊ីមែល-----------------------</p>
+            <mat-card-content>
+                <form>
+                    <label for="name">ឈ្មោះពេញ</label>
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-icon matPrefix>person</mat-icon>
+                        <mat-label>Full Name</mat-label>
+                        <input matInput type="text" placeholder="Enter your full name">
+                    </mat-form-field>
+                    <label for="email">អ៊ីមែល</label>
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>Email</mat-label>
+                        <mat-icon matPrefix>email</mat-icon>
+                        <input matInput type="email" placeholder="Enter your email">
+                    </mat-form-field>
+                    <label for="password">ពាក្យសម្ងាត់</label>
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>លេខសម្ងាត់</mat-label>
+                        <mat-icon matPrefix>lock</mat-icon>
+                        <input matInput type="password" placeholder="Enter your password">
+                    </mat-form-field>
+                    <label for="password">បញ្ជាក់លេខសម្ងាត់</label>
+                    <mat-form-field appearance="outline" class="full-width">
+                        <mat-label>បញ្ជាក់លេខសម្ងាត់</mat-label>
+                        <mat-icon matPrefix>lock</mat-icon>
+                        <input matInput type="password" placeholder="Enter your password">
+                    </mat-form-field>
+                
+                    <p>មានគណនីរួចហើយ? <a routerLink="/login"
+                            style="cursor: pointer; color: #007bff; text-decoration: underline;">ចូលប្រើប្រាស់</a></p>
+                    <button routerLink="/Layout/products" mat-raised-button class="full-width-button">
+                        ចូលប្រើ
+                    </button>
+
+                 
+                    
+
+                </form>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

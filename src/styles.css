@@ -16,6 +16,10 @@
   --color-dark: #0f172a;
   --bg-gry:#E9E9E9;
   --bg-gry-hover:#e0e0e0;
+  --bg-white-hover:#e0e0e05e;
   --bg-green:#006A61;
   --bg-green-hover:#0D5C4D;
+}
+.location-dialog .mat-mdc-dialog-container .mdc-dialog__surface {
+  border-radius: 10px;
 }

@@ -1,0 +1,428 @@
+<div class="main-staff">
+    <div class="naveget-add-staff">
+        <div class="text-staff">
+            <h2>ការគ្រប់គ្រងបុគ្គលិក (StaffManagement)</h2>
+            <p>Oversee schedules, attendance, and roles across the entire enterprise.</p>
+        </div>
+        <div class="add-staff">
+            <button> <mat-icon>person_add</mat-icon>
+                បន្ថែមបុគ្គលិក (AddStaff)</button>
+        </div>
+    </div>
+    <div class="dashboard">
+
+    <!-- ================= SUMMARY ================= -->
+    <section class="summary-grid">
+
+        <div class="summary-card">
+            <div class="summary-icon staff">
+                <i class="fa-solid fa-users"></i>
+            </div>
+
+            <div>
+                <span class="summary-title">TOTAL STAFF</span>
+                <strong>24</strong>
+            </div>
+        </div>
+
+        <div class="summary-card">
+            <div class="summary-icon shift">
+                <i class="fa-solid fa-clock"></i>
+            </div>
+
+            <div>
+                <span class="summary-title">ON SHIFT<br>NOW</span>
+                <strong>08</strong>
+            </div>
+        </div>
+
+        <div class="summary-card">
+            <div class="summary-icon attendance">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+
+            <div>
+                <span class="summary-title">ATTENDANCE<br>RATE</span>
+                <strong>96.4%</strong>
+            </div>
+        </div>
+
+        <div class="summary-card">
+            <div class="summary-icon request">
+                <i class="fa-solid fa-briefcase"></i>
+            </div>
+
+            <div>
+                <span class="summary-title">REQUESTS</span>
+                <strong>03</strong>
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- ================= STAFF TABLE ================= -->
+    <section class="staff-section">
+
+        <div class="toolbar">
+
+            <div class="tabs">
+                <button class="tab active">All</button>
+                <button class="tab">Management</button>
+                <button class="tab">Service</button>
+                <button class="tab">Kitchen</button>
+            </div>
+
+            <div class="toolbar-actions">
+                <button>
+                    <i class="fa-solid fa-filter"></i>
+                    Filter
+                </button>
+
+                <button>
+                    <i class="fa-solid fa-download"></i>
+                    Export
+                </button>
+            </div>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>STAFF NAME</th>
+                        <th>ROLE</th>
+                        <th>SHIFT STATUS</th>
+                        <th>ATTENDANCE</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <!-- Staff 1 -->
+                    <tr>
+                        <td>
+                            <div class="staff-info">
+                                <div class="avatar avatar-1">S</div>
+
+                                <div>
+                                    <strong>Sokha Phally</strong>
+                                    <small>sokha.p@culinarypro.com</small>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+                            <span class="role manager">Manager</span>
+                        </td>
+
+                        <td>
+                            <div class="status">
+                                <span class="dot green"></span>
+                                <div>
+                                    <span>On Duty</span>
+                                    <small>Clocked in: 08:30 AM</small>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="attendance">
+                                <span>98%</span>
+                                <div class="progress">
+                                    <div style="width:98%"></div>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="actions">
+                                <button>
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </button>
+
+                                <button>
+                                    <i class="fa-regular fa-eye"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+
+
+                    <!-- Staff 2 -->
+                    <tr>
+                        <td>
+                            <div class="staff-info">
+                                <div class="avatar avatar-2">V</div>
+
+                                <div>
+                                    <strong>Vannak Chan</strong>
+                                    <small>v.chan@culinarypro.com</small>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+                            <span class="role kitchen">Kitchen Staff</span>
+                        </td>
+
+                        <td>
+                            <div class="status">
+                                <span class="dot orange"></span>
+
+                                <div>
+                                    <span>On Break</span>
+                                    <small>Duration: 15 min</small>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="attendance">
+                                <span>92%</span>
+
+                                <div class="progress">
+                                    <div style="width:92%"></div>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="actions">
+                                <button>
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </button>
+
+                                <button>
+                                    <i class="fa-regular fa-eye"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+
+
+                    <!-- Staff 3 -->
+                    <tr>
+                        <td>
+                            <div class="staff-info">
+                                <div class="avatar avatar-3">B</div>
+
+                                <div>
+                                    <strong>Bopha Som</strong>
+                                    <small>bopha.som@culinarypro.com</small>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+                            <span class="role cashier">Cashier</span>
+                        </td>
+
+                        <td>
+                            <div class="status">
+                                <span class="dot gray"></span>
+
+                                <div>
+                                    <span>Off Shift</span>
+                                    <small>Next: Tomorrow 10AM</small>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="attendance">
+                                <span>100%</span>
+
+                                <div class="progress">
+                                    <div style="width:100%"></div>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="actions">
+                                <button>
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </button>
+
+                                <button>
+                                    <i class="fa-regular fa-eye"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+
+
+                    <!-- Staff 4 -->
+                    <tr>
+                        <td>
+                            <div class="staff-info">
+                                <div class="avatar avatar-4">M</div>
+
+                                <div>
+                                    <strong>Monyrath Keo</strong>
+                                    <small>monyr.k@culinarypro.com</small>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+                            <span class="role waiter">Waiter</span>
+                        </td>
+
+                        <td>
+                            <div class="status">
+                                <span class="dot green"></span>
+
+                                <div>
+                                    <span>On Duty</span>
+                                    <small>Clocked in: 11:15 AM</small>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="attendance low">
+                                <span>85%</span>
+
+                                <div class="progress">
+                                    <div style="width:85%"></div>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="actions">
+                                <button>
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </button>
+
+                                <button>
+                                    <i class="fa-regular fa-eye"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- Pagination -->
+        <div class="table-footer">
+
+            <span>Showing 1-10 of 24 members</span>
+
+            <div class="pagination">
+                <button>
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+
+                <button class="current">1</button>
+                <button>2</button>
+                <button>3</button>
+
+                <button>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= BOTTOM ================= -->
+    <section class="bottom-grid">
+
+        <!-- Recent Activity -->
+        <div class="activity-card">
+
+            <div class="card-title">
+                <h3>
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    សកម្មភាពវេនថ្មីៗ (Recent Shift Activity)
+                </h3>
+            </div>
+
+            <div class="activity-list">
+
+                <div class="activity">
+                    <div class="activity-icon login">
+                        <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                    </div>
+
+                    <strong>Vannak Chan checked in for PM Shift</strong>
+
+                    <span>12:30 PM</span>
+                </div>
+
+                <div class="activity">
+                    <div class="activity-icon logout">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    </div>
+
+                    <strong>Sokha Phally clocked out for Lunch Break</strong>
+
+                    <span>12:15 PM</span>
+                </div>
+
+                <div class="activity">
+                    <div class="activity-icon login">
+                        <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                    </div>
+
+                    <strong>Monyrath Keo clocked in for AM Shift</strong>
+
+                    <span>11:15 AM</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Pending Request -->
+        <div class="request-card">
+
+            <div class="request-header">
+                <h3>សំណើចាកចេញ (Pending)</h3>
+
+                <span class="request-count">3</span>
+            </div>
+
+            <div class="request-box">
+
+                <span class="request-label">LEAVE REQUEST</span>
+
+                <small>2h ago</small>
+
+                <h4>
+                    Bopha Som requested leave
+                    <br>
+                    for Oct 12th.
+                </h4>
+
+                <div class="request-buttons">
+                    <button class="approve">Approve</button>
+                    <button class="deny">Deny</button>
+                </div>
+
+            </div>
+
+            <a href="#">View all requests</a>
+
+        </div>
+
+    </section>
+
+</div>
+</div>

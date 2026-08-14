@@ -1,0 +1,35 @@
+<div class="main-dashboard">
+    <div class="menu-left">
+        <div class="logo">
+            <img src="assets/logo.png" alt="">
+        </div>
+        <ul>
+            <li  routerLink="/main-dashboard/dashboard"><mat-icon>dashboard</mat-icon> Dashboard</li>
+            <li><mat-icon>dashboard</mat-icon> Orders</li>
+            <li><mat-icon>dashboard</mat-icon> Kitchen Display</li>
+            <li><mat-icon>dashboard</mat-icon> Inventory</li>
+            <li routerLink="/main-dashboard/menu-management" ><mat-icon>dashboard</mat-icon> Menu Management</li>
+            <li routerLink="/main-dashboard/staff"><mat-icon>dashboard</mat-icon> Staff Managerment</li>
+            <li routerLink="/main-dashboard/customer"><mat-icon>dashboard</mat-icon>Customer</li>
+        </ul>
+    </div>
+    <div class="contain-right">
+        <div class="header">
+            <div class="search">
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-icon matPrefix>search</mat-icon>
+                    <input matInput type="search" placeholder="Search analytics, orders, or items...">
+                </mat-form-field>
+            </div>
+            <div class="live-status">
+                <mat-icon>notifications_unread</mat-icon>
+                <mat-icon>storefront</mat-icon>
+                <h3>| Live Status: Open</h3>
+            </div>
+        </div>
+        <div style="width: 100%;">
+            <router-outlet></router-outlet>
+        </div>
+        
+    </div>
+</div>

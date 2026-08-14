@@ -1,0 +1,63 @@
+<h2 mat-dialog-title>Select Delivery Location</h2>
+
+<mat-dialog-content>
+
+    <button class="current-location" (click)="getCurrentLocation()">
+
+        <mat-icon>my_location</mat-icon>
+
+        <div>
+            <h4>Use Current Location</h4>
+            <span>Detect your location automatically</span>
+        </div>
+
+    </button>
+
+    <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Search Address</mat-label>
+        <input matInput placeholder="Street, Building, Area">
+    </mat-form-field>
+
+    <div class="map-placeholder">
+             <iframe
+            *ngIf="mapUrl"
+            [src]="mapUrl"
+            width="100%"
+            height="300"
+            style="border:0"
+            loading="lazy">
+        </iframe>
+        
+       
+
+        <div *ngIf="!mapUrl">
+
+            <mat-icon>map</mat-icon>
+
+            <p>Map will appear here</p>
+
+        </div>
+
+    </div>
+
+    <div *ngIf="latitude">
+
+        <p><strong>Latitude:</strong> {{ latitude }}</p>
+
+        <p><strong>Longitude:</strong> {{ longitude }}</p>
+
+    </div>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+
+    <button mat-button mat-dialog-close>
+        Cancel
+    </button>
+
+    <button mat-flat-button color="primary">
+        Save Location
+    </button>
+
+</mat-dialog-actions>

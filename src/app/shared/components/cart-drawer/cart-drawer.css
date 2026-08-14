@@ -1,0 +1,128 @@
+.hader-cart {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    gap: 8px;
+    flex-direction: column;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgb(221, 221, 221);
+}
+
+.items {
+    position: relative;
+    width: 100%;
+   background-color: white;
+    display: flex;
+}
+
+.items .img {
+    width: 110px;
+    height: 110px;
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+.items .img img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.items .text {
+    width: 230px;
+    overflow: hidden;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.items .text h3 {
+    width: 100%;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.items .text p span {
+    font-weight: bold;
+    font-size: 16px;
+}
+.main-add-cart{
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+.main-add-cart .plus-minus {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 4px;
+    background: white;
+    border-radius: 20px;
+    width: fit-content;
+}
+
+.plus-minus .minus {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background-color: rgb(216, 216, 216);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.plus-minus .plus {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background-color:var(--bg-green);
+    color: white;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.plus-minus .plus:hover{
+    background-color: var(--bg-green-hover);
+}
+.clse-cart{
+    position: absolute;
+    cursor: pointer;
+    left: 10px;
+    
+}
+.add-checkout{
+    width: 100%;
+    cursor: pointer;
+    align-items: center;
+    padding: 10px;
+    background-color: var(--bg-green);
+    color: white;
+    margin-top: 20px;
+    border-radius: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+.add-checkout:hover{
+    background-color: var(--bg-green-hover);
+}
+.count-item{
+    background-color: white;
+    width: 30px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    color: var(--bg-green);
+    font-weight: bold;
+    height: 30px;
+    border-radius: 50%;
+}
+.add-checkout h4{
+    font-size: 16px;
+}

@@ -1,13 +1,17 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, ViewChild, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { MatIconModule } from "@angular/material/icon";
-import { RouterLink } from "@angular/router";
+import { RouterLink, RouterOutlet } from "@angular/router";
+
 
 
 @Component({
   selector: 'app-home',
-  imports: [MatIconModule, RouterLink],
+  imports: [MatIconModule, RouterLink, ],
   templateUrl: './home.html',
   styleUrl: './home.css',
-  schemas:[CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class Home {}
+export class Home {
+
+
+}

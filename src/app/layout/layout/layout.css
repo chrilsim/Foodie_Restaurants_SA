@@ -1,0 +1,18 @@
+.componenet-show{
+    margin-top: 70px;
+    overflow: hidden;
+
+}
+.container {
+   position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+}
+
+mat-sidenav {
+    z-index: 999;
+  max-width: 380px;
+    padding: 10px;
+  border-radius: 0px !important;
+}
