@@ -52,8 +52,18 @@ export class MenuDrawer implements OnInit {
   this.router.navigate([
     '/login'
   ]);
+  
 
 }
+goToRegister(): void {
+  this.router.navigate(['/register']);
+}
+
+goToLogin(): void {
+  this.router.navigate(['/login']);
+}
+
+
  openLocation() {
     this.dialog.open(LocationDialog, {
       width: '600px',
