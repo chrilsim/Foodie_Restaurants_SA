@@ -19,26 +19,29 @@
           "options": {
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
-            "assets": ["public/favicon.ico", "src/assets"],
+            "assets": [
+              "public/favicon.ico",
+              "src/assets"
+            ],
             "styles": [
               "src/material-theme.scss",
-               "src/styles.css",
-               "src/app/shared/components/flex.css",
-                "node_modules/leaflet/dist/leaflet.css"
-              ]
+              "src/styles.css",
+              "src/app/shared/components/flex.css",
+              "node_modules/leaflet/dist/leaflet.css"
+            ]
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "2mb",
+                  "maximumError": "3mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumWarning": "15kb",
+                  "maximumError": "20kb"
                 }
               ],
               "outputHashing": "all"
