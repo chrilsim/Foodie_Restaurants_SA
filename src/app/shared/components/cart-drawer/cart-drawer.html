@@ -1,32 +1,135 @@
 <div class="cart">
-
     <div class="hader-cart">
-        <div (click)="close()" class="clse-cart"> <mat-icon>close</mat-icon> </div>
+        <button type="button"class="clse-cart"(click)="close()">
+            <mat-icon>close</mat-icon>
+        </button>
         <h2>My Cart Summary</h2>
-        <p>Your order from ...</p>
+        <p>Your order from Foodie Restaurant</p>
     </div>
-    <div class="item-add">
-        <div class="items">
-            <div class="img">
-                <img src="/assets/tranding.jpg" alt="">
-            </div>
-            <div class="text">
-                <h3>The Ordinary Retino sada asdsada</h3>
-                <p> <span>$9.50 /</span>  38,950៛</p>
-            </div>
-            <div class="main-add-cart">
-                <div class="plus-minus">
-                    <div class="minus"><mat-icon>remove</mat-icon></div>
-                    <p>0</p>
-                    <div class="plus"><mat-icon>add</mat-icon></div>
+    @if (totalItem > 0) {
+        <div class="item-add">
+            @for (item of cartItems;track item._id) {
+                <div class="items">
+                    <div class="img">
+                        @if (item.image) {
+                            <img [src]="item.image" [alt]="item.name">
+                        }
+                        @else {
+                            <div class="no-image">
+                                <mat-icon>restaurant</mat-icon>
+                            </div>
+
+                        }
+
+                    </div>
+
+                    <div class="text">
+                        <h3>
+                            {{ item.name }}
+                        </h3>
+
+                        <p>
+                            <span>{{ item.finalPrice | currency:'USD' }}</span>
+                            /
+                            {{ item.finalPrice | usdToKhr }}
+                        </p>
+                        @if (item.selectedOptions && item.selectedOptions.length > 0) {
+
+                            <div class="selected-options">
+                                @for (option of item.selectedOptions; track option.optionName + option.choiceName) {
+                                    <div class="selected-option">
+                                        <small>
+                                            <strong>
+                                                {{ option.optionName }}:
+                                            </strong>
+
+                                            {{ option.choiceName }}
+
+                                            @if (
+                                                option.price > 0
+                                            ) {
+
+                                                <span>
+
+                                                    +
+                                                    {{ option.price | currency:'USD' }}
+
+                                                </span>
+
+                                            }
+
+                                        </small>
+
+                                    </div>
+
+                                }
+
+                            </div>
+
+                        }
+
+                        <div class="main-add-cart">
+
+                            <div class="plus-minus">
+                                <button type="button" class="minus" (click)="decrease(item)">
+                                    <mat-icon>remove</mat-icon>
+                                </button>
+                                <p>
+                                    {{ item.quantity }}
+                                </p>
+
+
+                                <button type="button" class="plus" (click)="increase(item)">
+
+                                    <mat-icon>
+                                        add
+                                    </mat-icon>
+
+                                </button>
+
+                            </div>
+
+                            <button type="button"class="remove" (click)="remove(item)">
+
+                                <mat-icon>
+                                    delete_outline
+                                </mat-icon>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
                 </div>
-            </div>
+
+            }
+
         </div>
-    </div>
-    <div routerLink="/products/checkout" (click)="close()" class="add-checkout">
-        <div class="count-item">0</div>
-        <h4>Checkout</h4>
-        <mat-icon>arrow_forward_ios</mat-icon>
-    </div>
+        <button type="button" class="add-checkout" (click)="checkout()">
+            <div class="count-item">
+                {{ totalItem }}
+            </div>
+            <h4>
+                Checkout -
+                <span>
+                    {{ totalPrice | currency:'USD' }}
+                </span>
+            </h4>
+            <mat-icon>
+                arrow_forward_ios
+            </mat-icon>
+
+        </button>
+
+    }
+    @else {
+        <div class="empty-cart">
+            <img src="assets/nonocart.png" alt="Empty cart">
+            <h3>Your cart is empty</h3>
+            <p>Add some delicious food to your cart.</p>
+        </div>
+
+    }
 
 </div>

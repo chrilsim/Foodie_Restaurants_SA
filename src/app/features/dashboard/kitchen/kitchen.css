@@ -1,0 +1,159 @@
+.kitchen-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 20px;
+    background: #f4f5f5;
+    min-height: 100vh;
+}
+
+.column {
+    background: #eef1ef;
+    border-radius: 18px;
+    border: 1px solid #d7dddd;
+    padding: 14px;
+}
+
+.column-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.column-header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.column-header span {
+    color: #777;
+    font-size: 12px;
+}
+
+.status-badge {
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.active {
+    background: #0c5c4c;
+    color: white;
+}
+
+.working {
+    background: #dbe6ff;
+    color: #294ea6;
+}
+
+.waiting {
+    background: #e3ece8;
+    color: #0c5c4c;
+}
+
+.order-card {
+    margin-bottom: 16px;
+    border-radius: 16px;
+    padding: 14px;
+}
+
+.preparing-card {
+    border-left: 4px solid #0c5c4c;
+}
+
+.card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+}
+
+.card-top h2 {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 800;
+    color: #d32f2f;
+}
+
+.time-box {
+    text-align: center;
+}
+
+.time-box span {
+    background: #ffdede;
+    color: #d32f2f;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-weight: 700;
+    display: block;
+}
+
+.time-box small {
+    color: #777;
+    font-size: 11px;
+}
+
+.progress-time {
+    color: #0c5c4c;
+    font-weight: 700;
+}
+
+.table-no {
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.food-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.food-item h4 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.tag {
+    background: #9b5b4f;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    display: inline-block;
+    margin-top: 6px;
+}
+
+.action-btn {
+    width: 100%;
+    margin-top: 16px;
+    height: 46px !important;
+    border-radius: 10px !important;
+    background: #0c5c4c !important;
+    color: white !important;
+}
+
+.ready-top {
+    align-items: center;
+}
+
+.ready-item {
+    margin: 12px 0;
+    padding: 16px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+.ready-item h3 {
+    margin: 0;
+}
+
+.ready-item small {
+    color: #666;
+}
+
+mat-progress-bar {
+    margin-top: 15px;
+}

@@ -1,0 +1,830 @@
+<div class="kitchen-dashboard">
+
+  <!-- ================================================= -->
+  <!-- HEADER -->
+  <!-- ================================================= -->
+
+  <div class="dashboard-header">
+
+    <div class="header-text">
+
+      <span class="welcome">
+        Kitchen Dashboard
+      </span>
+
+      <h1>
+        Order Queue
+      </h1>
+
+      <p>
+        Manage and prepare customer orders
+      </p>
+
+    </div>
+
+    <button
+      mat-icon-button
+      class="refresh-btn"
+      type="button"
+      (click)="loadOrders()"
+      [disabled]="isLoading"
+      matTooltip="Refresh Orders">
+
+      <mat-icon>
+        refresh
+      </mat-icon>
+
+    </button>
+
+  </div>
+
+
+  <!-- ================================================= -->
+  <!-- SUMMARY -->
+  <!-- ================================================= -->
+
+  <div class="summary-grid">
+
+    <!-- PENDING -->
+
+    <div class="summary-card pending-card">
+
+      <div class="summary-icon">
+        <mat-icon>
+          schedule
+        </mat-icon>
+      </div>
+
+      <div>
+        <span>
+          Pending
+        </span>
+
+        <strong>
+          {{
+            orders.filter(
+              o => o.status === 'Pending'
+            ).length
+          }}
+        </strong>
+      </div>
+
+    </div>
+
+
+    <!-- CONFIRMED -->
+
+    <div class="summary-card confirmed-card">
+
+      <div class="summary-icon">
+        <mat-icon>
+          check_circle
+        </mat-icon>
+      </div>
+
+      <div>
+        <span>
+          Confirmed
+        </span>
+
+        <strong>
+          {{
+            orders.filter(
+              o => o.status === 'Confirmed'
+            ).length
+          }}
+        </strong>
+      </div>
+
+    </div>
+
+
+    <!-- PREPARING -->
+
+    <div class="summary-card preparing-card">
+
+      <div class="summary-icon">
+        <mat-icon>
+          restaurant
+        </mat-icon>
+      </div>
+
+      <div>
+        <span>
+          Preparing
+        </span>
+
+        <strong>
+          {{
+            orders.filter(
+              o => o.status === 'Preparing'
+            ).length
+          }}
+        </strong>
+      </div>
+
+    </div>
+
+
+    <!-- READY -->
+
+    <div class="summary-card ready-card">
+
+      <div class="summary-icon">
+        <mat-icon>
+          done_all
+        </mat-icon>
+      </div>
+
+      <div>
+        <span>
+          Ready
+        </span>
+
+        <strong>
+          {{
+            orders.filter(
+              o => o.status === 'Ready'
+            ).length
+          }}
+        </strong>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ================================================= -->
+  <!-- LOADING -->
+  <!-- ================================================= -->
+
+  @if (isLoading) {
+
+    <div class="loading-box">
+
+      <mat-spinner
+        diameter="45">
+      </mat-spinner>
+
+      <p>
+        Loading kitchen orders...
+      </p>
+
+    </div>
+
+  }
+
+
+  <!-- ================================================= -->
+  <!-- EMPTY -->
+  <!-- ================================================= -->
+
+  @if (
+    !isLoading &&
+    orders.length === 0
+  ) {
+
+    <div class="empty-box">
+
+      <div class="empty-icon">
+
+        <mat-icon>
+          restaurant
+        </mat-icon>
+
+      </div>
+
+      <h3>
+        No Orders
+      </h3>
+
+      <p>
+        There are no orders waiting in the kitchen.
+      </p>
+
+      <button
+        mat-stroked-button
+        type="button"
+        (click)="loadOrders()">
+
+        <mat-icon>
+          refresh
+        </mat-icon>
+
+        Refresh
+
+      </button>
+
+    </div>
+
+  }
+
+
+  <!-- ================================================= -->
+  <!-- ORDER LIST -->
+  <!-- ================================================= -->
+
+  @if (
+    !isLoading &&
+    orders.length > 0
+  ) {
+
+    <div class="orders-list">
+
+      @for (
+        order of orders;
+        track order._id
+      ) {
+
+        <div class="order-card">
+
+
+          <!-- ========================================= -->
+          <!-- ORDER HEADER -->
+          <!-- ========================================= -->
+
+          <div class="order-header">
+
+            <div>
+
+              <span class="order-label">
+                ORDER
+              </span>
+
+              <h2>
+                #{{ order._id.slice(-8).toUpperCase() }}
+              </h2>
+
+              <span class="order-time">
+
+                {{ order.createdAt | date:'medium' }}
+
+              </span>
+
+            </div>
+
+
+            <!-- STATUS -->
+
+            <div
+              class="status"
+              [ngClass]="
+                getStatusClass(order.status)
+              ">
+
+              <mat-icon>
+
+                {{
+                  getStatusIcon(order.status)
+                }}
+
+              </mat-icon>
+
+              {{ order.status }}
+
+            </div>
+
+          </div>
+
+
+          <!-- ========================================= -->
+          <!-- CUSTOMER -->
+          <!-- ========================================= -->
+
+          <div class="customer-section">
+
+            <div class="section-title">
+
+              <mat-icon>
+                person
+              </mat-icon>
+
+              <span>
+                Customer
+              </span>
+
+            </div>
+
+
+            <div class="customer-info">
+
+              <div class="customer-avatar">
+
+                <mat-icon>
+                  person
+                </mat-icon>
+
+              </div>
+
+
+              <div>
+
+                <strong>
+
+                  {{
+                    order.userId?.fullName ||
+                    'Customer'
+                  }}
+
+                </strong>
+
+
+                @if (order.userId?.phone) {
+
+                  <span>
+                    {{ order.userId.phone }}
+                  </span>
+
+                }
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- ========================================= -->
+          <!-- FOOD ITEMS -->
+          <!-- ========================================= -->
+
+          <div class="items-section">
+
+            <div class="section-title">
+
+              <mat-icon>
+                shopping_bag
+              </mat-icon>
+
+              <span>
+                Order Items
+              </span>
+
+              <small>
+                {{ getItemCount(order) }} items
+              </small>
+
+            </div>
+
+
+            <div class="food-list">
+
+              @for (
+                item of order.items;
+                track $index
+              ) {
+
+                <div class="food-item">
+
+
+                  <!-- FOOD IMAGE -->
+
+                  <div class="food-image">
+
+                    @if (item.image) {
+
+                      <img
+                        [src]="item.image"
+                        [alt]="item.productName">
+
+                    }
+
+                    @else {
+
+                      <mat-icon>
+                        restaurant
+                      </mat-icon>
+
+                    }
+
+                  </div>
+
+
+                  <!-- FOOD CONTENT -->
+
+                  <div class="food-content">
+
+
+                    <!-- FOOD TITLE -->
+
+                    <div class="food-title-row">
+
+                      <h3>
+
+                        {{
+                          item.productName ||
+                          'Unknown Product'
+                        }}
+
+                      </h3>
+
+
+                      <span class="quantity">
+
+                        ×{{ item.quantity }}
+
+                      </span>
+
+                    </div>
+
+
+                    <!-- ================================= -->
+                    <!-- OPTIONS -->
+                    <!-- ================================= -->
+                    {{item.selectedOptions.length}}
+                    @if (item.selectedOptions &&item.selectedOptions.length > 0) {
+                      <div class="options">
+                        @for (option of item.selectedOptions;track $index) {
+
+                          <div class="option">
+
+                            <span>
+                              {{ option.optionName }}:
+                              
+                            </span>
+
+                            <strong>
+                              {{ option.choiceName }}
+                            </strong>
+
+                          </div>
+
+                        }
+
+                      </div>
+
+                    }
+
+
+                    <!-- ================================= -->
+                    <!-- ITEM KITCHEN NOTE -->
+                    <!-- ================================= -->
+
+                    @if (item.kitchenNote) {
+
+                      <div class="item-note">
+
+                        <mat-icon>
+                          notes
+                        </mat-icon>
+
+                        <div>
+
+                          <span>
+                            Note
+                          </span>
+
+                          <p>
+                            {{ item.kitchenNote }}
+                          </p>
+
+                        </div>
+
+                      </div>
+
+                    }
+
+                  </div>
+
+                </div>
+
+              }
+
+            </div>
+
+          </div>
+
+
+          <!-- ========================================= -->
+          <!-- ORDER KITCHEN NOTE -->
+          <!-- ========================================= -->
+
+          @if (order.kitchenNote) {
+
+            <div class="kitchen-note">
+
+              <mat-icon>
+                notes
+              </mat-icon>
+
+              <div>
+
+                <span>
+                  Kitchen Note
+                </span>
+
+                <p>
+                  {{ order.kitchenNote }}
+                </p>
+
+              </div>
+
+            </div>
+
+          }
+
+
+          <!-- ========================================= -->
+          <!-- ORDER INFORMATION -->
+          <!-- ========================================= -->
+
+          <div class="order-info-grid">
+
+
+            <!-- RECEIVE TYPE -->
+
+            <div class="info-box">
+
+              <span>
+                Receive Type
+              </span>
+
+              <strong>
+
+                @if (
+                  order.receiveType === 'delivery'
+                ) {
+
+                  🚚 Delivery
+
+                }
+
+                @else {
+
+                  🏪 Pickup
+
+                }
+
+              </strong>
+
+            </div>
+
+
+            <!-- ORDER TIME -->
+
+            <div class="info-box">
+
+              <span>
+                Order Time
+              </span>
+
+              <strong>
+
+                {{
+                  order.createdAt |
+                  date:'shortTime'
+                }}
+
+              </strong>
+
+            </div>
+
+
+            <!-- ITEMS -->
+
+            <div class="info-box">
+
+              <span>
+                Items
+              </span>
+
+              <strong>
+                {{ getItemCount(order) }}
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <!-- ========================================= -->
+          <!-- DELIVERY ADDRESS -->
+          <!-- ========================================= -->
+
+          @if (
+            order.receiveType === 'delivery' &&
+            order.deliveryAddress
+          ) {
+
+            <div class="address-box">
+
+              <mat-icon>
+                location_on
+              </mat-icon>
+
+              <div>
+
+                <span>
+                  Delivery Address
+                </span>
+
+                <strong>
+
+                  {{
+                    order.deliveryAddress.label ||
+                    'Customer Location'
+                  }}
+
+                </strong>
+
+                <p>
+
+                  {{
+                    order.deliveryAddress.address ||
+                    ''
+                  }}
+
+                  @if (
+                    order.deliveryAddress.city
+                  ) {
+
+                    ,
+                    {{ order.deliveryAddress.city }}
+
+                  }
+
+                  @if (
+                    order.deliveryAddress.province
+                  ) {
+
+                    ,
+                    {{ order.deliveryAddress.province }}
+
+                  }
+
+                </p>
+
+              </div>
+
+            </div>
+
+          }
+
+
+          <!-- ========================================= -->
+          <!-- ACTION -->
+          <!-- ========================================= -->
+
+          <div class="action-section">
+
+
+            <!-- PENDING -->
+
+            @if (
+              order.status === 'Pending'
+            ) {
+
+              <button
+                mat-raised-button
+                class="confirm-btn"
+                type="button"
+                [disabled]="
+                  isActionLoading(order._id)
+                "
+                (click)="confirmOrder(order)">
+
+                @if (
+                  isActionLoading(order._id)
+                ) {
+
+                  <mat-spinner
+                    diameter="20">
+                  </mat-spinner>
+
+                }
+
+                @else {
+
+                  <mat-icon>
+                    check_circle
+                  </mat-icon>
+
+                }
+
+                Confirm Order
+
+              </button>
+
+            }
+
+
+            <!-- CONFIRMED -->
+
+            @if (
+              order.status === 'Confirmed'
+            ) {
+
+              <button
+                mat-raised-button
+                class="prepare-btn"
+                type="button"
+                [disabled]="
+                  isActionLoading(order._id)
+                "
+                (click)="startPreparing(order)">
+
+                @if (
+                  isActionLoading(order._id)
+                ) {
+
+                  <mat-spinner
+                    diameter="20">
+                  </mat-spinner>
+
+                }
+
+                @else {
+
+                  <mat-icon>
+                    restaurant
+                  </mat-icon>
+
+                }
+
+                Start Preparing
+
+              </button>
+
+            }
+
+
+            <!-- PREPARING -->
+
+            @if (
+              order.status === 'Preparing'
+            ) {
+
+              <button
+                mat-raised-button
+                class="ready-btn"
+                type="button"
+                [disabled]="isActionLoading(order._id)"(click)="markReady(order)">
+                @if (
+                  isActionLoading(order._id)
+                ) {
+
+                  <mat-spinner
+                    diameter="20">
+                  </mat-spinner>
+
+                }
+
+                @else {
+
+                  <mat-icon>
+                    done_all
+                  </mat-icon>
+
+                }
+
+                Food Ready
+
+              </button>
+
+            }
+
+
+            <!-- READY -->
+
+            @if (
+              order.status === 'Ready'
+            ) {
+
+              <div class="ready-box">
+
+                <div>
+
+                  <mat-icon>
+                    check_circle
+                  </mat-icon>
+
+                  <div>
+
+                    <strong>
+                      Order Ready
+                    </strong>
+
+                    <span>
+                      Waiting for Rider pickup
+                    </span>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            }
+
+          </div>
+
+        </div>
+
+      }
+
+    </div>
+
+  }
+
+</div>

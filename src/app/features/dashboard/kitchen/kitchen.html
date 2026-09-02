@@ -1,0 +1,164 @@
+<div class="kitchen-board">
+
+    <!-- NEW -->
+    <div class="column">
+        <div class="column-header">
+            <div>
+                <h3>ការបញ្ជាទិញថ្មី</h3>
+                <span>/ NEW</span>
+            </div>
+
+            <div class="status-badge active">
+                4 ACTIVE
+            </div>
+        </div>
+
+        @for(order of newOrders; track order.id){
+
+        <mat-card class="order-card">
+
+            <div class="card-top">
+               <h2>#{{order.id}}</h2>
+
+                <div class="time-box">
+                    <span>{{order.time}}</span>
+                    <small>DINE-IN</small>
+                </div>
+            </div>
+
+            <p class="table-no">តុលេខ: {{order.table}}</p>
+
+            @for(item of order.items; track $index){
+            <div class="food-item">
+
+                <mat-icon>radio_button_unchecked</mat-icon>
+
+                <div>
+                    <h4>{{item.name}}</h4>
+
+                    @if(item.note){
+                    <span class="tag">
+                        {{item.note}}
+                    </span>
+                    }
+                </div>
+
+            </div>
+            }
+
+            <button mat-flat-button color="primary" class="action-btn">
+                START PREPARING
+            </button>
+
+        </mat-card>
+
+        }
+
+    </div>
+
+    <!-- PREPARING -->
+    <div class="column">
+
+        <div class="column-header">
+            <div>
+                <h3>កំពុងចម្អិន</h3>
+                <span>/ PREPARING</span>
+            </div>
+
+            <div class="status-badge working">
+                2 WORKING
+            </div>
+        </div>
+
+        @for(order of preparingOrders; track order.id){
+
+        <mat-card class="order-card preparing-card">
+
+            <div class="card-top">
+                <h2>#{{order.id}}</h2>
+
+                <div class="progress-time">
+                    {{order.time}}
+                </div>
+            </div>
+
+            <p class="table-no">តុលេខ: {{order.table}}</p>
+
+            <div class="food-item">
+                <mat-icon>radio_button_unchecked</mat-icon>
+
+                <div>
+                    <h4>{{order.items[0].name}}</h4>
+                    <small>Steam Veg instead of rice</small>
+                </div>
+            </div>
+
+            <mat-progress-bar
+                mode="determinate"
+                value="75">
+            </mat-progress-bar>
+
+            <button mat-flat-button color="primary" class="action-btn">
+                MARK READY
+            </button>
+
+        </mat-card>
+
+        }
+
+    </div>
+
+    <!-- READY -->
+    <div class="column">
+
+        <div class="column-header">
+            <div>
+                <h3>រួចរាល់</h3>
+                <span>/ READY</span>
+            </div>
+
+            <div class="status-badge waiting">
+                1 WAITING
+            </div>
+        </div>
+
+        @for(order of readyOrders; track order.id){
+
+        <mat-card class="order-card">
+
+            <div class="card-top ready-top">
+
+                <div>
+                    <h2>#{{order.id}}</h2>
+                    <p class="table-no">តុលេខ: {{order.table}}</p>
+                </div>
+
+                <button mat-icon-button>
+                    <mat-icon color="primary">
+                        check_circle
+                    </mat-icon>
+                </button>
+
+            </div>
+
+            <div class="ready-item">
+
+                <h3>{{order.items[0].name}}</h3>
+
+                <small>
+                    Plated on hot plates
+                </small>
+
+            </div>
+
+            <button mat-flat-button color="primary" class="action-btn">
+                MARK SERVED
+            </button>
+
+        </mat-card>
+
+        }
+
+    </div>
+
+</div>

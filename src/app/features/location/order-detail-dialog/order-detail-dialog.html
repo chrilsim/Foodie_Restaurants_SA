@@ -1,0 +1,251 @@
+<div class="dialog">
+  <div
+    class="dialog-header"
+    mat-dialog-title
+  >
+
+    <div>
+
+      <span>
+        ORDER
+      </span>
+
+      <h2>
+
+        #{{ order._id.slice(-8).toUpperCase() }}
+
+      </h2>
+
+      <p>
+
+        {{ formatDate(order.createdAt) }}
+
+      </p>
+
+    </div>
+
+
+    <button
+      mat-icon-button
+      mat-dialog-close
+    >
+
+      <mat-icon>
+        close
+      </mat-icon>
+
+    </button>
+
+  </div>
+
+  <mat-dialog-content>
+
+
+    <!-- STATUS -->
+
+    <div class="status-box">
+
+      <div>
+
+        <span>
+          Order Status
+        </span>
+
+        <strong>
+          {{ order.status }}
+        </strong>
+
+      </div>
+
+
+      <div>
+
+        <span>
+          Payment
+        </span>
+
+        <strong>
+          {{ getPaymentText(
+            order.paymentMethod
+          ) }}
+        </strong>
+
+      </div>
+
+
+      <div>
+
+        <span>
+          Payment Status
+        </span>
+
+        <strong
+          [class.paid]="
+            order.paymentStatus === 'Paid'
+          "
+        >
+
+          {{ order.paymentStatus }}
+
+        </strong>
+
+      </div>
+
+    </div>
+
+    <h3 class="section-title">
+
+      មុខម្ហូប
+
+      <span>
+        {{ getItemCount() }} items
+      </span>
+
+    </h3>
+
+
+    <div class="items-list">
+
+      @for (
+        item of order.items;
+        track item.productId
+      ) {
+
+        <div class="item">
+
+          <img
+            [src]="item.image"
+            [alt]="item.productName"
+          >
+
+
+          <div class="item-info">
+
+            <h4>
+              {{ item.productName }}
+            </h4>
+
+            <p>
+
+              {{ item.quantity }} ×
+
+              {{
+                item.price
+                | currency:'USD'
+              }}
+
+            </p>
+
+          </div>
+
+
+          <strong>
+
+            {{
+              item.subtotal
+              | currency:'USD'
+            }}
+
+          </strong>
+
+        </div>
+
+      }
+
+    </div>
+
+    @if (order.deliveryAddress) {
+
+      <div class="address-section">
+
+        <h3>
+          <mat-icon>
+            location_on
+          </mat-icon>
+
+          អាសយដ្ឋានដឹកជញ្ជូន
+        </h3>
+
+
+        @if (
+          typeof order.deliveryAddress === 'object'
+        ) {
+
+          <p>
+
+            <strong>
+              {{ order.deliveryAddress.label }}
+            </strong>
+
+            <br>
+
+            {{ order.deliveryAddress.address }},
+            {{ order.deliveryAddress.city }},
+            {{ order.deliveryAddress.province }}
+
+            <br>
+
+            {{ order.deliveryAddress.receiverName }}
+
+            •
+            {{ order.deliveryAddress.phone }}
+
+          </p>
+
+        }
+
+      </div>
+
+    }
+
+    <div class="totals">
+
+      <div>
+
+        <span>
+          ចំនួនទំនិញ
+        </span>
+
+        <strong>
+          {{ getItemCount() }}
+        </strong>
+
+      </div>
+
+
+      <div>
+
+        <span>
+          សរុប
+        </span>
+
+        <strong>
+
+          {{
+            order.totalAmount
+            | currency:'USD'
+          }}
+
+        </strong>
+
+      </div>
+
+    </div>
+
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+
+    <button
+      mat-flat-button
+      mat-dialog-close
+    >
+
+      បិទ
+
+    </button>
+
+  </mat-dialog-actions>
+
+</div>

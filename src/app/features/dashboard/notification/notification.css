@@ -1,0 +1,582 @@
+.notification-dialog {
+
+  width: 100%;
+
+  max-height: 82vh;
+
+  display: flex;
+
+  flex-direction: column;
+
+  overflow: hidden;
+
+  background: #ffffff;
+
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.dialog-header {
+
+  padding: 18px 20px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  border-bottom: 1px solid #edf1f5;
+
+}
+
+
+.header-title {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+}
+
+
+.bell-icon {
+
+  width: 43px;
+
+  height: 43px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 11px;
+
+  background: #eff6ff;
+
+  color: #2563eb;
+
+}
+
+
+.bell-icon mat-icon {
+
+  font-size: 21px;
+
+}
+
+
+.header-title h2 {
+
+  margin: 0;
+
+  color: #111827;
+
+  font-size: 16px;
+
+  font-weight: 800;
+
+}
+
+
+.header-title p {
+
+  margin: 3px 0 0;
+
+  color: #94a3b8;
+
+  font-size: 10px;
+
+}
+
+
+/* =====================================================
+   ACTION BAR
+===================================================== */
+
+.action-bar {
+
+  min-height: 48px;
+
+  padding: 0 20px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  border-bottom: 1px solid #f1f5f9;
+
+}
+
+
+.action-bar > span {
+
+  color: #64748b;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+}
+
+
+.action-bar button {
+
+  height: 34px;
+
+  font-size: 10px;
+
+}
+
+
+.action-bar button mat-icon {
+
+  width: 16px;
+
+  height: 16px;
+
+  margin-right: 4px;
+
+  font-size: 16px;
+
+}
+
+
+/* =====================================================
+   LIST
+===================================================== */
+
+.notification-list {
+
+  flex: 1;
+
+  max-height: 480px;
+
+  overflow-y: auto;
+
+}
+
+
+.notification-list::-webkit-scrollbar {
+
+  width: 6px;
+
+}
+
+
+.notification-list::-webkit-scrollbar-thumb {
+
+  border-radius: 10px;
+
+  background: #cbd5e1;
+
+}
+
+
+.notification-item {
+
+  min-height: 86px;
+
+  padding: 14px 18px;
+
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 12px;
+
+  cursor: pointer;
+
+  border-bottom: 1px solid #f1f5f9;
+
+  transition: .18s ease;
+
+}
+
+
+.notification-item:hover {
+
+  background: #f8fafc;
+
+}
+
+
+.notification-item.unread {
+
+  background: #f7fbff;
+
+}
+
+
+.notification-item.unread:hover {
+
+  background: #eff6ff;
+
+}
+
+
+/* =====================================================
+   ICON
+===================================================== */
+
+.notification-icon {
+
+  width: 40px;
+
+  height: 40px;
+
+  min-width: 40px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 10px;
+
+}
+
+
+.notification-icon mat-icon {
+
+  width: 19px;
+
+  height: 19px;
+
+  font-size: 19px;
+
+}
+
+
+.notification-icon.new_order {
+
+  background: #eff6ff;
+
+  color: #2563eb;
+
+}
+
+
+.notification-icon.new_booking {
+
+  background: #f5f3ff;
+
+  color: #7c3aed;
+
+}
+
+
+.notification-icon.low_stock {
+
+  background: #fff7ed;
+
+  color: #ea580c;
+
+}
+
+
+.notification-icon.out_of_stock {
+
+  background: #fef2f2;
+
+  color: #dc2626;
+
+}
+
+
+.notification-icon.order_ready {
+
+  background: #ecfdf5;
+
+  color: #16a34a;
+
+}
+
+
+.notification-icon.delivery_update {
+
+  background: #f0fdfa;
+
+  color: #0f766e;
+
+}
+
+
+.notification-icon.payment_received {
+
+  background: #ecfdf5;
+
+  color: #059669;
+
+}
+
+
+/* =====================================================
+   CONTENT
+===================================================== */
+
+.notification-content {
+
+  flex: 1;
+
+  min-width: 0;
+
+}
+
+
+.title-row {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+}
+
+
+.title-row strong {
+
+  color: #1e293b;
+
+  font-size: 11px;
+
+  font-weight: 750;
+
+}
+
+
+.notification-content p {
+
+  margin: 5px 0;
+
+  color: #64748b;
+
+  font-size: 10px;
+
+  line-height: 1.45;
+
+}
+
+
+.notification-content small {
+
+  color: #94a3b8;
+
+  font-size: 9px;
+
+}
+
+
+/* =====================================================
+   UNREAD
+===================================================== */
+
+.unread-dot {
+
+  width: 6px;
+
+  height: 6px;
+
+  min-width: 6px;
+
+  border-radius: 50%;
+
+  background: #2563eb;
+
+}
+
+
+/* =====================================================
+   DELETE
+===================================================== */
+
+.delete-btn {
+
+  width: 30px !important;
+
+  height: 30px !important;
+
+  min-width: 30px !important;
+
+  color: #cbd5e1;
+
+}
+
+
+.delete-btn:hover {
+
+  color: #ef4444;
+
+  background: #fef2f2;
+
+}
+
+
+.delete-btn mat-icon {
+
+  width: 17px;
+
+  height: 17px;
+
+  font-size: 17px;
+
+}
+
+
+/* =====================================================
+   EMPTY
+===================================================== */
+
+.empty {
+
+  padding: 65px 20px;
+
+  text-align: center;
+
+}
+
+
+.empty-icon {
+
+  width: 62px;
+
+  height: 62px;
+
+  margin: 0 auto 13px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #f8fafc;
+
+  color: #cbd5e1;
+
+}
+
+
+.empty-icon mat-icon {
+
+  font-size: 30px;
+
+}
+
+
+.empty h3 {
+
+  margin: 0;
+
+  color: #334155;
+
+  font-size: 12px;
+
+}
+
+
+.empty p {
+
+  margin: 5px 0 0;
+
+  color: #94a3b8;
+
+  font-size: 10px;
+
+}
+
+
+/* =====================================================
+   LOADING
+===================================================== */
+
+.loading {
+
+  min-height: 220px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 8px;
+
+  color: #94a3b8;
+
+  font-size: 10px;
+
+}
+
+
+.loading mat-icon {
+
+  animation:
+    spin 1s linear infinite;
+
+}
+
+
+@keyframes spin {
+
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.dialog-footer {
+
+  padding: 10px;
+
+  border-top: 1px solid #edf1f5;
+
+  text-align: center;
+
+}
+
+
+.dialog-footer button {
+
+  width: 100%;
+
+  font-size: 10px;
+
+}
+
+
+.dialog-footer mat-icon {
+
+  width: 16px;
+
+  height: 16px;
+
+  margin-left: 4px;
+
+  font-size: 16px;
+
+  vertical-align: middle;
+
+}

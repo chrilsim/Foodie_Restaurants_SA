@@ -1,0 +1,303 @@
+<div class="map-dialog">
+  <div class="map-header">
+    <div class="header-left">
+
+      <div class="map-icon">
+
+        <mat-icon>
+          map
+        </mat-icon>
+
+      </div>
+
+
+      <div class="header-title">
+
+        <h2>
+          Delivery Tracking
+        </h2>
+
+        <p>
+          Rider → Customer
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <button
+      mat-icon-button
+      mat-dialog-close
+      type="button"
+      class="close-btn">
+
+      <mat-icon>
+        close
+      </mat-icon>
+
+    </button>
+
+  </div>
+
+  <div class="delivery-info">
+    <div class="location-card">
+
+      <div class="location-avatar rider-avatar">
+
+        <mat-icon>
+          two_wheeler
+        </mat-icon>
+
+      </div>
+
+
+      <div class="location-text">
+
+        <span>
+          Rider
+        </span>
+
+        <strong>
+          Current Location
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- ARROW -->
+
+    <div class="direction-arrow">
+
+      <mat-icon>
+        arrow_forward
+      </mat-icon>
+
+    </div>
+
+
+    <!-- CUSTOMER -->
+
+    <div class="location-card">
+
+      <div class="location-avatar customer-avatar">
+
+        <mat-icon>
+          location_on
+        </mat-icon>
+
+      </div>
+
+
+      <div class="location-text">
+
+        <span>
+          Customer
+        </span>
+
+        <strong>
+          {{
+            data?.delivery
+              ?.orderId
+              ?.userId
+              ?.fullName
+            || 'Customer'
+          }}
+        </strong>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="route-info">
+
+    <!-- DISTANCE -->
+
+    <div class="route-stat">
+
+      <div class="stat-icon">
+
+        <mat-icon>
+          near_me
+        </mat-icon>
+
+      </div>
+
+
+      <div>
+
+        <span>
+          Distance
+        </span>
+
+        <strong>
+          {{ distance }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- TIME -->
+
+    <div class="route-stat">
+
+      <div class="stat-icon">
+
+        <mat-icon>
+          schedule
+        </mat-icon>
+
+      </div>
+
+
+      <div>
+
+        <span>
+          Estimated Time
+        </span>
+
+        <strong>
+          {{ duration }}
+        </strong>
+
+      </div>
+
+    </div>
+
+  </div>
+  <div class="map-container">
+
+    <div
+      id="rider-map"
+      class="rider-map">
+
+    </div>
+
+
+    <!-- LOADING -->
+
+    @if (isMapLoading) {
+
+      <div class="map-loading">
+
+        <div class="loading-spinner">
+        </div>
+
+        <span>
+          Loading Google Maps...
+        </span>
+
+      </div>
+
+    }
+
+
+    <!-- ERROR -->
+
+    @if (
+      !isMapLoading &&
+      mapError
+    ) {
+
+      <div class="map-error">
+
+        <mat-icon>
+          error_outline
+        </mat-icon>
+
+        <span>
+          {{ mapError }}
+        </span>
+
+      </div>
+
+    }
+
+  </div>
+
+  <div class="customer-card">
+
+    <div class="customer-avatar">
+
+      <mat-icon>
+        person
+      </mat-icon>
+
+    </div>
+
+
+    <div class="customer-info">
+
+      <strong>
+
+        {{
+          data?.delivery
+            ?.orderId
+            ?.userId
+            ?.fullName
+          || 'Customer'
+        }}
+
+      </strong>
+
+
+      <span>
+
+        {{
+          data?.delivery
+            ?.orderId
+            ?.userId
+            ?.email
+          || 'No email'
+        }}
+
+      </span>
+
+    </div>
+
+
+    <div class="status">
+
+      <span class="status-dot">
+      </span>
+
+      {{ data?.delivery?.status }}
+
+    </div>
+
+  </div>
+  <div class="map-footer">
+
+    <button
+      mat-stroked-button
+      mat-dialog-close
+      type="button">
+
+      Close
+
+    </button>
+
+
+    <button
+      mat-raised-button
+      type="button"
+      class="google-btn"
+      (click)="openGoogleMaps()">
+
+      <mat-icon>
+        directions
+      </mat-icon>
+
+      Open in Google Maps
+
+    </button>
+
+  </div>
+
+</div>

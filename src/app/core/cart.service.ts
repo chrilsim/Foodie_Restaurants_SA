@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-
+import { interfaceitemenu } from '../interface/menuitem';
 export type DrawerType = 'cart' | 'menu' | null;
 
 @Injectable({
   providedIn: 'root'
 })
-export class DrawerService {
+export class cartService {
 
   private drawerSubject = new BehaviorSubject<DrawerType>(null);
-
  drawer$ = this.drawerSubject.asObservable();
+
 
   open(type: 'menu' | 'cart') {
     this.drawerSubject.next(type);
@@ -19,4 +19,6 @@ export class DrawerService {
   close() {
     this.drawerSubject.next(null);
   }
+
+ 
 }

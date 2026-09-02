@@ -1,0 +1,696 @@
+<div class="table-management">
+  <div class="page-header">
+
+    <div class="header-content">
+
+      <div class="header-icon">
+        <mat-icon>table_restaurant</mat-icon>
+      </div>
+
+      <div>
+        <h1>Table Management</h1>
+
+        <p>
+          Manage restaurant tables and seating areas
+        </p>
+      </div>
+
+    </div>
+
+    <button
+      mat-raised-button
+      color="primary"
+      class="add-table-btn"
+      (click)="openAdd()">
+
+      <mat-icon>add</mat-icon>
+
+      Add Table
+
+    </button>
+
+  </div>
+
+  <div class="stats-grid">
+
+    <!-- TOTAL -->
+
+    <div class="stat-card total">
+
+      <div class="stat-icon">
+        <mat-icon>table_restaurant</mat-icon>
+      </div>
+
+      <div class="stat-info">
+
+        <span>Total Tables</span>
+
+        <strong>
+          {{ totalTables }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <!-- AVAILABLE -->
+
+    <div class="stat-card available">
+
+      <div class="stat-icon">
+        <mat-icon>check_circle</mat-icon>
+      </div>
+
+      <div class="stat-info">
+
+        <span>Available</span>
+
+        <strong>
+          {{ getTableCount('available') }}
+        </strong>
+
+      </div>
+
+    </div>
+
+    <div class="stat-card occupied">
+
+      <div class="stat-icon">
+        <mat-icon>event_seat</mat-icon>
+      </div>
+
+      <div class="stat-info">
+
+        <span>Occupied</span>
+
+        <strong>
+          {{ getTableCount('occupied') }}
+        </strong>
+
+      </div>
+
+    </div>
+    <div class="stat-card maintenance">
+
+      <div class="stat-icon">
+        <mat-icon>build</mat-icon>
+      </div>
+
+      <div class="stat-info">
+
+        <span>Maintenance</span>
+
+        <strong>
+          {{ getTableCount('maintenance') }}
+        </strong>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="filter-bar">
+
+    <!-- SEARCH -->
+
+    <mat-form-field
+      appearance="outline"
+      class="search-field">
+
+      <mat-label>
+        Search table
+      </mat-label>
+
+      <mat-icon matPrefix>
+        search
+      </mat-icon>
+
+      <input
+        matInput
+        [(ngModel)]="searchText"
+        (input)="applyFilter()"
+        placeholder="Table number or area">
+
+      @if (searchText) {
+
+        <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          (click)="clearSearch()">
+
+          <mat-icon>
+            close
+          </mat-icon>
+
+        </button>
+
+      }
+
+    </mat-form-field>
+
+    <mat-form-field
+      appearance="outline"
+      class="status-filter">
+
+      <mat-label>
+        Status
+      </mat-label>
+
+      <mat-select
+        [(ngModel)]="selectedStatus"
+        (selectionChange)="applyFilter()">
+
+        <mat-option value="All">
+          All Status
+        </mat-option>
+
+        <mat-option value="available">
+          Available
+        </mat-option>
+
+        <mat-option value="occupied">
+          Occupied
+        </mat-option>
+
+        <mat-option value="maintenance">
+          Maintenance
+        </mat-option>
+
+      </mat-select>
+
+    </mat-form-field>
+
+
+    <!-- RESET -->
+
+    <button
+      mat-stroked-button
+      class="reset-btn"
+      type="button"
+      (click)="resetFilter()">
+
+      <mat-icon>
+        filter_alt_off
+      </mat-icon>
+
+      Reset
+
+    </button>
+
+  </div>
+
+  <div class="results-info">
+
+    <div>
+
+      <strong>
+        Restaurant Tables
+      </strong>
+
+      <span>
+        Showing {{ filteredTables.length }}
+        of {{ tables.length }} tables
+      </span>
+
+    </div>
+
+  </div>
+
+  @if (isLoading) {
+
+    <div class="loading">
+
+      <mat-icon class="loading-icon">
+        sync
+      </mat-icon>
+
+      <span>
+        Loading tables...
+      </span>
+
+    </div>
+
+  }
+
+
+  @else {
+
+    <div class="table-container">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th class="number-col">
+              #
+            </th>
+
+            <th>
+              Table
+            </th>
+
+            <th>
+              Seats
+            </th>
+
+            <th>
+              Area
+            </th>
+
+            <th>
+              Status
+            </th>
+
+            <th class="action-col">
+              Actions
+            </th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          @for (
+            table of filteredTables;
+            track table._id;
+            let i = $index
+          ) {
+
+            <tr>
+
+              <td class="number-cell">
+                {{ i + 1 }}
+              </td>
+
+
+              <!-- TABLE -->
+
+              <td>
+
+                <div class="table-name">
+
+                  <div class="table-icon">
+                    <mat-icon>
+                      table_restaurant
+                    </mat-icon>
+                  </div>
+
+                  <div>
+
+                    <strong>
+                      {{ table.tableNumber }}
+                    </strong>
+
+                    <small>
+                      Restaurant Table
+                    </small>
+
+                  </div>
+
+                </div>
+
+              </td>
+
+
+              <!-- SEATS -->
+
+              <td>
+
+                <div class="seats">
+
+                  <mat-icon>
+                    people
+                  </mat-icon>
+
+                  <span>
+                    {{ table.seats }}
+                  </span>
+
+                  <small>
+                    seats
+                  </small>
+
+                </div>
+
+              </td>
+
+
+              <!-- AREA -->
+
+              <td>
+
+                <span class="area-badge">
+
+                  <mat-icon>
+                    location_on
+                  </mat-icon>
+
+                  {{ table.area }}
+
+                </span>
+
+              </td>
+
+
+              <!-- STATUS -->
+
+              <td>
+
+                <span
+                  class="status"
+                  [class.available]="
+                    table.status === 'available'
+                  "
+                  [class.occupied]="
+                    table.status === 'occupied'
+                  "
+                  [class.maintenance]="
+                    table.status === 'maintenance'
+                  ">
+
+                  <span class="status-dot"></span>
+
+                  {{ table.status }}
+
+                </span>
+
+              </td>
+
+              <td>
+
+                <div class="actions">
+
+                  <button
+                    mat-icon-button
+                    class="edit-btn"
+                    type="button"
+                    (click)="openEdit(table)"
+                    title="Edit">
+
+                    <mat-icon>
+                      edit
+                    </mat-icon>
+
+                  </button>
+
+
+                  <button
+                    mat-icon-button
+                    class="delete-btn"
+                    type="button"
+                    (click)="deleteTable(table)"
+                    title="Delete">
+
+                    <mat-icon>
+                      delete
+                    </mat-icon>
+
+                  </button>
+
+                </div>
+
+              </td>
+
+            </tr>
+
+          }
+
+          @if (
+            filteredTables.length === 0
+          ) {
+
+            <tr>
+
+              <td
+                colspan="6"
+                class="empty">
+
+                <mat-icon>
+                  table_restaurant
+                </mat-icon>
+
+                <strong>
+                  No tables found
+                </strong>
+
+                <span>
+                  Try changing your search or filter.
+                </span>
+
+              </td>
+
+            </tr>
+
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  }
+
+  @if (showModal) {
+
+    <div
+      class="modal-overlay"
+      (click)="closeModal()">
+
+
+      <div
+        class="modal"
+        (click)="$event.stopPropagation()">
+
+        <div class="modal-header">
+
+          <div class="modal-title">
+
+            <div class="modal-icon">
+
+              <mat-icon>
+                {{ isEditMode
+                  ? 'edit'
+                  : 'add_business'
+                }}
+              </mat-icon>
+
+            </div>
+
+            <div>
+
+              <h2>
+
+                {{
+                  isEditMode
+                    ? 'Update Table'
+                    : 'Add New Table'
+                }}
+
+              </h2>
+
+              <p>
+
+                {{
+                  isEditMode
+                    ? 'Update table information'
+                    : 'Create a new restaurant table'
+                }}
+
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <button
+            mat-icon-button
+            class="close-btn"
+            type="button"
+            (click)="closeModal()">
+
+            <mat-icon>
+              close
+            </mat-icon>
+
+          </button>
+
+        </div>
+
+
+        <!-- MODAL BODY -->
+
+        <div class="modal-body">
+
+
+          <!-- TABLE NUMBER -->
+
+          <mat-form-field
+            appearance="outline"
+            class="full-width">
+
+            <mat-label>
+              Table Number
+            </mat-label>
+
+            <mat-icon matPrefix>
+              table_restaurant
+            </mat-icon>
+
+            <input
+              matInput
+              [(ngModel)]="form.tableNumber"
+              placeholder="T01">
+
+          </mat-form-field>
+
+
+          <!-- SEATS -->
+
+          <mat-form-field
+            appearance="outline"
+            class="full-width">
+
+            <mat-label>
+              Number of Seats
+            </mat-label>
+
+            <mat-icon matPrefix>
+              people
+            </mat-icon>
+
+            <input
+              matInput
+              type="number"
+              min="1"
+              [(ngModel)]="form.seats"
+              placeholder="4">
+
+          </mat-form-field>
+
+
+          <!-- AREA -->
+
+          <mat-form-field
+            appearance="outline"
+            class="full-width">
+
+            <mat-label>
+              Area
+            </mat-label>
+
+            <mat-icon matPrefix>
+              location_on
+            </mat-icon>
+
+            <mat-select
+              [(ngModel)]="form.area">
+
+              <mat-option value="Indoor">
+                Indoor
+              </mat-option>
+
+              <mat-option value="Outdoor">
+                Outdoor
+              </mat-option>
+
+              <mat-option value="VIP">
+                VIP
+              </mat-option>
+
+              <mat-option value="Private">
+                Private
+              </mat-option>
+
+            </mat-select>
+
+          </mat-form-field>
+
+
+          <!-- STATUS -->
+
+          <mat-form-field
+            appearance="outline"
+            class="full-width">
+
+            <mat-label>
+              Status
+            </mat-label>
+
+            <mat-icon matPrefix>
+              toggle_on
+            </mat-icon>
+
+            <mat-select
+              [(ngModel)]="form.status">
+
+              <mat-option value="available">
+                Available
+              </mat-option>
+
+              <mat-option value="occupied">
+                Occupied
+              </mat-option>
+
+              <mat-option value="maintenance">
+                Maintenance
+              </mat-option>
+
+            </mat-select>
+
+          </mat-form-field>
+
+        </div>
+
+
+        <!-- MODAL FOOTER -->
+
+        <div class="modal-footer">
+
+          <button
+            mat-stroked-button
+            type="button"
+            class="cancel-btn"
+            (click)="closeModal()">
+
+            Cancel
+
+          </button>
+
+
+          <button
+            mat-raised-button
+            color="primary"
+            type="button"
+            class="save-btn"
+            (click)="saveTable()">
+
+            <mat-icon>
+              {{ isEditMode ? 'save' : 'add' }}
+            </mat-icon>
+
+            {{
+              isEditMode
+                ? 'Update Table'
+                : 'Create Table'
+            }}
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  }
+
+</div>

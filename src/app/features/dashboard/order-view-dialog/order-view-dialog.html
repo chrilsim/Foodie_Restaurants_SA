@@ -1,0 +1,752 @@
+<div class="dialog-container">
+  <div class="dialog-header">
+
+    <div class="dialog-title">
+
+      <div class="dialog-icon">
+
+        <mat-icon>
+          {{ getIcon() }}
+        </mat-icon>
+
+      </div>
+
+      <div>
+
+        <h2>
+          {{ getTitle() }}
+        </h2>
+
+        <p>
+          Order
+          #{{ order?._id?.slice(-8)?.toUpperCase() }}
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <button
+      mat-icon-button
+      type="button"
+      class="close-button"
+      (click)="close()"
+    >
+
+      <mat-icon>
+        close
+      </mat-icon>
+
+    </button>
+
+  </div>
+
+  <div class="dialog-body">
+
+    <div class="order-summary">
+
+      <div>
+
+        <span class="label">
+          ORDER ID
+        </span>
+
+        <strong>
+
+          #{{ order?._id?.slice(-8)?.toUpperCase() }}
+
+        </strong>
+
+      </div>
+
+
+      <div class="summary-right">
+
+        <span
+          class="status"
+          [ngClass]="
+            getStatusClass(
+              order?.status
+            )
+          "
+        >
+
+          <span class="status-dot"></span>
+
+          {{ order?.status || 'Unknown' }}
+
+        </span>
+
+
+        <span class="order-date">
+
+          {{
+            order?.createdAt
+            | date:'MMM d, y • h:mm a'
+          }}
+
+        </span>
+
+      </div>
+
+    </div>
+
+    @if (viewType === 'order') {
+
+
+      <!-- ITEMS -->
+
+      <section class="section">
+
+        <div class="section-header">
+
+          <div class="section-heading">
+
+            <mat-icon>
+              restaurant
+            </mat-icon>
+
+            <span>
+              Order Items
+            </span>
+
+          </div>
+
+          <span class="item-count">
+
+            {{ getItemCount() }} items
+
+          </span>
+
+        </div>
+
+
+        @if (
+          order?.items?.length
+        ) {
+
+          <div class="items-list">
+
+            @for (
+              item of order.items;
+              track $index
+            ) {
+
+              <div class="item-row">
+
+
+                <div class="item-main">
+
+                  <div class="item-image">
+
+                    <mat-icon>
+                      restaurant
+                    </mat-icon>
+
+                  </div>
+
+
+                  <div class="item-info">
+
+                    <strong>
+
+                      {{
+                        item.productId?.name
+                        || item.name
+                        || 'Product'
+                      }}
+
+                    </strong>
+
+                    <span>
+
+                      Qty:
+                      {{ item.quantity || 1 }}
+
+                    </span>
+
+                  </div>
+
+                </div>
+
+
+                <div class="item-price">
+
+                  {{
+                    item.subtotal || 0
+                    | currency:'USD'
+                  }}
+
+                </div>
+
+              </div>
+
+            }
+
+          </div>
+
+        } @else {
+
+          <div class="empty-small">
+
+            No items available
+
+          </div>
+
+        }
+
+      </section>
+
+
+
+      <!-- TOTAL -->
+
+      <section class="total-section">
+
+        <div class="total-row">
+
+          <span>
+            Items Subtotal
+          </span>
+
+          <strong>
+
+            {{
+              getItemsSubtotal()
+              | currency:'USD'
+            }}
+
+          </strong>
+
+        </div>
+
+
+        @if (order?.deliveryFee != null) {
+
+          <div class="total-row">
+
+            <span>
+              Delivery Fee
+            </span>
+
+            <strong>
+
+              {{
+                order.deliveryFee
+                | currency:'USD'
+              }}
+
+            </strong>
+
+          </div>
+
+        }
+
+
+        <div class="total-divider"></div>
+
+
+        <div class="grand-total">
+
+          <span>
+            Total Amount
+          </span>
+
+          <strong>
+
+            {{
+              order?.totalAmount || 0
+              | currency:'USD'
+            }}
+
+          </strong>
+
+        </div>
+
+      </section>
+
+    }
+    @if (viewType === 'customer') {
+
+      <section class="section">
+
+        <div class="section-header">
+
+          <div class="section-heading">
+
+            <mat-icon>
+              person
+            </mat-icon>
+
+            <span>
+              Customer
+            </span>
+
+          </div>
+
+        </div>
+
+
+        @if (order?.userId) {
+
+          <div class="profile-card">
+
+            <div class="profile-avatar">
+
+              <mat-icon>
+                person
+              </mat-icon>
+
+            </div>
+
+
+            <div class="profile-info">
+
+              <strong>
+
+                {{
+                  order.userId?.fullName
+                  || 'Unknown Customer'
+                }}
+
+              </strong>
+
+              <span>
+
+                {{
+                  order.userId?.email
+                  || 'No email'
+                }}
+
+              </span>
+
+              @if (
+                order.userId?.phone
+              ) {
+
+                <span>
+
+                  {{ order.userId.phone }}
+
+                </span>
+
+              }
+
+            </div>
+
+          </div>
+
+        } @else {
+
+          <div class="empty-small">
+            Customer information unavailable
+          </div>
+
+        }
+
+      </section>
+
+    }
+    @if (viewType === 'address') {
+
+      <section class="section">
+
+        <div class="section-header">
+
+          <div class="section-heading">
+
+            <mat-icon>
+              location_on
+            </mat-icon>
+
+            <span>
+              Delivery Address
+            </span>
+
+          </div>
+
+        </div>
+
+
+        @if (
+          order?.deliveryAddress
+        ) {
+
+          <div class="address-card">
+
+            <div class="address-icon">
+
+              <mat-icon>
+                location_on
+              </mat-icon>
+
+            </div>
+
+
+            <div class="address-info">
+
+              @if (
+                order.deliveryAddress?.label
+              ) {
+
+                <strong>
+
+                  {{
+                    order.deliveryAddress.label
+                  }}
+
+                </strong>
+
+              }
+
+
+              <p>
+
+                {{
+                  order.deliveryAddress?.address
+                  || 'Address not available'
+                }}
+
+              </p>
+
+
+              @if (
+                order.deliveryAddress?.receiverName
+              ) {
+
+                <span>
+
+                  Receiver:
+                  {{
+                    order.deliveryAddress.receiverName
+                  }}
+
+                </span>
+
+              }
+
+
+              @if (
+                order.deliveryAddress?.phone
+              ) {
+
+                <span>
+
+                  Phone:
+                  {{
+                    order.deliveryAddress.phone
+                  }}
+
+                </span>
+
+              }
+
+
+              @if (
+                order.deliveryAddress?.latitude != null
+                &&
+                order.deliveryAddress?.longitude != null
+              ) {
+
+                <span class="coordinates">
+
+                  <mat-icon>
+                    my_location
+                  </mat-icon>
+
+                  {{
+                    order.deliveryAddress.latitude
+                  }},
+                  {{
+                    order.deliveryAddress.longitude
+                  }}
+
+                </span>
+
+              }
+
+            </div>
+
+          </div>
+
+        } @else {
+
+          <div class="empty-state">
+
+            <mat-icon>
+              location_off
+            </mat-icon>
+
+            <strong>
+              No address
+            </strong>
+
+            <span>
+              Delivery address is not available.
+            </span>
+
+          </div>
+
+        }
+
+      </section>
+
+    }
+
+
+    @if (viewType === 'payment') {
+
+      <section class="section">
+
+        <div class="section-header">
+
+          <div class="section-heading">
+
+            <mat-icon>
+              payments
+            </mat-icon>
+
+            <span>
+              Payment Details
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="payment-grid">
+
+
+          <div class="payment-card">
+
+            <span>
+              Payment Method
+            </span>
+
+            <div>
+
+              <mat-icon>
+                account_balance_wallet
+              </mat-icon>
+
+              <strong>
+
+                {{
+                  order?.paymentMethod
+                  || 'N/A'
+                }}
+
+              </strong>
+
+            </div>
+
+          </div>
+
+
+
+          <div class="payment-card">
+
+            <span>
+              Payment Status
+            </span>
+
+            <div>
+
+              <mat-icon>
+                verified
+              </mat-icon>
+
+              <strong>
+
+                {{
+                  order?.paymentStatus
+                  || 'N/A'
+                }}
+
+              </strong>
+
+            </div>
+
+          </div>
+
+
+
+          <div class="payment-card amount">
+
+            <span>
+              Total Amount
+            </span>
+
+            <div>
+
+              <mat-icon>
+                attach_money
+              </mat-icon>
+
+              <strong>
+
+                {{
+                  order?.totalAmount || 0
+                  | currency:'USD'
+                }}
+
+              </strong>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    }
+
+    @if (viewType === 'rider') {
+
+      <section class="section">
+
+        <div class="section-header">
+
+          <div class="section-heading">
+
+            <mat-icon>
+              two_wheeler
+            </mat-icon>
+
+            <span>
+              Rider Details
+            </span>
+
+          </div>
+
+        </div>
+
+
+        @if (
+          delivery?.riderId
+        ) {
+
+          <div class="profile-card rider-profile">
+
+            <div class="rider-avatar">
+
+              <mat-icon>
+                two_wheeler
+              </mat-icon>
+
+            </div>
+
+
+            <div class="profile-info">
+
+              <strong>
+
+                {{
+                  delivery.riderId?.fullName
+                  || 'Rider'
+                }}
+
+              </strong>
+
+
+              @if (
+                delivery.riderId?.email
+              ) {
+
+                <span>
+
+                  {{
+                    delivery.riderId.email
+                  }}
+
+                </span>
+
+              }
+
+
+              @if (
+                delivery.riderId?.phone
+              ) {
+
+                <span>
+
+                  {{
+                    delivery.riderId.phone
+                  }}
+
+                </span>
+
+              }
+
+
+              <div class="rider-status">
+
+                Status:
+
+                <strong>
+
+                  {{
+                    delivery.status
+                    || 'N/A'
+                  }}
+
+                </strong>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        } @else {
+
+          <div class="empty-state">
+
+            <div class="empty-state-icon">
+
+              <mat-icon>
+                two_wheeler
+              </mat-icon>
+
+            </div>
+
+            <strong>
+              No Rider Assigned
+            </strong>
+
+            <span>
+              This order does not have a rider yet.
+            </span>
+
+          </div>
+
+        }
+
+      </section>
+
+    }
+
+  </div>
+
+  <div class="dialog-footer">
+
+    <button
+      mat-stroked-button
+      type="button"
+      (click)="close()"
+    >
+
+      <mat-icon>
+        close
+      </mat-icon>
+
+      Close
+
+    </button>
+
+  </div>
+
+</div>

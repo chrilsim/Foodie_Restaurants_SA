@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
-import { tap } from 'rxjs';
-import { map } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { interfaceitemenu } from '../interface/menuitem';
 
 @Injectable({
@@ -10,63 +8,274 @@ import { interfaceitemenu } from '../interface/menuitem';
 })
 export class MenuService {
 
-  private apiUrl = "http://localhost:3000/api/menuitems";
+  private apiUrl = 'http://localhost:3000/api/menuitems';
+
+  // =====================================================
+  // STATE
+  // =====================================================
+
+  private menuitemSource =
+    new BehaviorSubject<interfaceitemenu[]>([]);
+
+  menuitem$ =
+    this.menuitemSource.asObservable();
 
 
-  private menuitemSource = new BehaviorSubject<interfaceitemenu[]>([]);
-  menuitem$ = this.menuitemSource.asObservable();
+  // =====================================================
+  // CONSTRUCTOR
+  // =====================================================
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient
+  ) {}
 
 
-  getMenuItems() {
-    return this.http.get<interfaceitemenu[]>(this.apiUrl).pipe(
-      tap(data => this.menuitemSource.next(data))
-    );
+  // =====================================================
+  // GET ALL MENU ITEMS
+  // =====================================================
+
+  getMenuItems(): Observable<interfaceitemenu[]> {
+
+    return this.http
+      .get<interfaceitemenu[]>(this.apiUrl)
+      .pipe(
+
+        tap(data => {
+
+          this.menuitemSource.next(data);
+
+        })
+
+      );
+
   }
-  create(menuitem: FormData) {
-    return this.http.post<interfaceitemenu>(
-      this.apiUrl,
-      menuitem
-    ).pipe(
-      tap(newMenuitem => {
-        const current = this.menuitemSource.value;
 
-        this.menuitemSource.next([
-          ...current,
-          newMenuitem
-        ]);
-      })
-    );
-  }
-  update(id: string, menuitem: FormData) {
-    return this.http.put<interfaceitemenu>(
-      `${this.apiUrl}/${id}`,
-      menuitem
-    ).pipe(
-      tap(updatedItem => {
-        const current = this.menuitemSource.value;
-        const updatedList = current.map(item =>
-          item._id === id
-            ? updatedItem
-            : item
-        );
+getMenuItemsPagination(
+  page: number = 1,
+  limit: number = 10
+) {
 
-        this.menuitemSource.next(updatedList);
-      })
-    );
-  }
-  
-  delete(id: string) {
-  return this.http.delete(
-    `${this.apiUrl}/${id}`
+  const params = {
+
+    page: page.toString(),
+
+    limit: limit.toString()
+
+  };
+
+
+  return this.http.get<any>(
+    `${this.apiUrl}/pagination`,
+    {
+      params
+    }
   );
-}
 
-  updateAvailability(id: string, isAvailable: boolean) {
-    return this.http.put(
-      `${this.apiUrl}/${id}`,
-      { isAvailable }
-    );
+}
+  // =====================================================
+  // GET ONE MENU ITEM
+  // =====================================================
+
+  getMenuItem(
+    id: string
+  ): Observable<interfaceitemenu> {
+
+    return this.http
+      .get<interfaceitemenu>(
+        `${this.apiUrl}/${id}`
+      );
+
   }
+
+
+  // =====================================================
+  // CREATE
+  // =====================================================
+
+  create(
+    menuitem: FormData
+  ): Observable<interfaceitemenu> {
+
+    return this.http
+      .post<interfaceitemenu>(
+        this.apiUrl,
+        menuitem
+      )
+      .pipe(
+
+        tap(newMenuitem => {
+
+          const current =
+            this.menuitemSource.value;
+
+          this.menuitemSource.next([
+
+            newMenuitem,
+
+            ...current
+
+          ]);
+
+        })
+
+      );
+
+  }
+
+
+  // =====================================================
+  // UPDATE
+  // =====================================================
+
+  update(
+    id: string,
+    menuitem: FormData
+  ): Observable<interfaceitemenu> {
+
+    return this.http
+      .put<interfaceitemenu>(
+        `${this.apiUrl}/${id}`,
+        menuitem
+      )
+      .pipe(
+
+        tap(updatedItem => {
+
+          const current =
+            this.menuitemSource.value;
+
+
+          const updatedList =
+            current.map(item =>
+
+              item._id === id
+
+                ? updatedItem
+
+                : item
+
+            );
+
+
+          this.menuitemSource.next(
+            updatedList
+          );
+
+        })
+
+      );
+
+  }
+
+
+  // =====================================================
+  // UPDATE AVAILABILITY
+  // =====================================================
+
+  updateAvailability(
+    id: string,
+    isAvailable: boolean
+  ): Observable<interfaceitemenu> {
+
+    const formData =
+      new FormData();
+
+
+    formData.append(
+      'isAvailable',
+      String(isAvailable)
+    );
+
+
+    return this.http
+      .put<interfaceitemenu>(
+        `${this.apiUrl}/${id}`,
+        formData
+      )
+      .pipe(
+
+        tap(updatedItem => {
+
+          const current =
+            this.menuitemSource.value;
+
+
+          const updatedList =
+            current.map(item =>
+
+              item._id === id
+
+                ? {
+                    ...item,
+                    isAvailable:
+                      updatedItem.isAvailable
+                  }
+
+                : item
+
+            );
+
+
+          this.menuitemSource.next(
+            updatedList
+          );
+
+        })
+
+      );
+
+  }
+
+
+  // =====================================================
+  // DELETE
+  // =====================================================
+
+  delete(
+    id: string
+  ) {
+
+    return this.http
+      .delete<{
+        message: string;
+        menuitem: interfaceitemenu;
+      }>(
+        `${this.apiUrl}/${id}`
+      )
+      .pipe(
+
+        tap(() => {
+
+          const current =
+            this.menuitemSource.value;
+
+
+          const updatedList =
+            current.filter(
+              item =>
+                item._id !== id
+            );
+
+
+          this.menuitemSource.next(
+            updatedList
+          );
+
+        })
+
+      );
+
+  }
+
+
+  // =====================================================
+  // CLEAR STATE
+  // =====================================================
+
+  clearMenuItems(): void {
+
+    this.menuitemSource.next([]);
+
+  }
+
 }

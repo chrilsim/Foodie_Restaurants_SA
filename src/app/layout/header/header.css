@@ -158,3 +158,8 @@
     }
 
 }
+
+.myclass{
+    background-color: var(--bg-green) !important;
+    color: white;
+}

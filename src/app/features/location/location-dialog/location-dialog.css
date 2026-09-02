@@ -1,59 +1,711 @@
-mat-dialog-content{
-    width: 550px;
-    max-width: 100%;
-    display: flex;
+/* =====================================================
+   MAIN
+===================================================== */
+
+.location-dialog {
+  font-family: 'Noto Sans Khmer', sans-serif;
+  color: #111827;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 22px 24px 16px;
+}
+
+.header-icon {
+  width: 46px;
+  height: 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.header-icon mat-icon {
+  font-size: 25px;
+}
+
+.dialog-header h2 {
+  margin: 0;
+
+  font-size: 20px;
+  font-weight: 750;
+  color: #111827;
+}
+
+.dialog-header p {
+  margin: 4px 0 0;
+
+  font-size: 12px;
+  color: #6b7280;
+}
+
+
+/* =====================================================
+   MATERIAL CONTENT
+===================================================== */
+
+mat-dialog-content {
+  padding: 8px 24px 20px !important;
+  max-height: 70vh;
+}
+
+
+/* =====================================================
+   LOCATION OPTION
+===================================================== */
+
+.location-option {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+
+  padding: 13px;
+
+  margin-bottom: 10px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 13px;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    all 0.2s ease;
+
+  font-family: inherit;
+}
+
+.location-option:hover {
+  border-color: #93c5fd;
+
+  background: #f8fbff;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 5px 16px
+    rgba(37, 99, 235, 0.08);
+}
+
+.location-option:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+/* =====================================================
+   OPTION ICON
+===================================================== */
+
+.option-icon {
+  width: 42px;
+  height: 42px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 11px;
+
+  background: #eff6ff;
+
+  color: #2563eb;
+}
+
+.add-icon {
+  background: #f0fdf4;
+  color: #16a34a;
+}
+
+
+/* =====================================================
+   OPTION CONTENT
+===================================================== */
+
+.option-content {
+  flex: 1;
+}
+
+.option-content h4 {
+  margin: 0 0 3px;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  color: #111827;
+}
+
+.option-content span {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.arrow-icon {
+  color: #9ca3af;
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+.search-section {
+  margin-top: 16px;
+}
+
+.search-field {
+  width: 100%;
+}
+
+::ng-deep
+.search-field
+.mat-mdc-text-field-wrapper {
+  border-radius: 11px;
+}
+
+
+/* =====================================================
+   MAP TITLE
+===================================================== */
+
+.map-title {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin:
+    4px 0 9px;
+}
+
+.map-title > div {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  font-size: 14px;
+
+  font-weight: 700;
+}
+
+.map-title mat-icon {
+  color: #2563eb;
+  font-size: 20px;
+}
+
+.map-title small {
+  color: #9ca3af;
+  font-size: 11px;
+}
+
+
+/* =====================================================
+   MAP
+===================================================== */
+
+.map-wrapper {
+  width: 100%;
+  height: 330px;
+
+  overflow: hidden;
+
+  border-radius: 14px;
+
+  border:
+    1px solid #e5e7eb;
+
+  box-shadow:
+    0 4px 14px
+    rgba(15, 23, 42, 0.06);
+}
+
+#location-map {
+  width: 100%;
+  height: 100%;
+}
+
+
+/* =====================================================
+   LEAFLET
+===================================================== */
+
+::ng-deep
+.leaflet-container {
+  font-family:
+    'Noto Sans Khmer',
+    sans-serif;
+}
+
+::ng-deep
+.leaflet-control-zoom a {
+  color: #111827;
+}
+
+
+/* =====================================================
+   COORDINATES
+===================================================== */
+
+.coordinates {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, 1fr);
+
+  gap: 10px;
+
+  margin-top: 12px;
+}
+
+.coordinate-item {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 11px;
+
+  border:
+    1px solid #e5e7eb;
+
+  background: #f8fafc;
+
+  border-radius: 10px;
+}
+
+.coordinate-item mat-icon {
+  color: #2563eb;
+  font-size: 19px;
+}
+
+.coordinate-item div {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+.coordinate-item span {
+  font-size: 10px;
+  color: #9ca3af;
+}
+
+.coordinate-item strong {
+  font-size: 12px;
+  color: #374151;
+}
+
+
+/* =====================================================
+   SAVED HEADER
+===================================================== */
+
+.saved-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  margin-top: 22px;
+
+  margin-bottom: 10px;
+}
+
+.saved-header h3 {
+  margin: 0;
+
+  font-size: 16px;
+
+  font-weight: 750;
+}
+
+.saved-header span {
+  font-size: 11px;
+
+  color: #9ca3af;
+}
+
+.saved-header > mat-icon {
+  color: #2563eb;
+}
+
+
+/* =====================================================
+   ADDRESS LIST
+===================================================== */
+
+.address-list {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+
+/* =====================================================
+   ADDRESS ITEM
+===================================================== */
+
+.address-item {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 12px;
+
+  border:
+    1px solid #e5e7eb;
+
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  transition:
+    all 0.2s ease;
+}
+
+.address-item:hover {
+  background: #f8fafc;
+
+  border-color: #bfdbfe;
+}
+
+.selected-address {
+  background: #eff6ff;
+
+  border-color: #60a5fa;
+
+  box-shadow:
+    0 3px 10px
+    rgba(37, 99, 235, 0.08);
+}
+
+
+/* =====================================================
+   RADIO
+===================================================== */
+
+.address-radio {
+  flex-shrink: 0;
+}
+
+.radio-circle {
+  width: 19px;
+  height: 19px;
+
+  border:
+    2px solid #d1d5db;
+
+  border-radius: 50%;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+}
+
+.selected-address
+.radio-circle {
+  border-color: #2563eb;
+}
+
+.radio-dot {
+  width: 9px;
+  height: 9px;
+
+  background: #2563eb;
+
+  border-radius: 50%;
+}
+
+
+/* =====================================================
+   ADDRESS ICON
+===================================================== */
+
+.address-icon {
+  width: 39px;
+  height: 39px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background: #f3f4f6;
+
+  color: #6b7280;
+}
+
+.selected-address
+.address-icon {
+  background: #dbeafe;
+
+  color: #2563eb;
+}
+
+
+/* =====================================================
+   ADDRESS INFO
+===================================================== */
+
+.address-info {
+  flex: 1;
+
+  min-width: 0;
+}
+
+.address-title {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+}
+
+.address-info h4 {
+  margin: 0;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  color: #111827;
+}
+
+.default-badge {
+  padding: 2px 7px;
+
+  border-radius: 5px;
+
+  background: #dcfce7;
+
+  color: #15803d !important;
+
+  font-size: 9px !important;
+
+  font-weight: 700;
+}
+
+.address-info p {
+  margin: 3px 0;
+
+  font-size: 11px;
+
+  color: #6b7280;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
+.address-info small {
+  font-size: 10px;
+
+  color: #9ca3af;
+}
+
+
+/* =====================================================
+   ADDRESS ACTIONS
+===================================================== */
+
+.address-actions {
+  display: flex;
+
+  align-items: center;
+
+  flex-shrink: 0;
+}
+
+.address-actions button {
+  width: 34px;
+  height: 34px;
+
+  border-radius: 8px;
+}
+
+.address-actions button:hover {
+  background: #eff6ff;
+
+  color: #2563eb;
+}
+
+.address-actions button:last-child:hover {
+  background: #fef2f2;
+
+  color: #dc2626;
+}
+
+
+/* =====================================================
+   EMPTY
+===================================================== */
+
+.empty-address {
+  text-align: center;
+
+  padding: 30px 20px;
+
+  border:
+    1px dashed #d1d5db;
+
+  border-radius: 13px;
+
+  background: #fafafa;
+}
+
+.empty-address mat-icon {
+  font-size: 35px;
+
+  color: #9ca3af;
+
+  margin-bottom: 7px;
+}
+
+.empty-address h4 {
+  margin: 0 0 5px;
+
+  font-size: 14px;
+}
+
+.empty-address p {
+  margin: 0;
+
+  color: #9ca3af;
+
+  font-size: 11px;
+}
+
+
+/* =====================================================
+   ACTIONS
+===================================================== */
+
+mat-dialog-actions {
+  padding:
+    14px 24px 20px !important;
+
+  border-top:
+    1px solid #f0f0f0;
+
+  gap: 9px;
+}
+
+mat-dialog-actions button {
+  min-height: 42px;
+
+  border-radius: 10px;
+
+  font-family: inherit;
+
+  font-weight: 600;
+}
+
+.save-button {
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  padding:
+    0 18px;
+
+  background: #2563eb !important;
+
+  color: #ffffff !important;
+}
+
+.save-button:hover {
+  background: #1d4ed8 !important;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 600px) {
+
+  mat-dialog-content {
+    padding:
+      6px 15px 15px !important;
+
+    max-height: 72vh;
+  }
+
+  .dialog-header {
+    padding:
+      17px 15px 12px;
+  }
+
+  .dialog-header h2 {
+    font-size: 17px;
+  }
+
+  .dialog-header p {
+    font-size: 10px;
+  }
+
+  .map-wrapper {
+    height: 280px;
+  }
+
+  .coordinates {
+    grid-template-columns: 1fr;
+  }
+
+  .map-title {
     flex-direction: column;
-    gap: 16px;
-    padding-top: 10px;
-    background-color: white;
-}
 
-.current-location{
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 15px;
-    cursor: pointer;
-    background: white;
-}
+    align-items: flex-start;
 
-.current-location:hover{
-    background: #f8f8f8;
-}
+    gap: 4px;
+  }
 
-.current-location mat-icon{
-    font-size: 28px;
-    color: #ff5722;
-}
+  mat-dialog-actions {
+    padding:
+      12px 15px 16px !important;
+  }
 
-.current-location h4{
-    margin: 0;
-  
-}
-
-
-.current-location span{
-    color: gray;
-    font-size: 13px;
-}
-
-mat-form-field{
-    width: 100%;
-}
-
-.map-placeholder{
-    height: 300px;
-    border-radius: 12px;
-    border: 2px dashed #ccc;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: gray;
-}
-
-mat-dialog-actions{
-    padding: 16px 20px;
 }

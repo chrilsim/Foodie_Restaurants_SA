@@ -1,0 +1,502 @@
+<div class="profile-page">
+  <div class="page-header">
+
+    <div>
+
+      <span class="page-subtitle">
+        Account
+      </span>
+
+      <h1>
+        User Information
+      </h1>
+
+      <p>
+        View and manage your personal information
+      </p>
+
+    </div>
+
+
+    @if (!isEditing && user) {
+
+    <button mat-flat-button class="edit-button" type="button" (click)="editProfile()">
+
+      <mat-icon>
+        edit
+      </mat-icon>
+
+      Edit Profile
+
+    </button>
+
+    }
+
+  </div>
+
+  @if (isLoading) {
+
+  <div class="loading">
+
+    <mat-icon>
+      sync
+    </mat-icon>
+
+    <span>
+      Loading profile...
+    </span>
+
+  </div>
+
+  }
+
+  @if (!isLoading && user) {
+
+  <div class="profile-grid">
+
+    <div class="profile-card profile-summary">
+
+      <div class="avatar">
+
+        <span>
+          {{ user.fullName.charAt(0).toUpperCase() }}
+        </span>
+
+      </div>
+
+
+      <h2>
+        {{ user.fullName }}
+      </h2>
+
+
+      <p class="email">
+        {{ user.email }}
+      </p>
+
+
+      <div class="role-badge">
+
+        <mat-icon>
+          badge
+        </mat-icon>
+
+        {{ user.role }}
+
+      </div>
+
+
+      <div class="member">
+
+        <mat-icon>
+          calendar_today
+        </mat-icon>
+
+        <div>
+
+          <small>
+            Member since
+          </small>
+
+          <strong>
+            {{ user.createdAt | date:'dd MMM yyyy' }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="profile-card information-card">
+
+
+      <div class="card-title">
+
+        <div class="title-icon">
+
+          <mat-icon>
+            person
+          </mat-icon>
+
+        </div>
+
+        <div>
+
+          <h2>
+            Personal Information
+          </h2>
+
+          <p>
+            Your account details
+          </p>
+
+        </div>
+
+      </div>
+
+      @if (!isEditing) {
+
+      <div class="info-grid">
+
+
+        <div class="info-item">
+
+          <span>
+            Full Name
+          </span>
+
+          <strong>
+            {{ user.fullName }}
+          </strong>
+
+        </div>
+
+
+        <div class="info-item">
+
+          <span>
+            Email
+          </span>
+
+          <strong>
+            {{ user.email }}
+          </strong>
+
+        </div>
+
+
+        <div class="info-item">
+
+          <span>
+            Phone
+          </span>
+
+          <strong>
+            {{ user.phone || 'Not provided' }}
+          </strong>
+
+        </div>
+
+
+        <div class="info-item">
+
+          <span>
+            Gender
+          </span>
+
+          <strong>
+            {{ user.gender || 'Not provided' }}
+          </strong>
+
+        </div>
+
+
+        <div class="info-item">
+
+          <span>
+            Role
+          </span>
+
+          <strong>
+            {{ user.role }}
+          </strong>
+
+        </div>
+
+
+        @if (user.jobRole) {
+
+        <div class="info-item">
+
+          <span>
+            Job Role
+          </span>
+
+          <strong>
+            {{ user.jobRole }}
+          </strong>
+
+        </div>
+
+        }
+
+
+      </div>
+
+      }
+      <div class="profile-card security-card">
+
+        <div class="card-title">
+
+          <div class="title-icon">
+
+            <mat-icon>
+              lock
+            </mat-icon>
+
+          </div>
+
+          <div>
+
+            <h2>
+              Security
+            </h2>
+
+            <p>
+              Manage your account password
+            </p>
+
+          </div>
+
+        </div>
+
+
+        @if (!showPasswordSection) {
+
+        <div class="password-row">
+
+          <div>
+
+            <strong>
+              Password
+            </strong>
+
+            <p>
+              Change your password regularly
+              to keep your account secure.
+            </p>
+
+          </div>
+
+
+          <button mat-stroked-button type="button" class="change-password-button" (click)="showPasswordSection = true">
+
+            <mat-icon>
+              lock_reset
+            </mat-icon>
+
+            Change Password
+
+          </button>
+
+        </div>
+
+        }
+
+
+        @if (showPasswordSection) {
+
+        <div class="password-form">
+          <mat-form-field appearance="outline" class="full-width">
+
+            <mat-label>
+              Current Password
+            </mat-label>
+
+            <mat-icon matPrefix>
+              lock
+            </mat-icon>
+
+            <input matInput type="password" name="currentPassword" [(ngModel)]="currentPassword"
+              placeholder="Enter current password">
+
+          </mat-form-field>
+
+
+          <!-- New Password -->
+
+          <mat-form-field appearance="outline" class="full-width">
+
+            <mat-label>
+              New Password
+            </mat-label>
+
+            <mat-icon matPrefix>
+              lock_reset
+            </mat-icon>
+
+            <input matInput type="password" name="newPassword" [(ngModel)]="newPassword"
+              placeholder="Enter new password">
+
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+
+            <mat-label>
+              Confirm New Password
+            </mat-label>
+
+            <mat-icon matPrefix>
+              verified_user
+            </mat-icon>
+
+            <input matInput type="password" name="confirmPassword" [(ngModel)]="confirmPassword"
+              placeholder="Confirm new password">
+
+          </mat-form-field>
+
+          <div class="form-actions">
+
+            <button mat-stroked-button type="button" class="cancel-button" [disabled]="isChangingPassword"
+              (click)="showPasswordSection = false">
+
+              Cancel
+
+            </button>
+
+
+            <button mat-flat-button type="button" class="save-button" [disabled]="isChangingPassword"
+              (click)="changePassword()">
+
+              @if (isChangingPassword) {
+
+              <mat-icon>
+                sync
+              </mat-icon>
+
+              Updating...
+
+              }
+
+              @else {
+
+              <mat-icon>
+                save
+              </mat-icon>
+
+              Update Password
+
+              }
+
+            </button>
+
+          </div>
+
+        </div>
+
+        }
+
+      </div>
+
+      @if (isEditing) {
+
+      <div class="edit-form">
+
+
+        <mat-form-field appearance="outline" class="full-width">
+
+          <mat-label>
+            Full Name
+          </mat-label>
+
+          <mat-icon matPrefix>
+            person
+          </mat-icon>
+
+          <input matInput type="text" [(ngModel)]="fullName" name="fullName">
+
+        </mat-form-field>
+
+
+        <mat-form-field appearance="outline" class="full-width">
+
+          <mat-label>
+            Email
+          </mat-label>
+
+          <mat-icon matPrefix>
+            email
+          </mat-icon>
+
+          <input matInput type="email" [(ngModel)]="email" name="email">
+
+        </mat-form-field>
+
+
+        <mat-form-field appearance="outline" class="full-width">
+
+          <mat-label>
+            Phone
+          </mat-label>
+
+          <mat-icon matPrefix>
+            phone
+          </mat-icon>
+
+          <input matInput type="tel" [(ngModel)]="phone" name="phone" placeholder="096 360 4158">
+
+        </mat-form-field>
+
+
+        <mat-form-field appearance="outline" class="full-width">
+
+          <mat-label>
+            Gender
+          </mat-label>
+
+          <mat-select [(ngModel)]="gender" name="gender">
+
+            <mat-option value="">
+              Select Gender
+            </mat-option>
+
+            <mat-option value="Male">
+              Male
+            </mat-option>
+
+            <mat-option value="Female">
+              Female
+            </mat-option>
+
+          </mat-select>
+
+        </mat-form-field>
+
+
+        <div class="form-actions">
+
+          <button mat-stroked-button type="button" class="cancel-button" (click)="cancelEdit()" [disabled]="isSaving">
+
+            Cancel
+
+          </button>
+
+
+          <button mat-flat-button type="button" class="save-button" (click)="saveProfile()" [disabled]="isSaving">
+
+            @if (isSaving) {
+
+            <mat-icon>
+              sync
+            </mat-icon>
+
+            Saving...
+
+            }
+
+            @else {
+
+            <mat-icon>
+              save
+            </mat-icon>
+
+            Save Changes
+
+            }
+
+          </button>
+
+        </div>
+
+      </div>
+
+      }
+
+    </div>
+
+  </div>
+
+  }
+
+</div>

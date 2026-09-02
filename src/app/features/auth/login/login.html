@@ -1,57 +1,318 @@
-<div class="main-login">
-    <div class="left">
-        <img src="assets/login-image.png" alt="Login Image" class="login-image">
-        <div class="overly-img">
-            <h4>គ្រប់គ្រងភោជនីយដ្ឋានរបស់អ្នកដោយភាពជឿជាក់</h4>
-            <p>ប្រព័ន្ធគ្រប់គ្រងភោជនីយដ្ឋានទំនើប ដែលជួយសម្រួលដល់រាល់ប្រតិបត្តិការការងាររបស់អ្នកឱ្យកាន់តែមានប្រសិទ្ធភាព។</p>
-        </div>
-    </div>
-    <div class="right">
-        <mat-card class="login-card">
-            <h2><mat-card-title>Login</mat-card-title></h2>
-            <mat-card-content>
-                <form>
-                    <label for="email">អ៊ីមែល ឬ លេខទូរស័ព្ទ</label>
-                    <mat-form-field appearance="outline" class="full-width">
-                        <mat-icon matPrefix>email</mat-icon>
-                        <mat-label>Email</mat-label>
-                        <input matInput type="email" placeholder="Enter your email">
-                    </mat-form-field>
-                     <label for="password">ពាក្យសម្ងាត់</label>
-                    <mat-form-field appearance="outline" class="full-width">
-                        <mat-icon matPrefix>lock</mat-icon>
-                        <mat-label>Password</mat-label>
-                        <input matInput type="password" placeholder="Enter your password">
-                    </mat-form-field>
-                    
-                    <div class="full-width-checkbox">
-                        <div class="">
-                            <label for="remember-me" class="remember-me-label">
-                                <input type="checkbox" id="remember-me">
-                                ចងចាំខ្ញុំ
-                            </label>
-                        </div>
-                        <a class="forgot-password">ភ្លេចលេខសម្ងាត់?</a>
-                    </div>
-                    <button mat-raised-button class="full-width-button">
-                        ចូលប្រើ
-                    </button>
-                    <p>-----------------ឬចូលប្រើជាមួយ---------------</p>
-                    <div class="login-option">
-                        <button  class="google-login">
-                            <img src="assets/icon/google.png" alt="Google Logo">
-                            ចូលប្រើជាមួយ Google
-                        </button>
-                        <button class="facebook-login">
-                            <img src="assets/icon/facebook.png" alt="Facebook Logo">
-                            ចូលប្រើជាមួយ Facebook
-                        </button>
-                    </div>
-                    <hr style="border: 1px solid #ccc; margin: 20px 0;">
-                    <p>មិនទាន់មានគណនី? <a routerLink="/register" style="cursor: pointer; color: #007bff; text-decoration: underline;">ចុះឈ្មោះ</a></p>
+<div class="login-page">
 
-                </form>
-            </mat-card-content>
-        </mat-card>
+    <!-- =========================
+       LEFT HERO
+  ========================== -->
+
+    <div class="login-hero">
+
+        <img src="assets/login-image.png" alt="Restaurant" class="hero-image">
+
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content">
+
+            <!-- Brand -->
+
+            <div class="brand">
+
+                <div class="brand-icon">
+                    <mat-icon>restaurant</mat-icon>
+                </div>
+
+                <span>
+                    Restaurant Management
+                </span>
+
+            </div>
+
+
+            <!-- Hero Text -->
+
+            <div class="hero-text">
+
+                <span class="hero-badge">
+                    <mat-icon>auto_awesome</mat-icon>
+                    Smart Restaurant System
+                </span>
+
+                <h1>
+                    គ្រប់គ្រងភោជនីយដ្ឋាន
+                    <br>
+                    របស់អ្នកបានយ៉ាងងាយស្រួល
+                </h1>
+
+                <p>
+                    ប្រព័ន្ធគ្រប់គ្រងភោជនីយដ្ឋានទំនើប
+                    ជួយអ្នកគ្រប់គ្រងការកម្ម៉ង់
+                    មុខម្ហូប ការទូទាត់ និងការដឹកជញ្ជូន
+                    បានយ៉ាងមានប្រសិទ្ធភាព។
+                </p>
+
+            </div>
+
+
+            <!-- Features -->
+
+            <div class="hero-features">
+
+                <div class="feature">
+
+                    <mat-icon>
+                        check_circle
+                    </mat-icon>
+
+                    <span>
+                        ងាយស្រួលប្រើប្រាស់
+                    </span>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <mat-icon>
+                        security
+                    </mat-icon>
+
+                    <span>
+                        សុវត្ថិភាពខ្ពស់
+                    </span>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <mat-icon>
+                        analytics
+                    </mat-icon>
+
+                    <span>
+                        គ្រប់គ្រងបានប្រកបដោយប្រសិទ្ធភាព
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
+
+
+    <!-- =========================
+       RIGHT LOGIN
+  ========================== -->
+
+    <div class="login-section">
+
+        <div class="login-container">
+
+
+            <!-- Mobile Brand -->
+
+            <div class="mobile-brand">
+
+                <div class="mobile-brand-icon">
+                    <mat-icon>restaurant</mat-icon>
+                </div>
+
+                <span>
+                    Restaurant Management
+                </span>
+
+            </div>
+
+
+            <!-- Header -->
+
+            <div class="login-header">
+
+                <div class="welcome-icon">
+
+                    <mat-icon>
+                        lock_open
+                    </mat-icon>
+
+                </div>
+
+
+                <h2>
+                    សូមស្វាគមន៍ត្រឡប់មកវិញ
+                </h2>
+
+                <p>
+                    ចូលប្រើគណនីរបស់អ្នកដើម្បីបន្ត
+                </p>
+
+            </div>
+
+
+            <!-- Form -->
+
+            <form (ngSubmit)="login()" class="login-form">
+
+
+                <!-- Email / Phone -->
+
+                <mat-form-field appearance="outline" class="full-width">
+
+                    <mat-label>
+                        អ៊ីមែល ឬ លេខទូរស័ព្ទ
+                    </mat-label>
+
+                    <mat-icon matPrefix>
+                        person
+                    </mat-icon>
+
+                    <input matInput type="text" name="identifier" [(ngModel)]="identifier"
+                        placeholder="Email ឬ 012 345 678" required>
+
+                </mat-form-field>
+
+
+                <!-- Password -->
+
+                <mat-form-field appearance="outline" class="full-width">
+
+                    <mat-label>
+                        ពាក្យសម្ងាត់
+                    </mat-label>
+
+                    <mat-icon matPrefix>
+                        lock
+                    </mat-icon>
+
+                    <input matInput [type]="hidePassword ? 'password' : 'text'" name="password" [(ngModel)]="password"
+                        placeholder="បញ្ចូលពាក្យសម្ងាត់" required>
+
+                    <button mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword">
+
+                        <mat-icon>
+                            {{
+                            hidePassword
+                            ? 'visibility_off'
+                            : 'visibility'
+                            }}
+                        </mat-icon>
+
+                    </button>
+
+                </mat-form-field>
+
+
+                <!-- Remember / Forgot -->
+
+                <div class="login-options">
+
+                    <label class="remember">
+
+                        <input type="checkbox" id="remember-me">
+
+                        <span>
+                            ចងចាំខ្ញុំ
+                        </span>
+
+                    </label>
+
+
+                    <a class="forgot-password">
+                        ភ្លេចលេខសម្ងាត់?
+                    </a>
+
+                </div>
+
+
+                <!-- Login -->
+
+                <button mat-flat-button type="submit" class="login-button">
+
+                    <span>
+                        ចូលប្រើ
+                    </span>
+
+                    <mat-icon>
+                        arrow_forward
+                    </mat-icon>
+
+                </button>
+
+
+            </form>
+
+
+            <!-- Divider -->
+
+            <div class="divider">
+
+                <span>
+                    ឬបន្តជាមួយ
+                </span>
+
+            </div>
+
+
+            <!-- Social -->
+
+            <div class="social-login">
+
+                <button type="button" class="social-button">
+
+                    <img src="assets/icon/google.png" alt="Google">
+
+                    <span>
+                        Google
+                    </span>
+
+                </button>
+
+
+                <button type="button" class="social-button">
+
+                    <img src="assets/icon/facebook.png" alt="Facebook">
+
+                    <span>
+                        Facebook
+                    </span>
+
+                </button>
+
+            </div>
+
+
+            <!-- Register -->
+
+            <div class="register-link">
+
+                <span>
+                    មិនទាន់មានគណនី?
+                </span>
+
+                <a routerLink="/register">
+                    ចុះឈ្មោះ
+                </a>
+
+            </div>
+
+
+            <!-- Security -->
+
+            <div class="login-footer">
+
+                <mat-icon>
+                    verified_user
+                </mat-icon>
+
+                <span>
+                    ការចូលប្រើរបស់អ្នកមានសុវត្ថិភាព
+                </span>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
 </div>

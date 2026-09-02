@@ -23,3 +23,85 @@
 .location-dialog .mat-mdc-dialog-container .mdc-dialog__surface {
   border-radius: 10px;
 }
+
+.cart-success-snackbar {
+  --mdc-snackbar-container-color: #ffffff;
+  --mdc-snackbar-supporting-text-color: #222222;
+  --mat-snack-bar-button-color: #2e7d32;
+}
+
+.cart-success-snackbar .mdc-snackbar__surface {
+  border-radius: 12px !important;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+}
+.leaflet-container
+.leaflet-tile {
+  max-width: none !important;
+  max-height: none !important;
+}
+
+
+.leaflet-container
+.leaflet-tile-container img {
+  max-width: none !important;
+  max-height: none !important;
+}
+
+
+.leaflet-container
+.leaflet-marker-icon,
+.leaflet-container
+.leaflet-marker-shadow {
+  max-width: none !important;
+  max-height: none !important;
+}
+
+
+/* =================================
+   MAP
+   ================================= */
+
+.rider-map {
+  width: 100%;
+  height: 450px;
+  min-height: 450px;
+
+  position: relative;
+  overflow: hidden;
+}
+
+
+.rider-map .leaflet-container {
+  width: 100%;
+  height: 100%;
+}
+
+body.theme-dark {
+  background: #111827;
+  color: #f9fafb;
+}
+
+body.theme-dark .settings-card {
+  background: #1f2937;
+  color: #f9fafb;
+}
+
+body.theme-dark .content-header h1 {
+  color: #ffffff;
+}
+
+body.theme-dark .content-header p {
+  color: #9ca3af;
+}
+
+body.theme-dark .setting-row {
+  border-color: #374151;
+}
+
+body.theme-dark .setting-row strong {
+  color: #ffffff;
+}
+
+body.theme-dark .setting-row span {
+  color: #9ca3af;
+}

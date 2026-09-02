@@ -1,0 +1,212 @@
+<div class="invoice">
+
+  <!-- Header -->
+  <div class="invoice-header">
+
+    <div>
+      <div class="success-icon">
+        <mat-icon>check</mat-icon>
+      </div>
+    </div>
+
+    <div class="header-text">
+      <h2>Booking Confirmed!</h2>
+      <p>ការកក់តុបានជោគជ័យ 🎉</p>
+    </div>
+
+  </div>
+
+
+  <!-- Booking Number -->
+  <div class="booking-number">
+
+    <span>Booking Number</span>
+
+    <strong>
+      #{{ data.bookingNumber }}
+    </strong>
+
+  </div>
+
+
+  <!-- Restaurant -->
+  <div class="restaurant">
+
+    <h3>Foodie Restaurant</h3>
+
+    <p>
+      <mat-icon>location_on</mat-icon>
+      Phnom Penh, Cambodia
+    </p>
+
+  </div>
+
+
+  <div class="divider"></div>
+
+
+  <!-- Booking Details -->
+  <h3 class="section-title">
+    ព័ត៌មានការកក់
+  </h3>
+
+  <div class="details">
+
+    <div class="detail-item">
+
+      <mat-icon>table_restaurant</mat-icon>
+
+      <div>
+        <span>តុ</span>
+        <strong>
+          {{ data.tableNumber }}
+        </strong>
+      </div>
+
+    </div>
+
+
+    <div class="detail-item">
+
+      <mat-icon>groups</mat-icon>
+
+      <div>
+        <span>ចំនួនភ្ញៀវ</span>
+        <strong>
+          {{ data.partySize }} នាក់
+        </strong>
+      </div>
+
+    </div>
+
+
+    <div class="detail-item">
+
+      <mat-icon>calendar_month</mat-icon>
+
+      <div>
+        <span>ថ្ងៃ</span>
+        <strong>
+          {{ data.bookingDate | date:'dd MMMM yyyy' }}
+        </strong>
+      </div>
+
+    </div>
+
+
+    <div class="detail-item">
+
+      <mat-icon>schedule</mat-icon>
+
+      <div>
+        <span>ម៉ោង</span>
+        <strong>
+          {{ data.bookingTime }}
+        </strong>
+      </div>
+
+    </div>
+
+
+    <div class="detail-item">
+
+      <mat-icon>location_on</mat-icon>
+
+      <div>
+        <span>តំបន់អង្គុយ</span>
+        <strong>
+          {{ data.seatingArea }}
+        </strong>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="divider"></div>
+
+
+  <!-- Customer -->
+  <h3 class="section-title">
+    ព័ត៌មានភ្ញៀវ
+  </h3>
+
+  <div class="customer">
+
+    <p>
+      <span>ឈ្មោះ</span>
+      <strong>{{ data.fullName }}</strong>
+    </p>
+
+    <p>
+      <span>ទូរស័ព្ទ</span>
+      <strong>{{ data.phoneNumber }}</strong>
+    </p>
+
+    @if (data.email) {
+      <p>
+        <span>Email</span>
+        <strong>{{ data.email }}</strong>
+      </p>
+    }
+
+  </div>
+
+
+  @if (data.specialRequest) {
+
+    <div class="special-request">
+
+      <strong>សំណូមពរពិសេស</strong>
+
+      <p>
+        {{ data.specialRequest }}
+      </p>
+
+    </div>
+
+  }
+
+
+  <!-- Status -->
+  <div class="status">
+
+    <mat-icon>schedule</mat-icon>
+
+    <div>
+      <strong>Pending Confirmation</strong>
+      <p>
+        សូមរង់ចាំការបញ្ជាក់ពីហាង
+      </p>
+    </div>
+
+  </div>
+
+
+  <!-- Actions -->
+  <div class="actions">
+
+    <button
+      mat-stroked-button
+      (click)="printInvoice()">
+
+      <mat-icon>print</mat-icon>
+
+      Print
+
+    </button>
+
+
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="close()">
+
+      Done
+
+    </button>
+
+  </div>
+
+</div>

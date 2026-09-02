@@ -1,65 +1,344 @@
-<div class="main-login">
-    <div class="left">
-        <img src="assets/login-image.png" alt="Login Image" class="login-image">
-        <div class="overly-img">
-            <h4>គ្រប់គ្រងភោជនីយដ្ឋានរបស់អ្នកដោយភាពជឿជាក់</h4>
-            <p>ប្រព័ន្ធគ្រប់គ្រងភោជនីយដ្ឋានទំនើប ដែលជួយសម្រួលដល់រាល់ប្រតិបត្តិការការងាររបស់អ្នកឱ្យកាន់តែមានប្រសិទ្ធភាព។
-            </p>
+<div class="register-page">
+  <div class="register-hero">
+
+    <img
+      src="assets/login-image.png"
+      alt="Restaurant"
+      class="hero-image"
+    >
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+
+      <div class="brand">
+        <div class="brand-icon">
+          <mat-icon>restaurant</mat-icon>
         </div>
-    </div>
-    <div class="right">
-        <mat-card class="login-card">
-            <h2><mat-card-title>Register</mat-card-title></h2>
-            
-            <div class="login-option">
-                <button class="google-login">
-                    <img src="assets/icon/google.png" alt="Google Logo">
-                    ចូលប្រើជាមួយ Google
-                </button>
-                <button class="facebook-login">
-                    <img src="assets/icon/facebook.png" alt="Facebook Logo">
-                    ចូលប្រើជាមួយ Facebook
-                </button>
-            </div>
-            <p style="text-align: center;">----------------------ឬបន្តជាមួយអ៊ីមែល-----------------------</p>
-            <mat-card-content>
-                <form>
-                    <label for="name">ឈ្មោះពេញ</label>
-                    <mat-form-field appearance="outline" class="full-width">
-                        <mat-icon matPrefix>person</mat-icon>
-                        <mat-label>Full Name</mat-label>
-                        <input matInput type="text" placeholder="Enter your full name">
-                    </mat-form-field>
-                    <label for="email">អ៊ីមែល</label>
-                    <mat-form-field appearance="outline" class="full-width">
-                        <mat-label>Email</mat-label>
-                        <mat-icon matPrefix>email</mat-icon>
-                        <input matInput type="email" placeholder="Enter your email">
-                    </mat-form-field>
-                    <label for="password">ពាក្យសម្ងាត់</label>
-                    <mat-form-field appearance="outline" class="full-width">
-                        <mat-label>លេខសម្ងាត់</mat-label>
-                        <mat-icon matPrefix>lock</mat-icon>
-                        <input matInput type="password" placeholder="Enter your password">
-                    </mat-form-field>
-                    <label for="password">បញ្ជាក់លេខសម្ងាត់</label>
-                    <mat-form-field appearance="outline" class="full-width">
-                        <mat-label>បញ្ជាក់លេខសម្ងាត់</mat-label>
-                        <mat-icon matPrefix>lock</mat-icon>
-                        <input matInput type="password" placeholder="Enter your password">
-                    </mat-form-field>
-                
-                    <p>មានគណនីរួចហើយ? <a routerLink="/login"
-                            style="cursor: pointer; color: #007bff; text-decoration: underline;">ចូលប្រើប្រាស់</a></p>
-                    <button routerLink="/Layout/products" mat-raised-button class="full-width-button">
-                        ចូលប្រើ
-                    </button>
 
-                 
-                    
+        <span>Restaurant Management</span>
+      </div>
 
-                </form>
-            </mat-card-content>
-        </mat-card>
+      <div class="hero-text">
+
+        <h1>
+          គ្រប់គ្រងភោជនីយដ្ឋាន
+          <br>
+          របស់អ្នកដោយភាពជឿជាក់
+        </h1>
+
+        <p>
+          ប្រព័ន្ធគ្រប់គ្រងភោជនីយដ្ឋានទំនើប
+          ដែលជួយសម្រួលការងារ
+          និងធ្វើឱ្យប្រតិបត្តិការរបស់អ្នក
+          កាន់តែមានប្រសិទ្ធភាព។
+        </p>
+
+      </div>
+
+      <div class="hero-features">
+
+        <div>
+          <mat-icon>check_circle</mat-icon>
+          <span>ងាយស្រួលប្រើប្រាស់</span>
+        </div>
+
+        <div>
+          <mat-icon>security</mat-icon>
+          <span>សុវត្ថិភាព និងទំនុកចិត្ត</span>
+        </div>
+
+        <div>
+          <mat-icon>dashboard</mat-icon>
+          <span>គ្រប់គ្រងបានគ្រប់ទីកន្លែង</span>
+        </div>
+
+      </div>
+
     </div>
+
+  </div>
+
+  <div class="register-section">
+
+    <div class="register-container">
+
+      <div class="mobile-logo">
+        <div class="mobile-logo-icon">
+          <mat-icon>restaurant</mat-icon>
+        </div>
+
+        <span>Restaurant Management</span>
+      </div>
+
+      <div class="register-header">
+
+        <div class="welcome-icon">
+          <mat-icon>person_add</mat-icon>
+        </div>
+
+        <h2>
+          បង្កើតគណនី
+        </h2>
+
+        <p>
+          បំពេញព័ត៌មានខាងក្រោមដើម្បីចុះឈ្មោះ
+        </p>
+
+      </div>
+
+
+      <form
+        (ngSubmit)="register()"
+        #registerForm="ngForm"
+        class="register-form"
+      >
+
+
+        <!-- FULL NAME -->
+
+        <mat-form-field
+          appearance="outline"
+          class="full-width"
+        >
+
+          <mat-label>
+            ឈ្មោះពេញ
+          </mat-label>
+
+          <mat-icon matPrefix>
+            person
+          </mat-icon>
+
+          <input
+            matInput
+            type="text"
+            name="fullName"
+            [(ngModel)]="fullName"
+            placeholder="បញ្ចូលឈ្មោះពេញ"
+            required
+          >
+
+        </mat-form-field>
+
+
+        <!-- PHONE -->
+
+        <mat-form-field
+          appearance="outline"
+          class="full-width"
+        >
+
+          <mat-label>
+            លេខទូរស័ព្ទ
+          </mat-label>
+
+          <mat-icon matPrefix>
+            phone
+          </mat-icon>
+
+          <input
+            matInput
+            type="tel"
+            name="phone"
+            [(ngModel)]="phone"
+            placeholder="012 345 678"
+            required
+          >
+
+        </mat-form-field>
+        <mat-form-field
+          appearance="outline"
+          class="full-width"
+        >
+
+          <mat-label>
+            អ៊ីមែល
+          </mat-label>
+
+          <mat-icon matPrefix>
+            email
+          </mat-icon>
+
+          <input
+            matInput
+            type="email"
+            name="email"
+            [(ngModel)]="email"
+            placeholder="example@gmail.com"
+            required
+          >
+
+        </mat-form-field>
+
+        <mat-form-field
+          appearance="outline"
+          class="full-width"
+        >
+
+          <mat-label>
+            ពាក្យសម្ងាត់
+          </mat-label>
+
+          <mat-icon matPrefix>
+            lock
+          </mat-icon>
+
+          <input
+            matInput
+            [type]="hidePassword ? 'password' : 'text'"
+            name="password"
+            [(ngModel)]="password"
+            placeholder="បញ្ចូលពាក្យសម្ងាត់"
+            required
+          >
+
+          <button
+            mat-icon-button
+            matSuffix
+            type="button"
+            (click)="hidePassword = !hidePassword"
+          >
+
+            <mat-icon>
+              {{ hidePassword ? 'visibility_off' : 'visibility' }}
+            </mat-icon>
+
+          </button>
+
+        </mat-form-field>
+
+        <mat-form-field
+          appearance="outline"
+          class="full-width"
+        >
+
+          <mat-label>
+            បញ្ជាក់ពាក្យសម្ងាត់
+          </mat-label>
+
+          <mat-icon matPrefix>
+            lock_outline
+          </mat-icon>
+
+          <input
+            matInput
+            [type]="hideConfirmPassword ? 'password' : 'text'"
+            name="confirmPassword"
+            [(ngModel)]="confirmPassword"
+            placeholder="បញ្ចូលពាក្យសម្ងាត់ម្ដងទៀត"
+            required
+          >
+
+          <button
+            mat-icon-button
+            matSuffix
+            type="button"
+            (click)="hideConfirmPassword = !hideConfirmPassword"
+          >
+
+            <mat-icon>
+              {{
+                hideConfirmPassword
+                  ? 'visibility_off'
+                  : 'visibility'
+              }}
+            </mat-icon>
+
+          </button>
+
+        </mat-form-field>
+
+        <button
+          mat-flat-button
+          type="submit"
+          class="register-button"
+          [disabled]="registerForm.invalid"
+        >
+
+          <span>
+            ចុះឈ្មោះ
+          </span>
+
+          <mat-icon>
+            arrow_forward
+          </mat-icon>
+
+        </button>
+
+
+      </form>
+
+      <div class="login-link">
+
+        <span>
+          មានគណនីរួចហើយ?
+        </span>
+
+        <a routerLink="/login">
+          ចូលប្រើប្រាស់
+        </a>
+
+      </div>
+
+
+      <!-- SOCIAL -->
+
+      <div class="divider">
+
+        <span>ឬ</span>
+
+      </div>
+
+
+      <div class="social-login">
+
+        <button
+          type="button"
+          class="social-button"
+        >
+
+          <img
+            src="assets/icon/google.png"
+            alt="Google"
+          >
+
+          Google
+
+        </button>
+
+
+        <button
+          type="button"
+          class="social-button"
+        >
+
+          <img
+            src="assets/icon/facebook.png"
+            alt="Facebook"
+          >
+
+          Facebook
+
+        </button>
+
+      </div>
+
+
+      <div class="register-footer">
+
+        <mat-icon>
+          verified_user
+        </mat-icon>
+
+        <span>
+          ព័ត៌មានរបស់អ្នកត្រូវបានរក្សាទុកដោយសុវត្ថិភាព
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
 </div>

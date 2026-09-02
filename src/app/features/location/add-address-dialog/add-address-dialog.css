@@ -1,0 +1,286 @@
+
+.add-location-dialog {
+  font-family: 'Noto Sans Khmer', sans-serif;
+  color: #111827;
+}
+
+
+/* ================= HEADER ================= */
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 20px 24px 12px;
+}
+
+.header-icon {
+  width: 46px;
+  height: 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 13px;
+
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.dialog-header h2 {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 750;
+}
+
+.dialog-header p {
+  margin: 4px 0 0;
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+
+/* ================= CONTENT ================= */
+
+mat-dialog-content {
+  padding: 8px 24px 18px !important;
+  max-height: 70vh;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 4px;
+}
+
+
+/* ================= MAP HEADER ================= */
+
+.map-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin:
+    7px 0 9px;
+}
+
+.map-header > div {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  font-size: 14px;
+}
+
+.map-header mat-icon {
+  color: #2563eb;
+}
+
+.map-header span {
+  color: #9ca3af;
+  font-size: 10px;
+}
+
+
+/* ================= CURRENT LOCATION ================= */
+
+.current-location {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 12px 14px;
+
+  margin-bottom: 12px;
+
+  border:
+    1px solid #bfdbfe;
+
+  border-radius: 11px;
+
+  background: #eff6ff;
+
+  color: #1d4ed8;
+
+  cursor: pointer;
+
+  text-align: left;
+
+  font-family: inherit;
+}
+
+.current-location:hover {
+  background: #dbeafe;
+}
+
+.current-location:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.current-location mat-icon {
+  font-size: 23px;
+}
+
+.current-location div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.current-location strong {
+  font-size: 13px;
+}
+
+.current-location span {
+  font-size: 10px;
+  color: #6b7280;
+}
+
+
+/* ================= MAP ================= */
+
+.map-wrapper {
+  width: 100%;
+  height: 300px;
+
+  overflow: hidden;
+
+  border-radius: 13px;
+
+  border:
+    1px solid #e5e7eb;
+
+  box-shadow:
+    0 4px 15px
+    rgba(15, 23, 42, 0.07);
+
+  margin-bottom: 12px;
+}
+
+#add-address-map {
+  width: 100%;
+  height: 100%;
+}
+
+
+/* ================= COORDINATES ================= */
+
+.coordinates {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, 1fr);
+
+  gap: 9px;
+
+  margin-bottom: 13px;
+}
+
+.coordinates > div {
+  padding: 10px 12px;
+
+  border:
+    1px solid #e5e7eb;
+
+  border-radius: 9px;
+
+  background: #f8fafc;
+
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.coordinates span {
+  font-size: 10px;
+  color: #9ca3af;
+}
+
+.coordinates strong {
+  font-size: 12px;
+  color: #374151;
+}
+
+
+/* ================= DEFAULT ================= */
+
+.default-option {
+  padding: 4px 0 5px;
+}
+
+::ng-deep
+.default-option
+.mat-mdc-checkbox {
+  font-family:
+    'Noto Sans Khmer',
+    sans-serif;
+}
+
+
+/* ================= ACTIONS ================= */
+
+mat-dialog-actions {
+  padding:
+    13px 24px 19px !important;
+
+  border-top:
+    1px solid #f1f5f9;
+
+  gap: 8px;
+}
+
+mat-dialog-actions button {
+  min-height: 40px;
+
+  border-radius: 9px;
+
+  font-family: inherit;
+
+  font-weight: 600;
+}
+
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 600px) {
+
+  mat-dialog-content {
+    padding:
+      8px 15px 15px !important;
+  }
+
+  .dialog-header {
+    padding:
+      17px 15px 10px;
+  }
+
+  .dialog-header h2 {
+    font-size: 17px;
+  }
+
+  .map-wrapper {
+    height: 270px;
+  }
+
+  .coordinates {
+    grid-template-columns: 1fr;
+  }
+
+  .map-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+  }
+
+  mat-dialog-actions {
+    padding:
+      12px 15px 16px !important;
+  }
+
+}
+

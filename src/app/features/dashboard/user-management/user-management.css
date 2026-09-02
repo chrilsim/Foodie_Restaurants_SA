@@ -1,0 +1,1043 @@
+/* =========================================================
+   USER MANAGEMENT
+========================================================= */
+
+.user-management {
+  width: 100%;
+  min-height: 100vh;
+
+  padding: 28px;
+
+  box-sizing: border-box;
+
+  background: #f5f7fb;
+
+  color: #111827;
+
+  font-family:
+    "Noto Sans",
+    Arial,
+    sans-serif;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.page-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 25px;
+}
+
+
+.page-header h1 {
+  margin: 0 0 6px;
+
+  font-size: 30px;
+
+  font-weight: 750;
+
+  color: #111827;
+
+  letter-spacing: -0.5px;
+}
+
+
+.page-header p {
+  margin: 0;
+
+  font-size: 14px;
+
+  color: #64748b;
+}
+
+
+.page-header button {
+  height: 46px;
+
+  padding: 0 20px;
+
+  border-radius: 9px;
+
+  font-weight: 600;
+
+  box-shadow:
+    0 5px 14px
+    rgba(37, 99, 235, .18);
+}
+
+
+.page-header button mat-icon {
+  margin-right: 7px;
+}
+
+
+/* =========================================================
+   STATISTICS
+========================================================= */
+
+.stats-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 18px;
+
+  margin-bottom: 22px;
+}
+
+
+/* =========================================================
+   STAT CARD
+========================================================= */
+
+.stat-card {
+  min-height: 105px;
+
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 14px;
+
+  box-shadow:
+    0 4px 12px
+    rgba(15, 23, 42, .04);
+
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease;
+}
+
+
+.stat-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 9px 22px
+    rgba(15, 23, 42, .08);
+}
+
+
+/* =========================================================
+   STAT ICON
+========================================================= */
+
+.stat-icon {
+  width: 50px;
+  height: 50px;
+
+  min-width: 50px;
+
+  border-radius: 12px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+}
+
+
+.stat-icon mat-icon {
+  font-size: 25px;
+
+  width: 25px;
+  height: 25px;
+}
+
+
+/* =========================================================
+   STAT TEXT
+========================================================= */
+
+.stat-info span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  font-size: 13px;
+
+  font-weight: 500;
+
+  color: #64748b;
+}
+
+
+.stat-info strong {
+  display: block;
+
+  font-size: 27px;
+
+  line-height: 1;
+
+  font-weight: 750;
+
+  color: #111827;
+}
+
+
+/* TOTAL */
+
+.stat-card.total
+.stat-icon {
+  background: #dbeafe;
+
+  color: #2563eb;
+}
+
+
+/* CUSTOMER */
+
+.stat-card.customer
+.stat-icon {
+  background: #e0e7ff;
+
+  color: #4f46e5;
+}
+
+
+/* STAFF */
+
+.stat-card.staff
+.stat-icon {
+  background: #dcfce7;
+
+  color: #16a34a;
+}
+
+
+/* RIDER */
+
+.stat-card.rider
+.stat-icon {
+  background: #fef3c7;
+
+  color: #d97706;
+}
+
+
+/* =========================================================
+   FILTER BAR
+========================================================= */
+
+.filter-bar {
+  width: 100%;
+
+  padding: 18px;
+
+  box-sizing: border-box;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  margin-bottom: 17px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 14px;
+
+  box-shadow:
+    0 4px 12px
+    rgba(15, 23, 42, .035);
+}
+
+
+.search-field {
+  flex: 1;
+
+  min-width: 300px;
+}
+
+
+.role-filter {
+  width: 190px;
+
+  min-width: 190px;
+}
+
+
+.reset-btn {
+  height: 56px;
+
+  padding: 0 17px;
+
+  border-radius: 8px;
+
+  color: #475569;
+
+  border-color: #cbd5e1;
+
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+
+.reset-btn mat-icon {
+  margin-right: 5px;
+}
+
+
+/* =========================================================
+   MATERIAL FORM FIELD
+========================================================= */
+
+.filter-bar
+::ng-deep
+.mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+
+
+.modal-body
+::ng-deep
+.mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.table-container {
+  width: 100%;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 14px;
+
+  overflow-x: auto;
+
+  box-shadow:
+    0 4px 14px
+    rgba(15, 23, 42, .045);
+}
+
+
+table {
+  width: 100%;
+
+  min-width: 1050px;
+
+  border-collapse: separate;
+
+  border-spacing: 0;
+}
+
+
+/* =========================================================
+   TABLE HEADER
+========================================================= */
+
+thead {
+  background: #f8fafc;
+}
+
+
+thead th {
+  height: 56px;
+
+  padding: 0 20px;
+
+  text-align: left;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  color: #475569;
+
+  text-transform: uppercase;
+
+  letter-spacing: .35px;
+
+  border-bottom: 1px solid #e5e7eb;
+
+  white-space: nowrap;
+}
+
+
+thead th:first-child {
+  width: 55px;
+
+  text-align: center;
+}
+
+
+thead th:last-child {
+  width: 110px;
+}
+
+
+/* =========================================================
+   TABLE BODY
+========================================================= */
+
+tbody tr {
+  transition:
+    background .15s ease;
+}
+
+
+tbody tr:hover {
+  background: #f8fafc;
+}
+
+
+tbody td {
+  height: 70px;
+
+  padding: 10px 20px;
+
+  font-size: 14px;
+
+  color: #334155;
+
+  border-bottom: 1px solid #eef2f7;
+
+  vertical-align: middle;
+
+  white-space: nowrap;
+}
+
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+
+tbody td:first-child {
+  text-align: center;
+
+  color: #94a3b8;
+
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   USER NAME
+========================================================= */
+
+tbody td:nth-child(2) {
+  font-weight: 700;
+
+  color: #111827;
+}
+
+
+/* =========================================================
+   EMAIL
+========================================================= */
+
+tbody td:nth-child(3) {
+  color: #64748b;
+}
+
+
+/* =========================================================
+   PHONE
+========================================================= */
+
+tbody td:nth-child(4) {
+  color: #475569;
+
+  font-weight: 500;
+}
+
+
+/* =========================================================
+   ROLE BADGE
+========================================================= */
+
+.role {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  min-width: 78px;
+
+  padding: 6px 11px;
+
+  border-radius: 7px;
+
+  font-size: 11px;
+
+  font-weight: 700;
+}
+
+
+/* CUSTOMER */
+
+.role.customer {
+  color: #4f46e5;
+
+  background: #eef2ff;
+
+  border: 1px solid #c7d2fe;
+}
+
+
+/* STAFF */
+
+.role.staff {
+  color: #15803d;
+
+  background: #f0fdf4;
+
+  border: 1px solid #bbf7d0;
+}
+
+
+/* RIDER */
+
+.role.rider {
+  color: #b45309;
+
+  background: #fff7ed;
+
+  border: 1px solid #fed7aa;
+}
+
+
+/* =========================================================
+   JOB ROLE
+========================================================= */
+
+tbody td:nth-child(6) {
+  color: #475569;
+
+  font-weight: 500;
+}
+
+
+/* =========================================================
+   SALARY
+========================================================= */
+
+tbody td:nth-child(7) {
+  color: #111827;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+tbody td:last-child {
+  text-align: center;
+}
+
+
+tbody td:last-child button {
+  width: 38px;
+
+  height: 38px;
+
+  margin: 0 2px;
+
+  border-radius: 8px;
+
+  transition:
+    transform .15s ease,
+    background .2s ease;
+}
+
+
+tbody td:last-child button:hover {
+  transform: translateY(-1px);
+}
+
+
+tbody td:last-child
+mat-icon {
+  font-size: 19px;
+
+  width: 19px;
+  height: 19px;
+}
+
+
+/* EDIT */
+
+tbody td:last-child
+button:first-child {
+  color: #2563eb;
+
+  background: #eff6ff;
+}
+
+
+tbody td:last-child
+button:first-child:hover {
+  background: #dbeafe;
+}
+
+
+/* DELETE */
+
+tbody td:last-child
+button:last-child {
+  color: #dc2626;
+
+  background: #fef2f2;
+}
+
+
+tbody td:last-child
+button:last-child:hover {
+  background: #fee2e2;
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.empty {
+  height: 250px !important;
+
+  text-align: center !important;
+
+  vertical-align: middle !important;
+
+  color: #64748b !important;
+}
+
+
+.empty::before {
+  content: "👤";
+
+  display: block;
+
+  margin-bottom: 10px;
+
+  font-size: 35px;
+
+  opacity: .5;
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.loading {
+  min-height: 300px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 14px;
+
+  color: #64748b;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   MODAL OVERLAY
+========================================================= */
+
+.modal-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 9999;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  background:
+    rgba(15, 23, 42, .58);
+
+  backdrop-filter:
+    blur(4px);
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal {
+  width: 100%;
+
+  max-width: 560px;
+
+  max-height: 90vh;
+
+  overflow-y: auto;
+
+  background: #ffffff;
+
+  border-radius: 17px;
+
+  box-shadow:
+    0 25px 70px
+    rgba(15, 23, 42, .25);
+
+  animation:
+    modal-show .2s ease;
+}
+
+
+@keyframes modal-show {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(10px)
+      scale(.98);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+}
+
+
+/* =========================================================
+   MODAL HEADER
+========================================================= */
+
+.modal-header {
+  padding: 22px 24px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  border-bottom: 1px solid #eef2f7;
+}
+
+
+.modal-header h2 {
+  margin: 0;
+
+  font-size: 20px;
+
+  font-weight: 750;
+
+  color: #111827;
+}
+
+
+.modal-header button {
+  color: #64748b;
+}
+
+
+.modal-header button:hover {
+  background: #f1f5f9;
+}
+
+
+/* =========================================================
+   MODAL BODY
+========================================================= */
+
+.modal-body {
+  padding: 24px;
+
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap: 4px 15px;
+}
+
+
+.modal-body mat-form-field {
+  width: 100%;
+}
+
+
+/* Password / Role */
+
+.modal-body mat-form-field:nth-child(3),
+.modal-body mat-form-field:nth-child(4) {
+  width: 100%;
+}
+
+
+/* =========================================================
+   MODAL FOOTER
+========================================================= */
+
+.modal-footer {
+  padding: 17px 24px;
+
+  display: flex;
+
+  justify-content: flex-end;
+
+  align-items: center;
+
+  gap: 10px;
+
+  background: #f8fafc;
+
+  border-top: 1px solid #eef2f7;
+}
+
+
+.modal-footer button {
+  height: 42px;
+
+  padding: 0 18px;
+
+  border-radius: 8px;
+
+  font-weight: 600;
+}
+
+
+.modal-footer button:last-child {
+  box-shadow:
+    0 4px 10px
+    rgba(37, 99, 235, .18);
+}
+
+
+/* =========================================================
+   MODAL FORM FULL WIDTH
+========================================================= */
+
+.modal-body
+mat-form-field:nth-child(1),
+.modal-body
+mat-form-field:nth-child(2) {
+  grid-column: span 2;
+}
+
+
+/* =========================================================
+   RESPONSIVE 1200
+========================================================= */
+
+@media (max-width: 1200px) {
+
+  .stats-grid {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE 900
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .user-management {
+    padding: 20px;
+  }
+
+
+  .filter-bar {
+    flex-wrap: wrap;
+  }
+
+
+  .search-field {
+    flex: 1 1 100%;
+
+    min-width: 100%;
+  }
+
+
+  .role-filter {
+    flex: 1;
+
+    width: auto;
+  }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE 650
+========================================================= */
+
+@media (max-width: 650px) {
+
+  .user-management {
+    padding: 15px;
+  }
+
+
+  .page-header {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+
+  .page-header button {
+    width: 100%;
+  }
+
+
+  .stats-grid {
+    grid-template-columns:
+      1fr 1fr;
+
+    gap: 10px;
+  }
+
+
+  .stat-card {
+    padding: 14px;
+
+    min-height: 90px;
+  }
+
+
+  .stat-icon {
+    width: 42px;
+    height: 42px;
+
+    min-width: 42px;
+  }
+
+
+  .stat-info strong {
+    font-size: 22px;
+  }
+
+
+  .stat-info span {
+    font-size: 11px;
+  }
+
+
+  .filter-bar {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+
+  .role-filter {
+    width: 100%;
+
+    min-width: 100%;
+  }
+
+
+  .reset-btn {
+    width: 100%;
+  }
+
+
+  .modal-body {
+    grid-template-columns: 1fr;
+  }
+
+
+  .modal-body
+  mat-form-field:nth-child(1),
+  .modal-body
+  mat-form-field:nth-child(2) {
+    grid-column: span 1;
+  }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE 420
+========================================================= */
+
+@media (max-width: 420px) {
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+
+  .modal-overlay {
+    padding: 10px;
+  }
+
+
+  .modal {
+    border-radius: 14px;
+  }
+
+
+  .modal-header {
+    padding: 18px;
+  }
+
+
+  .modal-body {
+    padding: 18px;
+  }
+
+
+  .modal-footer {
+    padding: 14px 18px;
+  }
+
+}

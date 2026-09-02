@@ -1,0 +1,261 @@
+<div class="order-history">
+    <div class="page-header">
+
+        <div>
+
+            <h2>
+                ប្រវត្តិការបញ្ជាទិញ
+            </h2>
+
+            <p>
+                មើលការបញ្ជាទិញរបស់អ្នក
+            </p>
+
+        </div>
+
+        <button mat-stroked-button (click)="loadOrders()">
+
+            <mat-icon>
+                refresh
+            </mat-icon>
+
+            Refresh
+
+        </button>
+
+    </div>
+
+    @if (isLoading) {
+
+    <div class="loading">
+
+        <mat-spinner diameter="40">
+        </mat-spinner>
+
+        <p>
+            កំពុងទាញយក Order...
+        </p>
+
+    </div>
+
+    }
+
+    @if (
+    !isLoading &&
+    errorMessage
+    ) {
+
+    <div class="error-box">
+
+        <mat-icon>
+            error_outline
+        </mat-icon>
+
+        <p>
+            {{ errorMessage }}
+        </p>
+
+    </div>
+
+    }
+
+    @if (
+    !isLoading &&
+    !errorMessage &&
+    orders.length === 0
+    ) {
+
+    <div class="empty-orders">
+
+        <mat-icon>
+            receipt_long
+        </mat-icon>
+
+        <h3>
+            មិនទាន់មានការបញ្ជាទិញ
+        </h3>
+
+        <p>
+            ការបញ្ជាទិញរបស់អ្នកនឹងបង្ហាញនៅទីនេះ
+        </p>
+
+        <button mat-flat-button color="primary" routerLink="/products">
+
+            ចាប់ផ្តើមទិញ
+
+        </button>
+
+    </div>
+
+    }
+
+
+    @if (
+    !isLoading &&
+    orders.length > 0
+    ) {
+
+    <div class="orders-list">
+
+        @for (order of orders; track order._id ) {
+        <div class="order-card" (click)="viewOrder(order)">
+
+            <div class="order-header">
+
+                <div>
+
+                    <span class="order-label">
+                        Order
+                    </span>
+
+                    <h3>
+                        #{{ order._id.slice(-8).toUpperCase() }}
+                    </h3>
+
+                    <p>
+                        {{ formatDate(order.createdAt) }}
+                    </p>
+
+                </div>
+
+
+                <!-- STATUS -->
+
+                <div class="status" [class]="
+                getStatusClass(
+                  order.status
+                )
+              ">
+
+                    <mat-icon>
+                        {{
+                        getStatusIcon(
+                        order.status
+                        )
+                        }}
+                    </mat-icon>
+
+                    {{ order.status }}
+
+                </div>
+
+            </div>
+
+
+            <hr>
+
+            <div class="order-items">
+
+                @for (
+                item of order.items;
+                track item.productId
+                ) {
+
+                <div class="order-item">
+
+                    <img [src]="item.image" [alt]="item.productName">
+
+                    <div class="item-info">
+
+                        <h4>
+                            {{ item.productName }}
+                        </h4>
+
+                        <p>
+                            {{ item.quantity }} ×
+                            {{
+                            item.price
+                            | currency:'USD'
+                            }}
+                        </p>
+
+                    </div>
+
+                    <strong>
+
+                        {{
+                        item.subtotal
+                        | currency:'USD'
+                        }}
+
+                    </strong>
+
+                </div>
+
+                }
+
+            </div>
+
+
+            <hr>
+
+            <div class="order-footer">
+
+
+                <div class="footer-info">
+
+                    <span>
+                        {{ getItemCount(order) }}
+                        items
+                    </span>
+
+                    <span>
+                        •
+                    </span>
+
+                    <span>
+                        {{ getPaymentText(
+                        order.paymentMethod
+                        ) }}
+                    </span>
+
+                    <span>
+                        •
+                    </span>
+
+                    <span [class.payment-paid]="
+                  order.paymentStatus === 'Paid'
+                ">
+                        {{ order.paymentStatus }}
+                    </span>
+
+                </div>
+
+
+                <div class="total">
+
+                    <small>
+                        Total
+                    </small>
+
+                    <strong>
+                        {{
+                        order.totalAmount
+                        | currency:'USD'
+                        }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+            <div class="view-order">
+
+                View Order
+
+                <mat-icon>
+                    arrow_forward_ios
+                </mat-icon>
+
+            </div>
+
+
+        </div>
+
+        }
+
+    </div>
+
+    }
+
+</div>

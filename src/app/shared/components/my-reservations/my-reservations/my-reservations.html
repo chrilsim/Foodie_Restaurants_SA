@@ -1,0 +1,322 @@
+<div class="reservation-page">
+
+  <div class="page-header">
+
+    <div>
+
+      <h1>
+        My Reservations
+      </h1>
+
+      <p>
+        ការកក់តុរបស់ខ្ញុំ
+      </p>
+
+    </div>
+
+
+    <button
+      class="refresh-btn"
+      (click)="loadBookings()">
+
+      <mat-icon>
+        refresh
+      </mat-icon>
+
+    </button>
+
+  </div>
+
+
+  @if (isLoading) {
+
+    <div class="loading">
+    </div>
+    <div class="log" style="align-items: center;
+    justify-content: center; display: flex;"> <mat-spinner [diameter]="40"></mat-spinner></div>
+
+  }
+
+
+  @else if (bookings.length === 0) {
+
+    <div class="empty">
+
+      <mat-icon>
+        event_busy
+      </mat-icon>
+
+      <h3>
+        No Reservations
+      </h3>
+
+      <p>
+        អ្នកមិនទាន់មានការកក់តុទេ
+      </p>
+
+    </div>
+
+  }
+
+
+  @else {
+
+    <div class="booking-list">
+
+      @for (
+        booking of bookings;
+        track booking._id
+      ) {
+
+        <div class="booking-card">
+
+
+          <!-- ================================= -->
+          <!-- HEADER -->
+          <!-- ================================= -->
+
+          <div class="booking-header">
+
+            <div>
+
+              <h3>
+
+                Table
+                {{
+                  booking.tableId?.tableNumber
+                  || 'N/A'
+                }}
+
+              </h3>
+
+              <span class="booking-number">
+
+                #{{
+
+                  booking._id
+                    ?.slice(-6)
+                    ?.toUpperCase()
+
+                }}
+
+              </span>
+
+            </div>
+
+
+            <!-- STATUS -->
+
+            <span
+              class="status"
+              [ngClass]="booking.status">
+
+              {{ booking.status }}
+
+            </span>
+
+          </div>
+
+
+          <!-- ================================= -->
+          <!-- INFO -->
+          <!-- ================================= -->
+
+          <div class="booking-info">
+
+
+            <div class="info-item">
+
+              <mat-icon>
+                calendar_today
+              </mat-icon>
+
+              <div>
+
+                <small>
+                  Date
+                </small>
+
+                <strong>
+
+                  {{
+                    booking.bookingDate
+                    | date:'dd/MM/yyyy'
+                  }}
+
+                </strong>
+
+              </div>
+
+            </div>
+
+
+            <div class="info-item">
+
+              <mat-icon>
+                schedule
+              </mat-icon>
+
+              <div>
+
+                <small>
+                  Time
+                </small>
+
+                <strong>
+
+                  {{
+                    booking.bookingTime
+                  }}
+
+                </strong>
+
+              </div>
+
+            </div>
+
+
+            <div class="info-item">
+
+              <mat-icon>
+                group
+              </mat-icon>
+
+              <div>
+
+                <small>
+                  Guests
+                </small>
+
+                <strong>
+
+                  {{ booking.partySize }}
+
+                </strong>
+
+              </div>
+
+            </div>
+
+
+            <div class="info-item">
+
+              <mat-icon>
+                location_on
+              </mat-icon>
+
+              <div>
+
+                <small>
+                  Area
+                </small>
+
+                <strong>
+
+                  {{
+                    booking.seatingArea
+                  }}
+
+                </strong>
+
+              </div>
+
+            </div>
+
+
+          </div>
+
+
+          <!-- ================================= -->
+          <!-- CONTACT -->
+          <!-- ================================= -->
+
+          <div class="contact">
+
+            <div>
+
+              <small>
+                Name
+              </small>
+
+              <strong>
+
+                {{ booking.fullName }}
+
+              </strong>
+
+            </div>
+
+
+            <div>
+
+              <small>
+                Phone
+              </small>
+
+              <strong>
+
+                {{ booking.phoneNumber }}
+
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <!-- ================================= -->
+          <!-- ACTION -->
+          <!-- ================================= -->
+
+          <div class="booking-actions">
+
+
+            <!-- VIEW INVOICE -->
+
+            <button
+              class="invoice-btn"
+              (click)="viewInvoice(booking)">
+
+              <mat-icon>
+                receipt_long
+              </mat-icon>
+
+              View Invoice
+
+            </button>
+
+
+            <!-- CANCEL -->
+
+            @if (
+              booking.status === 'pending'
+            ) {
+
+              <button
+                class="cancel-btn"
+                (click)="
+                  cancelBooking(booking)
+                ">
+
+                <mat-icon>
+                  close
+                </mat-icon>
+
+                Cancel
+
+              </button>
+
+            }
+
+
+          </div>
+
+        </div>
+
+      }
+
+    </div>
+
+  }
+
+</div>

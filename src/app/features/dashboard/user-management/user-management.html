@@ -1,0 +1,624 @@
+<div class="user-management">
+  <div class="page-header">
+
+    <div>
+
+      <h1>
+        Customer & Staff Management
+      </h1>
+
+      <p>
+        Manage customer and staff accounts
+      </p>
+
+    </div>
+
+
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="openAdd()">
+
+      <mat-icon>
+        add
+      </mat-icon>
+
+      Add User
+
+    </button>
+
+  </div>
+
+<div class="stats-grid">
+
+  <div class="stat-card total">
+
+    <div class="stat-icon">
+      <mat-icon>groups</mat-icon>
+    </div>
+
+    <div class="stat-info">
+
+      <span>Total Users</span>
+
+      <strong>
+        {{ totalUsers }}
+      </strong>
+
+    </div>
+
+  </div>
+
+
+  <div class="stat-card customer">
+
+    <div class="stat-icon">
+      <mat-icon>person</mat-icon>
+    </div>
+
+    <div class="stat-info">
+
+      <span>Customers</span>
+
+      <strong>
+        {{ getUserCount('Customer') }}
+      </strong>
+
+    </div>
+
+  </div>
+
+  <div class="stat-card staff">
+
+    <div class="stat-icon">
+      <mat-icon>badge</mat-icon>
+    </div>
+
+    <div class="stat-info">
+
+      <span>Staff</span>
+
+      <strong>
+        {{ getUserCount('Staff') }}
+      </strong>
+
+    </div>
+
+  </div>
+
+  <div class="stat-card rider">
+
+    <div class="stat-icon">
+      <mat-icon>delivery_dining</mat-icon>
+    </div>
+
+    <div class="stat-info">
+
+      <span>Riders</span>
+
+      <strong>
+        {{ getUserCount('Rider') }}
+      </strong>
+
+    </div>
+
+  </div>
+
+</div>
+
+<div class="filter-bar">
+
+  <mat-form-field
+    appearance="outline"
+    class="search-field">
+
+    <mat-label>
+      Search user
+    </mat-label>
+
+    <mat-icon matPrefix>
+      search
+    </mat-icon>
+
+    <input
+      matInput
+      [(ngModel)]="searchText"
+      (input)="applyFilter()"
+      placeholder="Name, email or phone">
+
+
+    @if (searchText) {
+
+      <button
+        mat-icon-button
+        matSuffix
+        type="button"
+        (click)="clearSearch()">
+
+        <mat-icon>
+          close
+        </mat-icon>
+
+      </button>
+
+    }
+
+  </mat-form-field>
+
+
+  <mat-form-field
+    appearance="outline"
+    class="role-filter">
+
+    <mat-label>
+      Role
+    </mat-label>
+
+    <mat-select
+      [(ngModel)]="selectedRole"
+      (selectionChange)="applyFilter()">
+
+      <mat-option value="All">
+        All Roles
+      </mat-option>
+
+      <mat-option value="Customer">
+        Customer
+      </mat-option>
+
+      <mat-option value="Staff">
+        Staff
+      </mat-option>
+
+      <mat-option value="Rider">
+        Rider
+      </mat-option>
+
+    </mat-select>
+
+  </mat-form-field>
+
+
+  <button
+    mat-stroked-button
+    type="button"
+    class="reset-btn"
+    (click)="resetFilter()">
+
+    <mat-icon>
+      filter_alt_off
+    </mat-icon>
+
+    Reset
+
+  </button>
+
+</div>
+
+  @if (isLoading) {
+
+    <div class="loading">
+
+      Loading users...
+
+    </div>
+
+  }
+
+
+  @else {
+
+    <div class="table-container">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>
+              #
+            </th>
+
+            <th>
+              Name
+            </th>
+
+            <th>
+              Email
+            </th>
+
+            <th>
+              Phone
+            </th>
+
+            <th>
+              Role
+            </th>
+
+            <th>
+              Job Role
+            </th>
+
+            <th>
+              Salary
+            </th>
+
+            <th>
+              Actions
+            </th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          @for (
+            user of filteredUsers;
+            track user._id;
+            let i = $index
+          ) {
+
+            <tr>
+
+              <td>
+                {{ i + 1 }}
+              </td>
+
+              <td>
+                {{ user.fullName }}
+              </td>
+
+              <td>
+                {{ user.email }}
+              </td>
+
+              <td>
+                {{ user.phone || '-' }}
+              </td>
+
+              <td>
+
+                <span
+                  class="role"
+                  [class.staff]="
+                    user.role === 'Staff'
+                  "
+                  [class.customer]="
+                    user.role === 'Customer'
+                  "
+                  [class.rider]="
+                    user.role === 'Rider'
+                  ">
+
+                  {{ user.role }}
+
+                </span>
+
+              </td>
+
+              <td>
+                {{ user.jobRole || '-' }}
+              </td>
+
+              <td>
+
+                @if (user.salary !== null &&
+                     user.salary !== undefined) {
+
+                  ${{ user.salary }}
+
+                }
+
+                @else {
+
+                  -
+
+                }
+
+              </td>
+
+              <td>
+
+                <button
+                  mat-icon-button
+                  (click)="openEdit(user)"
+                  title="Edit">
+
+                  <mat-icon>
+                    edit
+                  </mat-icon>
+
+                </button>
+
+
+                <button
+                  mat-icon-button
+                  color="warn"
+                  (click)="deleteUser(user)"
+                  title="Delete">
+
+                  <mat-icon>
+                    delete
+                  </mat-icon>
+
+                </button>
+
+              </td>
+
+            </tr>
+
+          }
+
+
+          @if (filteredUsers.length === 0) {
+
+            <tr>
+
+              <td
+                colspan="8"
+                class="empty">
+
+                No users found
+
+              </td>
+
+            </tr>
+
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  }
+
+
+  @if (showModal) {
+
+    <div
+      class="modal-overlay"
+      (click)="closeModal()">
+
+
+      <div
+        class="modal"
+        (click)="$event.stopPropagation()">
+
+
+        <div class="modal-header">
+
+          <h2>
+
+            {{
+              isEditMode
+                ? 'Update User'
+                : 'Add User'
+            }}
+
+          </h2>
+
+
+          <button
+            mat-icon-button
+            (click)="closeModal()">
+
+            <mat-icon>
+              close
+            </mat-icon>
+
+          </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+
+          <!-- NAME -->
+
+          <mat-form-field
+            appearance="outline">
+
+            <mat-label>
+              Full Name
+            </mat-label>
+
+            <input
+              matInput
+              [(ngModel)]="form.fullName">
+
+          </mat-form-field>
+
+
+          <!-- EMAIL -->
+
+          <mat-form-field
+            appearance="outline">
+
+            <mat-label>
+              Email
+            </mat-label>
+
+            <input
+              matInput
+              type="email"
+              [(ngModel)]="form.email">
+
+          </mat-form-field>
+
+
+          <!-- PASSWORD -->
+
+          @if (!isEditMode) {
+
+            <mat-form-field
+              appearance="outline">
+
+              <mat-label>
+                Password
+              </mat-label>
+
+              <input
+                matInput
+                type="password"
+                [(ngModel)]="form.password">
+
+            </mat-form-field>
+
+          }
+
+
+          <!-- ROLE -->
+
+          <mat-form-field
+            appearance="outline">
+
+            <mat-label>
+              Role
+            </mat-label>
+
+            <mat-select
+              [(ngModel)]="form.role"
+              (selectionChange)="onRoleChange()">
+
+              <mat-option value="Customer">
+                Customer
+              </mat-option>
+
+              <mat-option value="Staff">
+                Staff
+              </mat-option>
+
+              <mat-option value="Rider">
+                Rider
+              </mat-option>
+
+            </mat-select>
+
+          </mat-form-field>
+
+          @if (form.role === 'Staff') {
+
+            <mat-form-field
+              appearance="outline">
+
+              <mat-label>
+                Gender
+              </mat-label>
+
+              <mat-select
+                [(ngModel)]="form.gender">
+
+                <mat-option value="Male">
+                  Male
+                </mat-option>
+
+                <mat-option value="Female">
+                  Female
+                </mat-option>
+
+              </mat-select>
+
+            </mat-form-field>
+
+
+            <mat-form-field
+              appearance="outline">
+
+              <mat-label>
+                Phone
+              </mat-label>
+
+              <input
+                matInput
+                [(ngModel)]="form.phone">
+
+            </mat-form-field>
+
+
+            <mat-form-field
+              appearance="outline">
+
+              <mat-label>
+                Job Role
+              </mat-label>
+
+              <mat-select
+                [(ngModel)]="form.jobRole">
+
+                <mat-option value="Manager">
+                  Manager
+                </mat-option>
+
+                <mat-option value="Cashier">
+                  Cashier
+                </mat-option>
+
+                <mat-option value="Kitchen">
+                  Kitchen
+                </mat-option>
+
+                <mat-option value="Waiter">
+                  Waiter
+                </mat-option>
+
+              </mat-select>
+
+            </mat-form-field>
+
+
+            <mat-form-field
+              appearance="outline">
+
+              <mat-label>
+                Salary
+              </mat-label>
+
+              <input
+                matInput
+                type="number"
+                [(ngModel)]="form.salary">
+
+            </mat-form-field>
+
+          }
+
+        </div>
+        <div class="modal-footer">
+
+          <button
+            mat-button
+            (click)="closeModal()">
+
+            Cancel
+
+          </button>
+
+
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="saveUser()">
+
+            {{
+              isEditMode
+                ? 'Update'
+                : 'Create'
+            }}
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  }
+
+</div>

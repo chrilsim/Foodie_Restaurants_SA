@@ -1,4 +1,4 @@
-.componenet-show{
+/* .componenet-show{
     margin-top: 70px;
     overflow: hidden;
 
@@ -15,4 +15,39 @@ mat-sidenav {
   max-width: 380px;
     padding: 10px;
   border-radius: 0px !important;
+} */
+
+.componenet-show {
+  margin-top: 70px;
+  min-height: calc(100vh - 70px);
+  overflow: visible;
+}
+
+.container {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+}
+
+mat-sidenav-container {
+  width: 100%;
+  height: 100%;
+}
+
+mat-sidenav-content {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+mat-sidenav {
+  width: 380px;
+  max-width: 85vw;
+  padding: 10px;
+  border-radius: 0 !important;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }

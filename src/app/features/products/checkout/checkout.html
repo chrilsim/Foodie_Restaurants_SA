@@ -1,4 +1,4 @@
-<div class="main-chackout">
+<!-- <div class="main-chackout">
     <div class="main-grid">
         <div class="select-left">
             <div class="select-location">
@@ -115,5 +115,560 @@
 
     </div>
 
-</div>
+</div> -->
 
+<div class="main-checkout">
+
+    <div class="main-grid">
+
+        <div class="select-left">
+
+            <div class="select-location">
+
+                <h3>
+
+                    <mat-icon>
+                        location_on
+                    </mat-icon>
+
+                    របៀបទទួលយក
+
+                </h3>
+
+
+                <ul class="receive-type">
+
+
+                    <!-- DELIVERY -->
+
+                    <li [class.active]="selectedReceiveType === 'delivery'
+            " (click)="selectReceiveType('delivery')
+            ">
+
+                        <mat-icon>
+                            moped
+                        </mat-icon>
+
+                        <p>
+                            ដឹកជញ្ជូន
+                        </p>
+
+                    </li>
+
+
+                    <!-- PICKUP -->
+
+                    <li [class.active]="
+              selectedReceiveType === 'pickup'
+            " (click)="
+              selectReceiveType('pickup')
+            ">
+
+                        <mat-icon>
+                            storefront
+                        </mat-icon>
+
+                        <p>
+                            មកយកផ្ទាល់
+                        </p>
+
+                    </li>
+
+                </ul>
+
+
+                <!-- ================================= -->
+                <!-- ADDRESS -->
+                <!-- ================================= -->
+
+                @if (selectedReceiveType === 'delivery') {
+                <p class="section-label">អាសយដ្ឋានដឹកជញ្ជូន</p>
+                @if (addresses.length > 0) {
+
+                <mat-radio-group class="address-list" [value]="selectedAddress?._id"
+                    (change)="selectAddressById($event.value)">
+                    @for (address of addresses;track address._id) {
+
+
+                    <mat-card class="address-card" [class.selected]="
+                    selectedAddress?._id ===
+                    address._id
+                  ">
+
+                        <mat-radio-button [value]="address._id" class="address-radio">
+                            <div class="address-content">
+                                <div class="address-icon">
+                                    <mat-icon>
+                                        @if (address.label === 'Home') {
+                                        home
+                                        } @else if (
+                                        address.label === 'Work'
+                                        ) {
+
+                                        work
+
+                                        } @else {
+
+                                        location_on
+                                        }
+
+                                    </mat-icon>
+
+                                </div>
+                                <div class="address-info">
+                                    <div class="address-header">
+                                        <h4>
+                                            {{ address.label }}
+                                        </h4>
+                                        @if (address.isDefault) {
+                                        <span class="default-badge">
+                                            Default
+                                        </span>
+
+                                        }
+
+                                    </div>
+                                    <p>{{ address.address }},{{ address.city }},{{ address.province }}</p>
+
+                                    <span class="receiver">
+
+                                        {{ address.receiverName }}
+
+                                        <span>
+                                            •
+                                        </span>
+
+                                        {{ address.phone }}
+
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </mat-radio-button>
+
+                    </mat-card>
+
+                    }
+
+                </mat-radio-group>
+
+
+                } @else {
+
+
+                <mat-card class="no-address">
+
+                    <mat-icon>
+                        location_off
+                    </mat-icon>
+
+                    <h4>
+                        មិនទាន់មានអាសយដ្ឋាន
+                    </h4>
+
+                    <p>
+                        សូមបន្ថែមអាសយដ្ឋានសម្រាប់ការដឹកជញ្ជូន
+                    </p>
+
+                    <button mat-stroked-button color="primary" type="button" (click)="addAddress()">
+
+                        <mat-icon>
+                            add
+                        </mat-icon>
+
+                        បន្ថែមអាសយដ្ឋាន
+
+                    </button>
+
+
+                    <div class="location-divider">
+
+                        <span></span>
+
+                        <small>ឬ</small>
+
+                        <span></span>
+
+                    </div>
+
+
+                    <button mat-button type="button" class="current-location-btn" (click)="useCurrentLocation()">
+
+                        <mat-icon>
+                            my_location
+                        </mat-icon>
+
+                        ប្រើទីតាំងបច្ចុប្បន្ន
+
+                    </button>
+
+                </mat-card>
+
+                }
+
+                }
+
+
+                <!-- ================================= -->
+                <!-- PAYMENT -->
+                <!-- ================================= -->
+
+                <div class="payments">
+
+
+                    <h3>
+
+                        <mat-icon>
+                            payments
+                        </mat-icon>
+
+                        របៀបបង់ប្រាក់
+
+                    </h3>
+
+
+                    <ul>
+
+
+                        <!-- CASH -->
+
+                        <li [class.active]="
+                selectedPayment === 'cash'
+              " (click)="
+                selectPayment('cash')
+              ">
+
+                            <div class="icon">
+
+                                <input type="radio" name="payment" [checked]="
+                    selectedPayment === 'cash'
+                  ">
+
+                                <mat-icon>
+                                    payments
+                                </mat-icon>
+
+                            </div>
+
+
+                            <div class="text-body">
+
+                                <h3>
+                                    សាច់ប្រាក់
+                                </h3>
+
+                                <p>
+                                    បង់ប្រាក់ពេលទំនិញមកដល់
+                                </p>
+
+                            </div>
+
+                        </li>
+
+
+                        <!-- ABA -->
+
+                        <li [class.active]="
+                selectedPayment === 'aba'
+              " (click)="
+                selectPayment('aba')
+              ">
+
+                            <div class="icon">
+
+                                <input type="radio" name="payment" [checked]="
+                    selectedPayment === 'aba'
+                  ">
+
+                                <mat-icon>
+                                    account_balance
+                                </mat-icon>
+
+                            </div>
+
+
+                            <div class="text-body">
+
+                                <h3>
+                                    ABA PAY /
+                                    វ៉ាលេតឌីជីថល
+                                </h3>
+
+                                <p>
+                                    បង់ប្រាក់តាម Digital Wallet
+                                </p>
+
+                            </div>
+
+                        </li>
+
+
+                        <!-- CARD -->
+
+                        <li [class.active]="
+                selectedPayment === 'card'
+              " (click)="
+                selectPayment('card')
+              ">
+
+                            <div class="icon">
+
+                                <input type="radio" name="payment" [checked]="
+                    selectedPayment === 'card'
+                  ">
+
+                                <mat-icon>
+                                    credit_card
+                                </mat-icon>
+
+                            </div>
+
+
+                            <div class="text-body">
+
+                                <h3>
+                                    កាតឥណទាន / Visa
+                                </h3>
+
+                                <p>
+                                    **** **** **** 4242
+                                </p>
+
+                            </div>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================= -->
+        <!-- RIGHT -->
+        <!-- ================================= -->
+
+        <div class="select-right">
+
+            <div class="order-summary">
+
+
+                <h3>
+                    សេចក្តីសង្ខេបនៃការបញ្ជាទិញ
+                </h3>
+
+
+                <!-- EMPTY -->
+
+                @if (
+                cartItems.length === 0
+                ) {
+
+                <div class="empty-cart">
+
+                    <mat-icon>
+                        shopping_cart
+                    </mat-icon>
+
+                    <p>
+                        Cart is empty
+                    </p>
+
+                </div>
+
+                }
+
+
+                <!-- ITEMS -->
+
+                @for (
+                item of cartItems;
+                track item._id
+                ) {
+
+                <div class="items-order">
+
+
+                    <div class="img">
+
+                        <img [src]="item.image" [alt]="item.name">
+
+                    </div>
+
+
+                    <div class="text-order">
+
+
+                        <div class="item-header">
+
+                            <h3>
+                                {{ item.name }}
+                            </h3>
+
+                            <span>
+
+                                {{
+                                item.price
+                                | currency:'USD'
+                                }}
+
+                            </span>
+
+                        </div>
+
+
+                        <p>
+
+                            ចំនួន:
+                            {{ item.quantity }}
+
+                        </p>
+
+
+                        <strong>
+
+                            {{
+                            getItemTotal(item)
+                            | currency:'USD'
+                            }}
+
+                        </strong>
+
+                    </div>
+
+                </div>
+
+                }
+
+
+                <hr>
+
+
+                <!-- PRODUCT TOTAL -->
+
+                <div class="total-line">
+
+                    <h3>
+                        សរុបផលិតផល
+                    </h3>
+
+                    <span>
+
+                        {{
+                        totalPrice
+                        | currency:'USD'
+                        }}
+
+                    </span>
+
+                </div>
+
+
+                <!-- DELIVERY -->
+
+                <div class="total-line">
+
+                    <h3>
+                        សេវាដឹកជញ្ជូន
+                    </h3>
+
+                    <span>
+
+                        {{
+                        deliveryFee
+                        | currency:'USD'
+                        }}
+
+                    </span>
+
+                </div>
+
+
+                <hr>
+
+
+                <!-- GRAND TOTAL -->
+
+                <div class="total-line">
+
+                    <h3>
+                        សរុបរួម
+                    </h3>
+
+                    <span>
+
+                        {{
+                        getGrandTotal()
+                        | currency:'USD'
+                        }}
+
+                    </span>
+
+                </div>
+
+
+                <!-- TOTAL ITEMS -->
+
+                <div class="total-line">
+
+                    <h3>
+                        ចំនួនទំនិញ
+                    </h3>
+
+                    <span>
+                        {{ totalItem }}
+                    </span>
+
+                </div>
+
+
+                <!-- BUTTON -->
+
+                <button mat-raised-button [disabled]="
+
+            isLoading ||
+
+            cartItems.length === 0 ||
+
+            (
+              selectedReceiveType === 'delivery' &&
+              !selectedAddress
+            )
+
+          " (click)="
+            placeOrder()
+          ">
+
+                    @if (isLoading) {
+
+                    កំពុងបញ្ជាទិញ...
+
+                    } @else {
+
+                    បញ្ជាទិញ
+
+                    }
+
+                </button>
+
+
+                <p class="terms">
+
+                    ដោយចុចលើប៊ូតុងនេះ
+                    អ្នកយល់ព្រមតាម
+                    លក្ខខណ្ឌប្រើប្រាស់របស់យើង។
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

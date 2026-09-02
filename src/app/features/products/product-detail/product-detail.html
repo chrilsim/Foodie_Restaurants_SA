@@ -1,73 +1,152 @@
-<div class="main-product-detail">
-    <div class="left-contain">
-        <div class="full-img">
-            <img src="assets/tranding.jpg" alt="">
+<div class="" style="padding-top: 30px;">
+    <div class="product-detail">
+
+        @if (isLoading) {
+
+        <div class="loading">
+            <mat-spinner diameter="45"></mat-spinner>
+            <p>Loading product...</p>
         </div>
-    </div>
-    <div class="right-contain">
-        <h2>អាម៉ុកត្រី (Fish Amok)</h2>
-        <div class="price-start">
+        }
+        @else {
+        <div class="product-image">
+            @if (menuItem.image) {
+            <img [src]="menuItem.image" [alt]="menuItem.name">
+            }
+            @else {
+            <div class="no-image">
+                <mat-icon>restaurant</mat-icon>
+            </div>
+            }
+            @if (menuItem.isPopular) {
+
+            <span class="popular">🔥 Popular</span>
+            }
+            @if (menuItem.isFeatured) {
+
+            <span class="featured">⭐ Featured</span>
+            }
+
+        </div>
+
+        <div class="product-info">
+            @if (getCurrentCategory()) {
+
+            <span class="category">
+                {{ getCurrentCategory()?.name }}
+            </span>
+
+            }
+            <h1>{{ menuItem.name }}</h1>
+            <p class="description">{{ menuItem.description }}</p>
             <div class="price">
-                <h3>$8.50/</h3> <span>/ 34,850៛</span>
+                <strong>
+                    {{ getUnitPrice() | currency:'USD' }}
+                </strong>
+                <span>
+                    /
+                    {{ getUnitPrice() | usdToKhr }}
+                </span>
+
             </div>
-            <div class="start">
-                <mat-icon>star</mat-icon>
-                <h4>4.7</h4>
-                <p>(120+ ពិនិត្យឡើងវិញ)</p>
+            @if (menuItem.preparationTime) {
+            <div class="preparation">
+                <mat-icon>schedule</mat-icon>
+                {{ menuItem.preparationTime }}
+                min
+
             </div>
-        </div>
-        <div class="description">
-            <p>Authentic Cambodian steamed curried fish in banana leaf, seasoned with kroeung and coconut milk.
-                អាម៉ុកត្រីខ្មែរពិតៗ ចម្អិនដោយប្រើគ្រឿងបុកពិសេស និងខ្ទិះដូងដ៏ឈ្ងុយឆ្ងាញ់</p>
-        </div>
-        <div class="select-size">
-            <h3>ជ្រើសរើសទំហំ (Select Size)</h3>
-            <ul>
-                <li>
-                    <p>ទំហំ S</p>
-                    <h4>$8.50</h4>
-                    <p>Small</p>
-                </li>
-                <li>
-                    <p>ទំហំ S</p>
-                    <h4>$8.50</h4>
-                    <p>Small</p>
-                </li>
-                <li>
-                    <p>ទំហំ S</p>
-                    <h4>$8.50</h4>
-                    <p>Small</p>
-                </li>
-            </ul>
-        </div>
-        <div class="add-rice">
-            <h3>បន្ថែមគ្រឿង (Add-ons)</h3>
-            <label>
-                <div class="check-radio">
-                     <input type="radio" name="addon">
-                     <p>បាយបន្ថែម (Extra Rice)</p>
+
+            }
+            @if (menuItem.options &&menuItem.options.length > 0) {
+            <div class="options">
+                @for (option of menuItem.options;track option._id || option.name) {
+                <div class="option-group">
+                    <div class="option-title">
+                        <h3>{{ option.name }}</h3>
+                        @if (option.required) {
+                        <span>Required</span>
+                        }
+
+                        @else {
+                        <span>Optional</span>
+                        }
+
+                    </div>
+                    @if (option.type === 'single') {
+                    <div class="choices">
+                        @for (choice of option.choices;track choice.name) {
+                        <label class="choice">
+                            <input type="radio" [name]="option.name" [value]="choice.name" [checked]="
+                                                    selectedOptions.some(
+                                                        selected =>
+                                                            selected.optionName === option.name &&
+                                                            selected.choiceName === choice.name
+                                                    )
+                                                " (change)="selectSingleOption(option,choice)">
+
+                            <span>{{ choice.name }}</span>
+                            @if (choice.price > 0) {
+                            <small>
+                                +
+                                {{ choice.price | currency:'USD' }}
+                            </small>
+                            }
+                        </label>
+                        }
+                    </div>
+                    }
+                    @if (option.type === 'multiple') {
+                    <div class="choices">
+                        @for (choice of option.choices;track choice.name) {
+                        <label class="choice">
+                            <input type="checkbox" [checked]="
+                                                    selectedOptions.some(
+                                                        selected =>
+                                                            selected.optionName === option.name &&
+                                                            selected.choiceName === choice.name
+                                                    )
+                                                " (change)="toggleMultipleOption(option,choice,$event)">
+                            <span>{{ choice.name }}</span>
+                            @if (choice.price > 0) {
+                            <small>+{{ choice.price | currency:'USD' }}</small>
+                            }
+                        </label>
+                        }
+                    </div>
+                    }
                 </div>
-                <div class="">
-                    <span>+$0.50</span>
+                }
+            </div>
+            }
+
+            <div class="quantity-section">
+                <h3>Quantity</h3>
+                <div class="quantity">
+                    <button type="button" (click)="decreaseQty()">
+                        <mat-icon>remove</mat-icon>
+                    </button>
+                    <strong>{{ quantity }}</strong>
+                    <button type="button" (click)="increaseQty()">
+                        <mat-icon>add</mat-icon>
+                    </button>
                 </div>
-            </label>
-            <label>
-                <div class="check-radio">
-                     <input type="radio" name="addon">
-                     <p>ត្រីបន្ថែម (Extra Fish)</p>
-                </div>
-                <div class="">
-                    <span>+$0.50</span>
-                </div>
-            </label>
+            </div>
+            <div class="total">
+                <span>Total</span>
+                <strong>
+                    {{ getTotalPrice() | currency:'USD' }}
+                </strong>
+
+            </div>
+
+            <button type="button" class="add-cart-btn" [disabled]="!menuItem.isAvailable ||(menuItem.hasStock &&menuItem.stock <= 0)
+                " (click)="addToCart()">
+                <mat-icon>add_shopping_cart</mat-icon>
+                Add to Cart
+            </button>
         </div>
-    </div>
-    <div class="main-add-cart">
-        <div class="plus-minus">
-            <div class="minus"><mat-icon>remove</mat-icon></div>
-            <p>0</p>
-            <div class="plus"><mat-icon>add</mat-icon></div>
-        </div>
-        <div class="add-cart"><p>បន្ថែមទៅក្នុងកន្ត្រក (Add to Cart)</p></div>
+        }
+
     </div>
 </div>

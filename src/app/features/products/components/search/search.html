@@ -1,1 +1,148 @@
-<p>search works!</p>
+<div class="main-search">
+    <div class="search-container">
+
+        <!-- Search Header -->
+        <div class="search-header">
+
+            <h2>Search Food</h2>
+            <div class="" style=" display: flex; align-items: center; justify-content: center; gap: 10px;">
+                <div class="" style="width: 55%; ">
+                    <mat-form-field appearance="outline" class="search-form-field">
+                        <mat-icon matPrefix>search</mat-icon>
+
+                        <input #searchInput matInput placeholder="Search..." [(ngModel)]="searchText"
+                            (input)="onSearchChange()" (keyup.enter)="search()">
+
+                        @if (searchText) {
+                        <button mat-icon-button matSuffix type="button" (click)="clearSearch()">
+
+                            <mat-icon>close</mat-icon>
+                        </button>
+                        }
+                    </mat-form-field>
+                </div>
+
+                <!-- Categories -->
+                <div class="category-section">
+
+                    <mat-chip-listbox [value]="selectedCategory">
+
+                        @for (category of categories; track category) {
+
+                        <mat-chip-option [value]="category" [selected]="selectedCategory === category"
+                            (click)="selectCategory(category)">
+
+                            {{ category }}
+
+                        </mat-chip-option>
+
+                        }
+
+                    </mat-chip-listbox>
+
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+        <!-- Result -->
+        <div class="result-header">
+
+            <h3>
+                Search Result
+            </h3>
+
+            <span>
+                {{ filteredProducts.length }} items
+            </span>
+
+        </div>
+
+
+        <!-- Products -->
+        <div class="body-search">
+
+            @for (
+            product of filteredProducts;
+            track product._id
+            ) {
+
+            <div class="search-item" (click)="openProduct(product)" [routerLink]="['/products/product-detail', product._id]">
+
+                <!-- Image -->
+                <div class="image-wrapper">
+
+                    <img [src]="product.image" [alt]="product.name">
+
+                    <button mat-mini-fab class="favorite-btn" type="button" (click)="$event.stopPropagation()">
+
+                        <mat-icon>
+                            favorite_border
+                        </mat-icon>
+
+                    </button>
+
+                </div>
+
+
+                <!-- Information -->
+                <div class="item-info">
+
+                    <h4>
+                        {{ product.name }}
+                    </h4>
+
+                    <p>
+                        {{ product.description }}
+                    </p>
+
+                    <div class="item-bottom">
+
+                        <span class="price">
+                            ${{ product.price | number:'1.2-2' }}
+                        </span>
+
+                        <button mat-icon-button type="button" [disabled]="isOutOfStock(product)"
+                            (click)="$event.stopPropagation(); addToCart(product)">
+                            <mat-icon>
+                                add
+                            </mat-icon>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            }
+
+
+            <!-- Empty -->
+            @if (filteredProducts.length === 0) {
+
+            <div class="empty-search">
+
+                <mat-icon>
+                    search_off
+                </mat-icon>
+
+                <h3>
+                    No food found
+                </h3>
+
+                <p>
+                    Try searching for another food.
+                </p>
+
+            </div>
+
+            }
+
+        </div>
+
+    </div>
+</div>

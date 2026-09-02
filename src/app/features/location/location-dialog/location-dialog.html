@@ -1,63 +1,552 @@
-<h2 mat-dialog-title>Select Delivery Location</h2>
 
-<mat-dialog-content>
+<div class="location-dialog">
+  <div class="dialog-header">
 
-    <button class="current-location" (click)="getCurrentLocation()">
+    <div class="header-icon">
+      <mat-icon>location_on</mat-icon>
+    </div>
 
-        <mat-icon>my_location</mat-icon>
+    <div>
+      <h2>Select Delivery Location</h2>
+
+      <p>
+        ជ្រើសរើសទីតាំងសម្រាប់ការដឹកជញ្ជូន
+      </p>
+    </div>
+
+  </div>
+
+
+  <mat-dialog-content>
+    <button
+      class="location-option"
+      type="button"
+      (click)="getCurrentLocation()"
+      [disabled]="locationLoading"
+    >
+
+      <div class="option-icon">
+
+        <mat-icon>
+          my_location
+        </mat-icon>
+
+      </div>
+
+      <div class="option-content">
+
+        <h4>
+          Use Current Location
+        </h4>
+
+        <span>
+          @if (locationLoading) {
+            Detecting your location...
+          } @else {
+            Detect your location automatically
+          }
+        </span>
+
+      </div>
+
+      <mat-icon class="arrow-icon">
+        chevron_right
+      </mat-icon>
+
+    </button>
+    <button class="location-option"type="button"(click)="openAddAddressDialog()">
+
+      <div class="option-icon add-icon">
+
+        <mat-icon>
+          add_location_alt
+        </mat-icon>
+
+      </div>
+
+      <div class="option-content">
+
+        <h4>
+          Add your Location
+        </h4>
+
+        <span>
+          Enter your address manually
+        </span>
+
+      </div>
+
+      <mat-icon class="arrow-icon">
+        chevron_right
+      </mat-icon>
+
+    </button>
+    <div class="search-section">
+
+      <mat-form-field
+        appearance="outline"
+        class="search-field"
+      >
+
+        <mat-label>
+          Search Address
+        </mat-label>
+
+        <mat-icon matPrefix>
+          search
+        </mat-icon>
+
+        <input
+          matInput
+          type="text"
+          [(ngModel)]="searchText"
+          (keydown)="onSearchKeydown($event)"
+          placeholder="Street, Building, Area"
+        />
+
+        <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          (click)="searchLocation()"
+          [disabled]="searching"
+        >
+
+          @if (searching) {
+
+            <mat-icon>
+              sync
+            </mat-icon>
+
+          } @else {
+
+            <mat-icon>
+              search
+            </mat-icon>
+
+          }
+
+        </button>
+
+      </mat-form-field>
+
+    </div>
+    <div class="map-title">
+
+      <div>
+        <mat-icon>
+          map
+        </mat-icon>
+
+        <span>
+          កំណត់ទីតាំង
+        </span>
+
+      </div>
+
+      <small>
+        ចុចលើ Map ឬអូស Pin ដើម្បីកំណត់ទីតាំង
+      </small>
+
+    </div>
+    <div class="map-wrapper">
+      <div
+        id="location-map"
+      ></div>
+
+    </div>
+
+
+    @if (
+      latitude === undefined ||
+      longitude === undefined
+    ) {
+
+      <div class="map-help">
+
+        <mat-icon>
+          touch_app
+        </mat-icon>
 
         <div>
-            <h4>Use Current Location</h4>
-            <span>Detect your location automatically</span>
-        </div>
 
-    </button>
+          <strong>
+            កំណត់ទីតាំងរបស់អ្នក
+          </strong>
 
-    <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Search Address</mat-label>
-        <input matInput placeholder="Street, Building, Area">
-    </mat-form-field>
-
-    <div class="map-placeholder">
-             <iframe
-            *ngIf="mapUrl"
-            [src]="mapUrl"
-            width="100%"
-            height="300"
-            style="border:0"
-            loading="lazy">
-        </iframe>
-        
-       
-
-        <div *ngIf="!mapUrl">
-
-            <mat-icon>map</mat-icon>
-
-            <p>Map will appear here</p>
+          <span>
+            ចុចលើ Map ដើម្បីដាក់ Pin
+            ឬអូស Pin ទៅទីតាំងដែលអ្នកចង់បាន
+          </span>
 
         </div>
 
+      </div>
+
+    }
+
+    @if (
+      latitude !== undefined &&
+      longitude !== undefined
+    ) {
+
+      <div class="selected-location">
+
+        <div class="selected-location-icon">
+
+          <mat-icon>
+            location_on
+          </mat-icon>
+
+        </div>
+
+        <div class="selected-location-info">
+
+          <strong>
+            ទីតាំងដែលបានជ្រើស
+          </strong>
+
+          <span>
+            Location selected successfully
+          </span>
+
+        </div>
+
+        <mat-icon class="success-icon">
+          check_circle
+        </mat-icon>
+
+      </div>
+
+
+      <div class="coordinates">
+
+        <div class="coordinate-item">
+
+          <div class="coordinate-icon">
+
+            <mat-icon>
+              north
+            </mat-icon>
+
+          </div>
+
+          <div>
+
+            <span>
+              Latitude
+            </span>
+
+            <strong>
+              {{ latitude }}
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <div class="coordinate-item">
+
+          <div class="coordinate-icon">
+
+            <mat-icon>
+              east
+            </mat-icon>
+
+          </div>
+
+          <div>
+
+            <span>
+              Longitude
+            </span>
+
+            <strong>
+              {{ longitude }}
+            </strong>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    }
+
+
+    <div class="saved-header">
+
+      <div>
+
+        <h3>
+          Saved Addresses
+        </h3>
+
+        <span>
+          {{ addresses.length }} addresses
+        </span>
+
+      </div>
+
+      <mat-icon>
+        bookmarks
+      </mat-icon>
+
     </div>
 
-    <div *ngIf="latitude">
 
-        <p><strong>Latitude:</strong> {{ latitude }}</p>
+    @if (addresses.length > 0) {
 
-        <p><strong>Longitude:</strong> {{ longitude }}</p>
+      <div class="address-list">
 
-    </div>
+        @for (
+          address of addresses;
+          track address._id
+        ) {
 
-</mat-dialog-content>
+          <div
+            class="address-item"
+            [class.selected-address]="
+              selectedAddressId === address._id
+            "
+            (click)="selectAddress(address)"
+          >
 
-<mat-dialog-actions align="end">
+            <!-- RADIO -->
+            <div class="address-radio">
 
-    <button mat-button mat-dialog-close>
-        Cancel
+              <div class="radio-circle">
+
+                @if (
+                  selectedAddressId === address._id
+                ) {
+
+                  <div class="radio-dot"></div>
+
+                }
+
+              </div>
+
+            </div>
+
+
+            <!-- ADDRESS ICON -->
+            <div class="address-icon">
+
+              <mat-icon>
+                @if (
+                  address.label === 'Work'
+                ) {
+                  work
+                } @else {
+                  home
+                }
+              </mat-icon>
+
+            </div>
+
+
+            <!-- ADDRESS INFO -->
+            <div class="address-info">
+
+              <div class="address-title">
+
+                <h4>
+                  {{ address.label }}
+                </h4>
+
+                @if (address.isDefault) {
+
+                  <span class="default-badge">
+                    Default
+                  </span>
+
+                }
+
+              </div>
+
+
+              <p>
+
+                {{ address.address }}
+
+                @if (address.city) {
+
+                  , {{ address.city }}
+
+                }
+
+                @if (address.province) {
+
+                  , {{ address.province }}
+
+                }
+
+              </p>
+
+
+              <small>
+
+                {{ address.receiverName }}
+
+                @if (address.phone) {
+
+                  <span>
+                    · {{ address.phone }}
+                  </span>
+
+                }
+
+              </small>
+
+            </div>
+
+
+            <!-- ACTIONS -->
+            <div class="address-actions">
+
+              <!-- EDIT -->
+              <button
+                mat-icon-button
+                type="button"
+                title="Edit Address"
+                (click)="
+                  updateAddress(address);
+                  $event.stopPropagation()
+                "
+              >
+
+                <mat-icon>
+                  edit
+                </mat-icon>
+
+              </button>
+
+
+              <!-- DELETE -->
+              <button
+                mat-icon-button
+                type="button"
+                title="Delete Address"
+                (click)="
+                  deleteAddress(address._id!);
+                  $event.stopPropagation()
+                "
+              >
+
+                <mat-icon>
+                  delete
+                </mat-icon>
+
+              </button>
+
+            </div>
+
+          </div>
+
+        }
+
+      </div>
+
+    }
+
+    @else {
+
+      <div class="empty-address">
+
+        <div class="empty-icon">
+
+          <mat-icon>
+            location_off
+          </mat-icon>
+
+        </div>
+
+        <h4>
+          No saved addresses
+        </h4>
+
+        <p>
+          អ្នកមិនទាន់មានអាសយដ្ឋានដែលបានរក្សាទុកទេ
+        </p>
+
+        <button
+          mat-stroked-button
+          type="button"
+          (click)="openAddAddressDialog()"
+        >
+
+          <mat-icon>
+            add
+          </mat-icon>
+
+          Add Address
+
+        </button>
+
+      </div>
+
+    }
+
+  </mat-dialog-content>
+
+
+
+  <mat-dialog-actions align="end">
+
+    <button
+      mat-button
+      type="button"
+      (click)="close()"
+    >
+
+      Cancel
+
     </button>
 
-    <button mat-flat-button color="primary">
-        Save Location
+
+    <button
+      mat-flat-button
+      class="save-button"
+      type="button"
+      (click)="saveLocation()"
+      [disabled]="
+        saving ||
+        (
+          latitude === undefined &&
+          !selectedAddressId
+        )
+      "
+    >
+
+      @if (saving) {
+
+        <mat-icon class="loading-icon">
+          sync
+        </mat-icon>
+
+        <span>
+          Saving...
+        </span>
+
+      }
+
+      @else {
+
+        <mat-icon>
+          check
+        </mat-icon>
+
+        <span>
+          Save Location
+        </span>
+
+      }
+
     </button>
 
-</mat-dialog-actions>
+  </mat-dialog-actions>
+
+</div>
+

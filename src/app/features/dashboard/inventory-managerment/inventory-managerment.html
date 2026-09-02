@@ -1,0 +1,1467 @@
+<div class="inventory-page">
+
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
+
+  <div class="page-header">
+
+    <div class="header-left">
+
+      <div class="header-icon">
+        <mat-icon>inventory_2</mat-icon>
+      </div>
+
+      <div class="header-content">
+
+        <div class="breadcrumb">
+
+          <span>Admin</span>
+
+          <mat-icon>
+            chevron_right
+          </mat-icon>
+
+          <strong>
+            Inventory
+          </strong>
+
+        </div>
+
+        <h1>
+          Inventory Management
+        </h1>
+
+        <p>
+          Manage restaurant ingredients and stock
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="header-actions">
+
+      <div class="inventory-summary">
+
+        <div class="summary-icon">
+
+          <mat-icon>
+            inventory_2
+          </mat-icon>
+
+        </div>
+
+        <div>
+
+          <strong>
+            {{ filteredItems.length }}
+          </strong>
+
+          <span>
+            Items
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <button
+        mat-raised-button
+        color="primary"
+        class="add-button"
+        (click)="openAdd()">
+
+        <mat-icon>
+          add
+        </mat-icon>
+
+        Add Item
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       STATISTICS
+  ====================================================== -->
+
+  <div class="stats-grid">
+
+
+    <!-- TOTAL -->
+
+    <div class="stat-card total">
+
+      <div class="stat-icon">
+
+        <mat-icon>
+          inventory_2
+        </mat-icon>
+
+      </div>
+
+      <div class="stat-content">
+
+        <span>
+          Total Items
+        </span>
+
+        <strong>
+          {{ items.length }}
+        </strong>
+
+        <small>
+          All inventory items
+        </small>
+
+      </div>
+
+    </div>
+
+
+    <!-- IN STOCK -->
+
+    <div class="stat-card stock">
+
+      <div class="stat-icon">
+
+        <mat-icon>
+          check_circle
+        </mat-icon>
+
+      </div>
+
+      <div class="stat-content">
+
+        <span>
+          In Stock
+        </span>
+
+        <strong>
+          {{ getInStockCount() }}
+        </strong>
+
+        <small>
+          Stock level is healthy
+        </small>
+
+      </div>
+
+    </div>
+
+
+    <!-- LOW STOCK -->
+
+    <div class="stat-card low">
+
+      <div class="stat-icon">
+
+        <mat-icon>
+          warning
+        </mat-icon>
+
+      </div>
+
+      <div class="stat-content">
+
+        <span>
+          Low Stock
+        </span>
+
+        <strong>
+          {{ getLowStockCount() }}
+        </strong>
+
+        <small>
+          Need restocking
+        </small>
+
+      </div>
+
+    </div>
+
+
+    <!-- OUT OF STOCK -->
+
+    <div class="stat-card out">
+
+      <div class="stat-icon">
+
+        <mat-icon>
+          remove_circle
+        </mat-icon>
+
+      </div>
+
+      <div class="stat-content">
+
+        <span>
+          Out of Stock
+        </span>
+
+        <strong>
+          {{ getOutOfStockCount() }}
+        </strong>
+
+        <small>
+          Immediately restock
+        </small>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       SECONDARY SUMMARY
+  ====================================================== -->
+
+  <div class="inventory-value-card">
+
+    <div class="value-left">
+
+      <div class="value-icon">
+
+        <mat-icon>
+          payments
+        </mat-icon>
+
+      </div>
+
+      <div>
+
+        <span>
+          Inventory Value
+        </span>
+
+        <strong>
+          {{ getInventoryValue() | currency:'USD' }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <div class="value-right">
+
+      <span>
+        Low stock items
+      </span>
+
+      <strong class="warning-number">
+        {{ getLowStockCount() }}
+      </strong>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       TOOLBAR
+  ====================================================== -->
+
+  <div class="toolbar">
+
+
+    <!-- SEARCH -->
+
+    <div class="search-box">
+
+      <mat-icon>
+        search
+      </mat-icon>
+
+      <input
+        type="text"
+        [(ngModel)]="searchText"
+        (input)="applyFilter()"
+        placeholder="Search item, category or supplier..."
+      />
+
+      @if (searchText) {
+
+        <button
+          type="button"
+          class="clear-search"
+          (click)="clearSearch()">
+
+          <mat-icon>
+            close
+          </mat-icon>
+
+        </button>
+
+      }
+
+    </div>
+
+
+    <!-- CATEGORY -->
+
+    <mat-form-field
+      appearance="outline"
+      class="filter-field">
+
+      <mat-label>
+        Category
+      </mat-label>
+
+      <mat-icon matPrefix>
+        category
+      </mat-icon>
+
+      <mat-select
+        [(ngModel)]="selectedCategory"
+        (selectionChange)="applyFilter()">
+
+        @for (
+          category of categories;
+          track category
+        ) {
+
+          <mat-option
+            [value]="category">
+
+            {{ category }}
+
+          </mat-option>
+
+        }
+
+      </mat-select>
+
+    </mat-form-field>
+
+
+    <!-- STATUS -->
+
+    <mat-form-field
+      appearance="outline"
+      class="filter-field">
+
+      <mat-label>
+        Status
+      </mat-label>
+
+      <mat-icon matPrefix>
+        filter_list
+      </mat-icon>
+
+      <mat-select
+        [(ngModel)]="selectedStatus"
+        (selectionChange)="applyFilter()">
+
+        @for (
+          status of statuses;
+          track status
+        ) {
+
+          <mat-option
+            [value]="status">
+
+            {{ status }}
+
+          </mat-option>
+
+        }
+
+      </mat-select>
+
+    </mat-form-field>
+
+
+    <!-- REFRESH -->
+
+    <button
+      mat-stroked-button
+      class="refresh-button"
+      (click)="loadItems()">
+
+      <mat-icon>
+        refresh
+      </mat-icon>
+
+      Refresh
+
+    </button>
+
+  </div>
+
+
+  <!-- =====================================================
+       STATUS BAR
+  ====================================================== -->
+
+  <div class="status-bar">
+
+    <div class="status-left">
+
+
+      <div class="status-item">
+
+        <span class="dot all"></span>
+
+        <span>
+          All
+        </span>
+
+        <strong>
+          {{ items.length }}
+        </strong>
+
+      </div>
+
+
+      <div class="status-item">
+
+        <span class="dot available"></span>
+
+        <span>
+          In Stock
+        </span>
+
+        <strong>
+          {{ getInStockCount() }}
+        </strong>
+
+      </div>
+
+
+      <div class="status-item">
+
+        <span class="dot low"></span>
+
+        <span>
+          Low Stock
+        </span>
+
+        <strong>
+          {{ getLowStockCount() }}
+        </strong>
+
+      </div>
+
+
+      <div class="status-item">
+
+        <span class="dot out"></span>
+
+        <span>
+          Out of Stock
+        </span>
+
+        <strong>
+          {{ getOutOfStockCount() }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <div class="status-right">
+
+      Showing
+
+      <strong>
+        {{ filteredItems.length }}
+      </strong>
+
+      of
+
+      <strong>
+        {{ items.length }}
+      </strong>
+
+      items
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       TABLE
+  ====================================================== -->
+
+  <div class="table-card">
+
+
+    <!-- TABLE HEADER -->
+
+    <div class="table-header">
+
+      <div>
+
+        <h3>
+          Inventory Items
+        </h3>
+
+        <p>
+          Manage ingredients and stock levels
+        </p>
+
+      </div>
+
+
+      <div class="table-count">
+
+        <mat-icon>
+          list_alt
+        </mat-icon>
+
+        {{ filteredItems.length }}
+
+      </div>
+
+    </div>
+
+
+    <!-- LOADING -->
+
+    @if (isLoading) {
+
+      <div class="loading">
+
+        <div class="loading-icon">
+
+          <mat-icon class="spin">
+            sync
+          </mat-icon>
+
+        </div>
+
+        <strong>
+          Loading inventory...
+        </strong>
+
+        <span>
+          Please wait while we load your stock.
+        </span>
+
+      </div>
+
+    }
+
+
+    <!-- TABLE -->
+
+    @if (!isLoading) {
+
+      <div class="table-scroll">
+
+        <table>
+
+          <thead>
+
+            <tr>
+
+              <th>
+                #
+              </th>
+
+              <th>
+                Item
+              </th>
+
+              <th>
+                Category
+              </th>
+
+              <th>
+                Stock
+              </th>
+
+              <th>
+                Min Stock
+              </th>
+
+              <th>
+                Unit Cost
+              </th>
+
+              <th>
+                Supplier
+              </th>
+
+              <th>
+                Expiry
+              </th>
+
+              <th>
+                Status
+              </th>
+
+              <th class="action-header">
+                Actions
+              </th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody>
+
+            @for (
+              item of filteredItems;
+              track item._id;
+              let i = $index
+            ) {
+
+              <tr>
+
+
+                <!-- NUMBER -->
+
+                <td>
+
+                  <span class="row-number">
+                    {{ i + 1 }}
+                  </span>
+
+                </td>
+
+
+                <!-- ITEM -->
+
+                <td>
+
+                  <div class="item-cell">
+
+                    <div class="item-icon">
+
+                      <mat-icon>
+                        inventory_2
+                      </mat-icon>
+
+                    </div>
+
+                    <div>
+
+                      <strong>
+                        {{ item.name }}
+                      </strong>
+
+                      <span>
+                        {{ item.storageLocation || 'Main Storage' }}
+                      </span>
+
+                    </div>
+
+                  </div>
+
+                </td>
+
+
+                <!-- CATEGORY -->
+
+                <td>
+
+                  <span class="category">
+
+                    <mat-icon>
+                      category
+                    </mat-icon>
+
+                    {{ item.category }}
+
+                  </span>
+
+                </td>
+
+
+                <!-- STOCK -->
+
+                <td>
+
+                  <div class="stock-cell">
+
+                    <strong>
+                      {{ item.quantity }}
+                    </strong>
+
+                    <span>
+                      {{ item.unit }}
+                    </span>
+
+                  </div>
+
+                </td>
+
+
+                <!-- MIN STOCK -->
+
+                <td>
+
+                  <span class="minimum-stock">
+
+                    {{ item.minimumStock }}
+
+                    {{ item.unit }}
+
+                  </span>
+
+                </td>
+
+
+                <!-- COST -->
+
+                <td>
+
+                  <strong class="cost">
+
+                    {{
+                      item.costPerUnit
+                      | currency:'USD'
+                    }}
+
+                  </strong>
+
+                  <span class="per-unit">
+                    / {{ item.unit }}
+                  </span>
+
+                </td>
+
+
+                <!-- SUPPLIER -->
+
+                <td>
+
+                  <div class="supplier">
+
+                    <mat-icon>
+                      local_shipping
+                    </mat-icon>
+
+                    <span>
+                      {{ item.supplier || '-' }}
+                    </span>
+
+                  </div>
+
+                </td>
+
+
+                <!-- EXPIRY -->
+
+                <td>
+
+                  @if (item.expiryDate) {
+
+                    <span
+                      class="expiry"
+                      [class.expired]="
+                        isExpired(item.expiryDate)
+                      "
+                      [class.expiring]="
+                        isExpiringSoon(item.expiryDate)
+                      ">
+
+                      <mat-icon>
+                        event
+                      </mat-icon>
+
+                      {{
+                        item.expiryDate
+                        | date:'dd/MM/yyyy'
+                      }}
+
+                    </span>
+
+                  }
+
+                  @else {
+
+                    <span class="no-data">
+                      -
+                    </span>
+
+                  }
+
+                </td>
+
+
+                <!-- STATUS -->
+
+                <td>
+
+                  <span
+                    class="stock-status"
+                    [ngClass]="
+                      getStockStatusClass(item)
+                    ">
+
+                    <span class="status-dot"></span>
+
+                    {{ getStockStatus(item) }}
+
+                  </span>
+
+                </td>
+
+
+                <!-- ACTIONS -->
+
+                <td>
+
+                  <div class="actions">
+
+
+                    <!-- STOCK IN -->
+
+                    <button
+                      mat-icon-button
+                      class="action-in"
+                      matTooltip="Stock In"
+                      (click)="stockIn(item)">
+
+                      <mat-icon>
+                        add_box
+                      </mat-icon>
+
+                    </button>
+
+
+                    <!-- STOCK OUT -->
+
+                    <button
+                      mat-icon-button
+                      class="action-out"
+                      matTooltip="Stock Out"
+                      (click)="stockOut(item)">
+
+                      <mat-icon>
+                        remove_circle
+                      </mat-icon>
+
+                    </button>
+
+
+                    <!-- EDIT -->
+
+                    <button
+                      mat-icon-button
+                      class="action-edit"
+                      matTooltip="Edit"
+                      (click)="openEdit(item)">
+
+                      <mat-icon>
+                        edit
+                      </mat-icon>
+
+                    </button>
+
+
+                    <!-- DELETE -->
+
+                    <button
+                      mat-icon-button
+                      class="action-delete"
+                      matTooltip="Delete"
+                      (click)="deleteItem(item)">
+
+                      <mat-icon>
+                        delete
+                      </mat-icon>
+
+                    </button>
+
+                  </div>
+
+                </td>
+
+              </tr>
+
+            }
+
+
+            <!-- EMPTY -->
+
+            @if (
+              filteredItems.length === 0
+            ) {
+
+              <tr>
+
+                <td
+                  colspan="10"
+                  class="empty">
+
+                  <div class="empty-content">
+
+                    <div class="empty-icon">
+
+                      <mat-icon>
+                        inventory_2
+                      </mat-icon>
+
+                    </div>
+
+                    <strong>
+                      No inventory items found
+                    </strong>
+
+                    <span>
+                      Try changing your search
+                      or filters.
+                    </span>
+
+                    <button
+                      mat-stroked-button
+                      (click)="clearFilters()">
+
+                      Clear Filters
+
+                    </button>
+
+                  </div>
+
+                </td>
+
+              </tr>
+
+            }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    }
+
+  </div>
+
+
+  <!-- =====================================================
+       ADD / EDIT MODAL
+  ====================================================== -->
+
+  @if (showModal) {
+
+    <div
+      class="modal-overlay"
+      (click)="closeModal()">
+
+
+      <div
+        class="modal"
+        (click)="$event.stopPropagation()">
+
+
+        <!-- MODAL HEADER -->
+
+        <div class="modal-header">
+
+          <div>
+
+            <div class="modal-title-icon">
+
+              <mat-icon>
+                {{
+                  isEditMode
+                    ? 'edit'
+                    : 'inventory_2'
+                }}
+              </mat-icon>
+
+            </div>
+
+            <div>
+
+              <h2>
+
+                {{
+                  isEditMode
+                    ? 'Update Inventory'
+                    : 'Add Inventory Item'
+                }}
+
+              </h2>
+
+              <p>
+                {{
+                  isEditMode
+                    ? 'Update item information'
+                    : 'Add a new ingredient to inventory'
+                }}
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <button
+            mat-icon-button
+            (click)="closeModal()">
+
+            <mat-icon>
+              close
+            </mat-icon>
+
+          </button>
+
+        </div>
+
+
+        <!-- MODAL BODY -->
+
+        <div class="modal-body">
+
+
+          <!-- NAME -->
+
+          <mat-form-field
+            appearance="outline">
+
+            <mat-label>
+              Item Name
+            </mat-label>
+
+            <mat-icon matPrefix>
+              inventory_2
+            </mat-icon>
+
+            <input
+              matInput
+              [(ngModel)]="form.name"
+              placeholder="Chicken Breast">
+
+          </mat-form-field>
+
+
+          <!-- CATEGORY -->
+
+          <mat-form-field
+            appearance="outline">
+
+            <mat-label>
+              Category
+            </mat-label>
+
+            <mat-icon matPrefix>
+              category
+            </mat-icon>
+
+            <mat-select
+              [(ngModel)]="form.category">
+
+              @for (
+                category of itemCategories;
+                track category
+              ) {
+
+                <mat-option
+                  [value]="category">
+
+                  {{ category }}
+
+                </mat-option>
+
+              }
+
+            </mat-select>
+
+          </mat-form-field>
+
+
+          <!-- QUANTITY -->
+
+          <mat-form-field
+            appearance="outline">
+
+            <mat-label>
+              Quantity
+            </mat-label>
+
+            <mat-icon matPrefix>
+              numbers
+            </mat-icon>
+
+            <input
+              matInput
+              type="number"
+              min="0"
+              [(ngModel)]="form.quantity">
+
+          </mat-form-field>
+
+
+          <!-- UNIT -->
+
+          <mat-form-field
+            appearance="outline">
+
+            <mat-label>
+              Unit
+            </mat-label>
+
+            <mat-select
+              [(ngModel)]="form.unit">
+
+              @for (
+                unit of units;
+                track unit
+              ) {
+
+                <mat-option
+                  [value]="unit">
+
+                  {{ unit }}
+
+                </mat-option>
+
+              }
+
+            </mat-select>
+
+          </mat-form-field>
+
+
+          <!-- MINIMUM STOCK -->
+
+          <mat-form-field
+            appearance="outline">
+
+            <mat-label>
+              Minimum Stock
+            </mat-label>
+
+            <mat-icon matPrefix>
+              warning
+            </mat-icon>
+
+            <input
+              matInput
+              type="number"
+              min="0"
+              [(ngModel)]="form.minimumStock">
+
+          </mat-form-field>
+
+
+          <!-- COST -->
+
+          <mat-form-field
+            appearance="outline">
+
+            <mat-label>
+              Cost Per Unit
+            </mat-label>
+
+            <mat-icon matPrefix>
+              payments
+            </mat-icon>
+
+            <input
+              matInput
+              type="number"
+              min="0"
+              step="0.01"
+              [(ngModel)]="form.costPerUnit">
+
+            <span matTextPrefix>
+              $
+            </span>
+
+          </mat-form-field>
+
+
+          <!-- SUPPLIER -->
+
+          <mat-form-field
+            appearance="outline">
+
+            <mat-label>
+              Supplier
+            </mat-label>
+
+            <mat-icon matPrefix>
+              local_shipping
+            </mat-icon>
+
+            <input
+              matInput
+              [(ngModel)]="form.supplier"
+              placeholder="ABC Food Supplier">
+
+          </mat-form-field>
+
+
+          <!-- STORAGE -->
+
+          <mat-form-field
+            appearance="outline">
+
+            <mat-label>
+              Storage Location
+            </mat-label>
+
+            <mat-icon matPrefix>
+              warehouse
+            </mat-icon>
+
+            <input
+              matInput
+              [(ngModel)]="form.storageLocation"
+              placeholder="Freezer 01">
+
+          </mat-form-field>
+
+
+          <!-- EXPIRY -->
+
+          <mat-form-field
+            appearance="outline">
+
+            <mat-label>
+              Expiry Date
+            </mat-label>
+
+            <mat-icon matPrefix>
+              event
+            </mat-icon>
+
+            <input
+              matInput
+              type="date"
+              [(ngModel)]="form.expiryDate">
+
+          </mat-form-field>
+
+        </div>
+
+
+        <!-- MODAL FOOTER -->
+
+        <div class="modal-footer">
+
+          <button
+            mat-button
+            (click)="closeModal()">
+
+            Cancel
+
+          </button>
+
+
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="saveItem()">
+
+            <mat-icon>
+              {{
+                isEditMode
+                  ? 'save'
+                  : 'add'
+              }}
+            </mat-icon>
+
+            {{
+              isEditMode
+                ? 'Update Item'
+                : 'Create Item'
+            }}
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  }
+
+
+  <!-- =====================================================
+       STOCK IN / OUT MODAL
+  ====================================================== -->
+
+  @if (showStockModal) {
+
+    <div
+      class="modal-overlay"
+      (click)="closeStockModal()">
+
+
+      <div
+        class="stock-modal"
+        (click)="$event.stopPropagation()">
+
+
+        <div class="stock-modal-header">
+
+          <div
+            class="stock-operation-icon"
+            [class.stock-in-icon]="
+              stockOperation === 'in'
+            "
+            [class.stock-out-icon]="
+              stockOperation === 'out'
+            ">
+
+            <mat-icon>
+
+              {{
+                stockOperation === 'in'
+                  ? 'add_box'
+                  : 'remove_circle'
+              }}
+
+            </mat-icon>
+
+          </div>
+
+
+          <div>
+
+            <h2>
+
+              {{
+                stockOperation === 'in'
+                  ? 'Stock In'
+                  : 'Stock Out'
+              }}
+
+            </h2>
+
+            <p>
+              {{ selectedItem?.name }}
+            </p>
+
+          </div>
+
+
+          <button
+            mat-icon-button
+            (click)="closeStockModal()">
+
+            <mat-icon>
+              close
+            </mat-icon>
+
+          </button>
+
+        </div>
+
+
+        <div class="stock-modal-body">
+
+
+          <div class="current-stock">
+
+            <span>
+              Current Stock
+            </span>
+
+            <strong>
+
+              {{ selectedItem?.quantity || 0 }}
+
+              {{ selectedItem?.unit }}
+
+            </strong>
+
+          </div>
+
+
+          <mat-form-field
+            appearance="outline">
+
+            <mat-label>
+              Quantity
+            </mat-label>
+
+            <mat-icon matPrefix>
+              numbers
+            </mat-icon>
+
+            <input
+              matInput
+              type="number"
+              min="1"
+              [(ngModel)]="stockQuantity">
+
+          </mat-form-field>
+
+
+          <mat-form-field
+            appearance="outline">
+
+            <mat-label>
+              Reason
+            </mat-label>
+
+            <mat-icon matPrefix>
+              description
+            </mat-icon>
+
+            <input
+              matInput
+              [(ngModel)]="stockReason"
+              placeholder="Purchase / Kitchen Usage">
+
+          </mat-form-field>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+          <button
+            mat-button
+            (click)="closeStockModal()">
+
+            Cancel
+
+          </button>
+
+
+          <button
+            mat-raised-button
+            [class.stock-in-button]="
+              stockOperation === 'in'
+            "
+            [class.stock-out-button]="
+              stockOperation === 'out'
+            "
+            (click)="saveStockOperation()">
+
+            <mat-icon>
+
+              {{
+                stockOperation === 'in'
+                  ? 'add'
+                  : 'remove'
+              }}
+
+            </mat-icon>
+
+            Confirm
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  }
+
+</div>

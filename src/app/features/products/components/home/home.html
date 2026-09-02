@@ -1,330 +1,205 @@
-
 <div class="main-home">
-    <div class="main-slider">
-        <div class="diplay-menu">
-            <div class="text-menu">
-                <h2>សូមស្វាគមន៍មកកាន់ Foodie Restaurant</h2>
-                <p style="color: white;">ជ្រើសរើសរបៀបកុម្ម៉ង់អាហារដែលអ្នកពេញចិត្ត ដើម្បីទទួលបានបទពិសោធន៍ដ៏ល្អបំផុត</p>
-                <div class="book-table-and-order-online">
-                    <ul>
-                        <li routerLink="/products/table-booking" class="flex-column">
-                            <div class="logo flex-center">
-                                <mat-icon>local_dining</mat-icon>
-                            </div>
-                            <div class="text flex-center flex-column">
-                                <h4>
-                                    <h4>មកញ៉ាំនៅហាង</h4>
-                                </h4>
-                                <p>ទទួលយកបរិយាកាសដ៏កក់ក្តៅ និងសេវាកម្មដ៏ល្អឥតខ្ចោះក្នុងហាងផ្ទាល់</p>
-                            </div>
-                            <button routerLink="/products/table-booking">កក់តុឥឡូវនេះ</button>
-                        </li>
-                        <li routerLink="/products/order-online" class="flex-column">
-                            <div class="logo flex-center">
-                                <mat-icon>moped</mat-icon>
-                            </div>
-                            <div class="text flex-center flex-column">
-                                <h4>
-                                    <h4>កម្ម៉ង់តាមអនឡាញ</h4>
-                                </h4>
-                                <p>កម្ម៉ង់ម្ហូបដែលអ្នកចូលចិត្ត ផ្ញើជូនដល់គេហដ្ឋានយ៉ាងរហ័ស</p>
-                            </div>
-                            <button>កម្ម៉ង់ឥឡូវនេះ</button>
-                        </li>
+  <div class="main-slider">
+    <div class="diplay-menu">
+      <div class="text-menu">
+        <h2>សូមស្វាគមន៍មកកាន់ Foodie Restaurant</h2>
+        <p style="color: white;">
+          ជ្រើសរើសរបៀបកុម្ម៉ង់អាហារដែលអ្នកពេញចិត្ត
+          ដើម្បីទទួលបានបទពិសោធន៍ដ៏ល្អបំផុត
+        </p>
+        <div class="book-table-and-order-online">
+          <ul>
+            <li routerLink="/products/table-booking" class="flex-column">
+              <div class="logo flex-center">
+                <mat-icon>local_dining</mat-icon>
+              </div>
+              <div class="text flex-center flex-column">
+                <h4>មកញ៉ាំនៅហាង</h4>
+                <p>ទទួលយកបរិយាកាសដ៏កក់ក្តៅនិងសេវាកម្មដ៏ល្អឥតខ្ចោះក្នុងហាងផ្ទាល់</p>
+              </div>
+              <button type="button" routerLink="/products/table-booking">កក់តុឥឡូវនេះ</button>
+            </li>
 
-                    </ul>
-                </div>
-            </div>
+            <li routerLink="/products/order-online" class="flex-column">
+
+              <div class="logo flex-center">
+                <mat-icon>moped</mat-icon>
+              </div>
+              <div class="text flex-center flex-column">
+                <h4>កម្ម៉ង់តាមអនឡាញ</h4>
+                <p>កម្ម៉ង់ម្ហូបដែលអ្នកចូលចិត្តផ្ញើជូនដល់គេហដ្ឋានយ៉ាងរហ័ស</p>
+              </div>
+              <button type="button" routerLink="/products/order-online">
+                កម្ម៉ង់ឥឡូវនេះ
+              </button>
+            </li>
+
+          </ul>
+
         </div>
+
+      </div>
+
     </div>
-    <div class="main-tranding">
-        <h2 style="color:var(--bg-green);">មុខម្ហូបពេញនិយមបំផុត</h2>
-        <div class="trandin-menu">
-            <!-- carousel.component.html -->
-            <swiper-container navigation="true" pagination="true" loop="true" slides-per-view="5" breakpoints='{
-            "0": {
-            "slidesPerView": 2
-            },
-            "640": {
-            "slidesPerView": 3
-            },
-            "768": {
-            "slidesPerView": 4
-            },
-            "1024": {
-            "slidesPerView": 5
+
+  </div>
+
+  <div class="main-tranding">
+
+    <h2 style="color:var(--bg-green);">មុខម្ហូបពេញនិយមបំផុត</h2>
+    <div class="trandin-menu">
+      <swiper-container navigation="true" pagination="true" loop="true" slides-per-view="4" space-between="20"
+        breakpoints='{
+                    "0": {
+                        "slidesPerView": 1
+                    },
+                    "576": {
+                        "slidesPerView": 2
+                    },
+                    "768": {
+                        "slidesPerView": 3
+                    },
+                    "1200": {
+                        "slidesPerView": 4
+                    }
+                }'>
+        @for (item of popularItems;track item._id) {
+        <swiper-slide>
+          <div class="slider-main" [routerLink]="['/products/product-detail',item._id]">
+            @if (item.image) {
+            <img [src]="item.image" [alt]="item.name" >
+            } @else {
+
+            <div class="no-image">
+              <mat-icon>restaurant</mat-icon>
+            </div>
             }
-        }'>
+            <div class="popular-info">
+              <h3>{{ item.name }}</h3>
+              <p>{{ item.description }}</p>
+              <strong>
+                {{ item.price | currency:'USD' }}
+              </strong>
+            </div>
+          </div>
 
-                <swiper-slide>
-                    <div class="item-diplay">
-                        <div class="item-nav">
-                            <span>$12.00 / 49,200៛</span>
-                            <img src="/assets/tranding.jpg" alt="">
-                        </div>
-                        <div class="item-body">
-                            <h3>សាឡាត់ត្រីសាល់ម៉ុនពិសេស</h3>
-                            <p>ត្រីសាល់ម៉ុនស្រស់ៗ ផ្សំជាមួយបន្លែបៃតងធម្មជាតិ និងទឹកជ្រលក់រូបមន្តពិសេស…</p>
-                            <div class="star-add-cart">
-                                <div class="start">
-                                    <mat-icon>star</mat-icon>
-                                    <p>4.9(120+)</p>
-                                </div>
-                                <div class="add-cart">
-                                    <mat-icon>add_shopping_cart</mat-icon>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </swiper-slide>
-                <swiper-slide>
-                    <div class="item-diplay">
-                        <div class="item-nav">
-                            <span>$12.00 / 49,200៛</span>
-                            <img src="/assets/tranding.jpg" alt="">
-                        </div>
-                        <div class="item-body">
-                            <h3>សាឡាត់ត្រីសាល់ម៉ុនពិសេស</h3>
-                            <p>ត្រីសាល់ម៉ុនស្រស់ៗ ផ្សំជាមួយបន្លែបៃតងធម្មជាតិ និងទឹកជ្រលក់រូបមន្តពិសេស…</p>
-                            <div class="star-add-cart">
-                                <div class="start">
-                                    <mat-icon>star</mat-icon>
-                                    <p>4.9(120+)</p>
-                                </div>
-                                <div class="add-cart">
-                                    <mat-icon>add_shopping_cart</mat-icon>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </swiper-slide>
-                <swiper-slide>
-                    <div class="item-diplay">
-                        <div class="item-nav">
-                            <span>$12.00 / 49,200៛</span>
-                            <img src="/assets/tranding.jpg" alt="">
-                        </div>
-                        <div class="item-body">
-                            <h3>សាឡាត់ត្រីសាល់ម៉ុនពិសេស</h3>
-                            <p>ត្រីសាល់ម៉ុនស្រស់ៗ ផ្សំជាមួយបន្លែបៃតងធម្មជាតិ និងទឹកជ្រលក់រូបមន្តពិសេស…</p>
-                            <div class="star-add-cart">
-                                <div class="start">
-                                    <mat-icon>star</mat-icon>
-                                    <p>4.9(120+)</p>
-                                </div>
-                                <div class="add-cart">
-                                    <mat-icon>add_shopping_cart</mat-icon>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </swiper-slide>
-                <swiper-slide>
-                    <div class="item-diplay">
-                        <div class="item-nav">
-                            <span>$12.00 / 49,200៛</span>
-                            <img src="/assets/tranding.jpg" alt="">
-                        </div>
-                        <div class="item-body">
-                            <h3>សាឡាត់ត្រីសាល់ម៉ុនពិសេស</h3>
-                            <p>ត្រីសាល់ម៉ុនស្រស់ៗ ផ្សំជាមួយបន្លែបៃតងធម្មជាតិ និងទឹកជ្រលក់រូបមន្តពិសេស…</p>
-                            <div class="star-add-cart">
-                                <div class="start">
-                                    <mat-icon>star</mat-icon>
-                                    <p>4.9(120+)</p>
-                                </div>
-                                <div class="add-cart">
-                                    <mat-icon>add_shopping_cart</mat-icon>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </swiper-slide>
-                <swiper-slide>
-                    <div class="item-diplay">
-                        <div class="item-nav">
-                            <span>$12.00 / 49,200៛</span>
-                            <img src="/assets/tranding.jpg" alt="">
-                        </div>
-                        <div class="item-body">
-                            <h3>សាឡាត់ត្រីសាល់ម៉ុនពិសេស</h3>
-                            <p>ត្រីសាល់ម៉ុនស្រស់ៗ ផ្សំជាមួយបន្លែបៃតងធម្មជាតិ និងទឹកជ្រលក់រូបមន្តពិសេស…</p>
-                            <div class="star-add-cart">
-                                <div class="start">
-                                    <mat-icon>star</mat-icon>
-                                    <p>4.9(120+)</p>
-                                </div>
-                                <div class="add-cart">
-                                    <mat-icon>add_shopping_cart</mat-icon>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </swiper-slide>
+        </swiper-slide>
+        }
+        @if (popularItems.length === 0) {
+        <swiper-slide>
+          <div class="empty-popular">
+            <mat-icon>
+              restaurant
+            </mat-icon>
+            <p>មិនទាន់មានមុខម្ហូបពេញនិយម</p>
 
-                <swiper-slide>Slide 3 Content</swiper-slide>
-                <swiper-slide>Slide 3 Content</swiper-slide>
-                <swiper-slide>Slide 3 Content</swiper-slide>
-                <swiper-slide>Slide 3 Content</swiper-slide>
-                <swiper-slide>Slide 3 Content</swiper-slide>
-                <swiper-slide>Slide 3 Content</swiper-slide>
+          </div>
+        </swiper-slide>
+        }
 
-            </swiper-container>
-
-        </div>
-    </div>
-    <div class="poster-discound">
-        <div>ការផ្តល់ជូនពិសេស</div>
-        <h2>បញ្ចុះតម្លៃ ២០% រាល់ការកម្ម៉ង់ដំបូង!</h2>
-        <p>ប្រើប្រាស់កូដ "NEWFOODIE" សម្រាប់ការបញ្ចុះតម្លៃដ៏អស្ចារ្យនេះ។</p>
-        <button>កម្ម៉ង់ឥឡូវនេះ</button>
-        <img src="assets/poster.png" alt="">
-
+      </swiper-container>
     </div>
 
-    <div class="menu-items">
-        <ul>
-            <li>ទាំងអស់</li>
-            <li>មុខម្ហូបប្រចាំហាង</li>
-            <li>ភេសជ្ជៈ</li>
-            <li>បង្អែម</li>
-            <li>អាហារសម្រន់</li>
-        </ul>
-    </div>
+  </div>
 
-    <div class="item-grid-all">
-        <div routerLink="/products/product-detail" class="item-diplay">
-            <div class="item-nav">
-                <span>$12.00 / 49,200៛</span>
-                <img src="/assets/tranding.jpg" alt="">
-            </div>
-            <div class="item-body">
-                <h3>សាឡាត់ត្រីសាល់ម៉ុនពិសេស</h3>
-                <p>ត្រីសាល់ម៉ុនស្រស់ៗ ផ្សំជាមួយបន្លែបៃតងធម្មជាតិ និងទឹកជ្រលក់រូបមន្តពិសេស…</p>
-                <div class="star-add-cart">
-                    <div class="start">
-                        <mat-icon>star</mat-icon>
-                        <p>4.9(120+)</p>
-                    </div>
-                    <div class="add-cart">
-                        <mat-icon>add_shopping_cart</mat-icon>
-                    </div>
-                </div>
-            </div>
+  <div class="poster-discound">
+    <div>ការផ្តល់ជូនពិសេស</div>
+    <h2>បញ្ចុះតម្លៃ ២០% រាល់ការកម្ម៉ង់ដំបូង!</h2>
+    <p>ប្រើប្រាស់កូដ "NEWFOODIE"សម្រាប់ការបញ្ចុះតម្លៃដ៏អស្ចារ្យនេះ។</p>
+    <button type="button" routerLink="/products/order-online">
+      កម្ម៉ង់ឥឡូវនេះ
+    </button>
+    <img src="assets/poster.png" alt="Foodie Restaurant promotion">
+  </div>
+  <div class="menu-items">
+    <ul>
+      <li [class.active]="selectedCategoryId === 'all'" (click)="filterCategory('all')">
+        ទាំងអស់
+      </li>
+      @for (category of categorys;track category._id) {
+      <li [class.active]="selectedCategoryId === category._id " (click)="filterCategory(category._id!)">
+        {{ category.name }}
+      </li>
+      }
+
+    </ul>
+
+  </div>
+
+  @if (isLoading) {
+  <div class="loading-menu">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p> កំពុងផ្ទុកមុខម្ហូប... </p>
+  </div>
+
+  }
+
+
+  @if (!isLoading &&filteredMenuitems.length > 0 ) {
+  <div class="item-grid-all">
+    @for (item of filteredMenuitems;track item._id) {
+    @if (item.isAvailable) {
+    <div class="item-diplay" [routerLink]="['/products/product-detail',item._id]">
+      <div class="item-nav">
+        <span class="price">
+          {{ item.price | currency:'USD' }}/{{ item.price | usdToKhr }}
+        </span>
+        @if (item.image) {
+        <img [src]="item.image" [alt]="item.name"  >
+        }
+        @else {
+        <div class="item-no-image">
+          <mat-icon>restaurant</mat-icon>
         </div>
-        <div class="item-diplay">
-            <div class="item-nav">
-                <span>$12.00 / 49,200៛</span>
-                <img src="/assets/tranding.jpg" alt="">
-            </div>
-            <div class="item-body">
-                <h3>សាឡាត់ត្រីសាល់ម៉ុនពិសេស</h3>
-                <p>ត្រីសាល់ម៉ុនស្រស់ៗ ផ្សំជាមួយបន្លែបៃតងធម្មជាតិ និងទឹកជ្រលក់រូបមន្តពិសេស…</p>
-                <div class="star-add-cart">
-                    <div class="start">
-                        <mat-icon>star</mat-icon>
-                        <p>4.9(120+)</p>
-                    </div>
-                    <div class="add-cart">
-                        <mat-icon>add_shopping_cart</mat-icon>
-                    </div>
-                </div>
-            </div>
+        }
+        @if (item.isPopular) {
+          <div class="popular-badge">🔥 Popular</div>
+        }
+        @if (item.isFeatured) {
+          <div class="featured-badge">⭐ Featured</div>
+
+        }
+      </div>
+      <div class="item-body">
+        <h3>{{ item.name }}</h3>
+        <p>{{ item.description }}</p>
+        @if (item.preparationTime) {
+        <div class="food-time">
+          <mat-icon>schedule</mat-icon>
+          <span>{{ item.preparationTime }}min</span>
         </div>
-        <div class="item-diplay">
-            <div class="item-nav">
-                <span>$12.00 / 49,200៛</span>
-                <img src="/assets/tranding.jpg" alt="">
-            </div>
-            <div class="item-body">
-                <h3>សាឡាត់ត្រីសាល់ម៉ុនពិសេស</h3>
-                <p>ត្រីសាល់ម៉ុនស្រស់ៗ ផ្សំជាមួយបន្លែបៃតងធម្មជាតិ និងទឹកជ្រលក់រូបមន្តពិសេស…</p>
-                <div class="star-add-cart">
-                    <div class="start">
-                        <mat-icon>star</mat-icon>
-                        <p>4.9(120+)</p>
-                    </div>
-                    <div class="add-cart">
-                        <mat-icon>add_shopping_cart</mat-icon>
-                    </div>
-                </div>
-            </div>
+
+        }
+        <div class="star-add-cart">
+          <div class="start">
+            <mat-icon>star</mat-icon>
+            <p>4.9 (120+)</p>
+          </div>
+          <button type="button" class="add-cart" (click)="addToCart(item);$event.stopPropagation()">
+            <mat-icon>add_shopping_cart</mat-icon>
+          </button>
         </div>
-        <div class="item-diplay">
-            <div class="item-nav">
-                <span>$12.00 / 49,200៛</span>
-                <img src="/assets/tranding.jpg" alt="">
-            </div>
-            <div class="item-body">
-                <h3>សាឡាត់ត្រីសាល់ម៉ុនពិសេស</h3>
-                <p>ត្រីសាល់ម៉ុនស្រស់ៗ ផ្សំជាមួយបន្លែបៃតងធម្មជាតិ និងទឹកជ្រលក់រូបមន្តពិសេស…</p>
-                <div class="star-add-cart">
-                    <div class="start">
-                        <mat-icon>star</mat-icon>
-                        <p>4.9(120+)</p>
-                    </div>
-                    <div class="add-cart">
-                        <mat-icon>add_shopping_cart</mat-icon>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="item-diplay">
-            <div class="item-nav">
-                <span>$12.00 / 49,200៛</span>
-                <img src="/assets/tranding.jpg" alt="">
-            </div>
-            <div class="item-body">
-                <h3>សាឡាត់ត្រីសាល់ម៉ុនពិសេស</h3>
-                <p>ត្រីសាល់ម៉ុនស្រស់ៗ ផ្សំជាមួយបន្លែបៃតងធម្មជាតិ និងទឹកជ្រលក់រូបមន្តពិសេស…</p>
-                <div class="star-add-cart">
-                    <div class="start">
-                        <mat-icon>star</mat-icon>
-                        <p>4.9(120+)</p>
-                    </div>
-                    <div class="add-cart">
-                        <mat-icon>add_shopping_cart</mat-icon>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="item-diplay">
-            <div class="item-nav">
-                <span>$12.00 / 49,200៛</span>
-                <img src="/assets/tranding.jpg" alt="">
-            </div>
-            <div class="item-body">
-                <h3>សាឡាត់ត្រីសាល់ម៉ុនពិសេស</h3>
-                <p>ត្រីសាល់ម៉ុនស្រស់ៗ ផ្សំជាមួយបន្លែបៃតងធម្មជាតិ និងទឹកជ្រលក់រូបមន្តពិសេស…</p>
-                <div class="star-add-cart">
-                    <div class="start">
-                        <mat-icon>star</mat-icon>
-                        <p>4.9(120+)</p>
-                    </div>
-                    <div class="add-cart">
-                        <mat-icon>add_shopping_cart</mat-icon>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="item-diplay">
-            <div class="item-nav">
-                <span>$12.00 / 49,200៛</span>
-                <img src="/assets/tranding.jpg" alt="">
-            </div>
-            <div class="item-body">
-                <h3>សាឡាត់ត្រីសាល់ម៉ុនពិសេស</h3>
-                <p>ត្រីសាល់ម៉ុនស្រស់ៗ ផ្សំជាមួយបន្លែបៃតងធម្មជាតិ និងទឹកជ្រលក់រូបមន្តពិសេស…</p>
-                <div class="star-add-cart">
-                    <div class="start">
-                        <mat-icon>star</mat-icon>
-                        <p>4.9(120+)</p>
-                    </div>
-                    <div class="add-cart">
-                        <mat-icon>add_shopping_cart</mat-icon>
-                    </div>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
+    }
+    }
+  </div>
+  }
+
+  @if (!isLoading &&filteredMenuitems.length === 0) {
+  <div class="empty-menu">
+    <mat-icon> restaurant </mat-icon>
+    <p>មិនទាន់មានមុខម្ហូប</p>
+  </div>
+  }
+  @if (hasMore && filteredMenuitems.length > 0 ) {
+  <div #loadMoreTrigger class="load-more-trigger">
+    @if (isLoadingMore) {
+    <div class="load-more-loading">
+      <mat-spinner diameter="40"></mat-spinner>
+      <span>កំពុងផ្ទុកមុខម្ហូបបន្ថែម...</span>
+    </div>
+    }
+  </div>
+  }
 </div>

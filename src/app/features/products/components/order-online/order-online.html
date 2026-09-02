@@ -1,155 +1,248 @@
 <div class="main-order-online">
-    <div class="menu-wrapper">
-        <button class="nav-btn left" (click)="scrollLeft()">
-            <mat-icon>chevron_left</mat-icon>
-        </button>
-        <div class="menu-bar" #menuBar>
-            <ul>
-                <li> <mat-icon>apps</mat-icon> ទាំងអស់</li>
-                <li> <mat-icon>tapas</mat-icon> អាហារសម្រន់ (Appetizers)</li>
-                <li><mat-icon>dinner_dining</mat-icon>មុខម្ហូបចម្បង (Main Course)</li>
-                <li><mat-icon>icecream</mat-icon>បង្អែម (Desserts)</li>
-                <li><mat-icon>local_bar</mat-icon>ភេសជ្ជៈ (Drinks)</li>
-            </ul>
-        </div>
-        <button class="nav-btn right" (click)="scrollRight()">
-            <mat-icon>chevron_right</mat-icon>
-        </button>
+
+  <!-- ========================================= -->
+  <!-- CATEGORY BAR -->
+  <!-- ========================================= -->
+
+  <div class="menu-wrapper">
+
+    <button
+      class="nav-btn left"
+      (click)="scrollLeft()">
+
+      <mat-icon>
+        chevron_left
+      </mat-icon>
+
+    </button>
+
+
+    <div class="menu-bar">
+
+      <ul>
+
+        <!-- ALL -->
+
+        <li [class.active]="selectedCategoryId === 'all'"(click)="filterCategory('all')">
+          <mat-icon>apps</mat-icon>ទាំងអស់
+        </li>
+        <!-- CATEGORY -->
+        @for (category of categorys;track category._id) {
+          <li [class.active]="selectedCategoryId ===category._id"
+            (click)="filterCategory(category._id )">
+            <mat-icon>restaurant</mat-icon>
+            {{ category.name }}
+          </li>
+        }
+      </ul>
+
+    </div>
+    <button
+      class="nav-btn right"
+      (click)="scrollRight()">
+
+      <mat-icon>
+        chevron_right
+      </mat-icon>
+
+    </button>
+
+  </div>
+
+
+
+  <!-- ========================================= -->
+  <!-- SEARCH -->
+  <!-- ========================================= -->
+
+  <div class="search-box">
+
+    <mat-icon>
+      search
+    </mat-icon>
+
+    <input
+      type="text"
+      placeholder="Search food..."
+      (input)="searchMenu($event)"
+    >
+
+  </div>
+
+
+
+  <!-- ========================================= -->
+  <!-- LOADING -->
+  <!-- ========================================= -->
+
+  @if (isLoading) {
+
+    <div class="loading">
+
+      <mat-spinner
+        diameter="45">
+      </mat-spinner>
+
+      <p>
+        Loading menu...
+      </p>
+
     </div>
 
+  }
+
+
+
+  @else {
+
+    <!-- ======================================= -->
+    <!-- MENU -->
+    <!-- ======================================= -->
+
     <div class="item-grid-all">
-        <div class="item-diplay">
-            <div class="item-nav">
-                <span>$12.00 / 49,200៛</span>
-                <img src="/assets/tranding.jpg" alt="">
+
+      @for (
+        item of filteredMenuitems;
+        track item._id
+      ) {
+
+        <div class="item-display" [class.disabled]="!canOrder(item)  " [routerLink]="['/products/product-detail', item._id]">
+
+
+          <!-- IMAGE -->
+
+          <div class="item-nav">
+
+            <span class="price">
+
+              ${{ item.price }}
+
+              /
+
+              {{ item.price | usdToKhr }}
+
+            </span>
+
+
+            <img
+              [src]="getImage(item.image)"
+              [alt]="item.name"
+            >
+
+
+            @if (item.isPopular) {
+
+              <span class="popular">
+                🔥 Popular
+              </span>
+
+            }
+
+
+            @if (
+              isOutOfStock(item)
+            ) {
+
+              <span class="out-stock">
+
+                Out of Stock
+
+              </span>
+
+            }
+
+          </div>
+
+
+
+          <!-- BODY -->
+
+          <div class="item-body">
+
+            <h3>
+              {{ item.name }}
+            </h3>
+
+
+            <p>
+              {{ item.description }}
+            </p>
+
+
+
+            <div class="star-add-cart">
+
+
+              <div class="start">
+
+                <mat-icon>
+                  star
+                </mat-icon>
+
+                <p>
+                  4.9
+                </p>
+
+              </div>
+
+
+
+              <button
+                class="add-cart"
+
+                [disabled]="
+                  !canOrder(item)
+                "
+
+                (click)="
+                  addToCart(item)
+                ">
+
+                <mat-icon>
+                  add_shopping_cart
+                </mat-icon>
+
+              </button>
+
+
             </div>
-            <div class="item-body">
-                <h3>សាឡាត់ត្រីសាល់ម៉ុនពិសេស</h3>
-                <p>ត្រីសាល់ម៉ុនស្រស់ៗ ផ្សំជាមួយបន្លែបៃតងធម្មជាតិ និងទឹកជ្រលក់រូបមន្តពិសេស…</p>
-                <div class="star-add-cart">
-                    <div class="start">
-                        <mat-icon>star</mat-icon>
-                        <p>4.9(120+)</p>
-                    </div>
-                    <div class="add-cart">
-                        <mat-icon>add_shopping_cart</mat-icon>
-                    </div>
-                </div>
-            </div>
+
+          </div>
+
         </div>
-        <div class="item-diplay">
-            <div class="item-nav">
-                <span>$12.00 / 49,200៛</span>
-                <img src="/assets/tranding.jpg" alt="">
-            </div>
-            <div class="item-body">
-                <h3>សាឡាត់ត្រីសាល់ម៉ុនពិសេស</h3>
-                <p>ត្រីសាល់ម៉ុនស្រស់ៗ ផ្សំជាមួយបន្លែបៃតងធម្មជាតិ និងទឹកជ្រលក់រូបមន្តពិសេស…</p>
-                <div class="star-add-cart">
-                    <div class="start">
-                        <mat-icon>star</mat-icon>
-                        <p>4.9(120+)</p>
-                    </div>
-                    <div class="add-cart">
-                        <mat-icon>add_shopping_cart</mat-icon>
-                    </div>
-                </div>
-            </div>
+
+      }
+
+
+
+      <!-- ===================================== -->
+      <!-- EMPTY -->
+      <!-- ===================================== -->
+
+      @if (
+        filteredMenuitems.length === 0
+      ) {
+
+        <div class="empty">
+
+          <mat-icon>
+            restaurant_menu
+          </mat-icon>
+
+          <h3>
+            No food found
+          </h3>
+
+          <p>
+            Try another category or search.
+          </p>
+
         </div>
-        <div class="item-diplay">
-            <div class="item-nav">
-                <span>$12.00 / 49,200៛</span>
-                <img src="/assets/tranding.jpg" alt="">
-            </div>
-            <div class="item-body">
-                <h3>សាឡាត់ត្រីសាល់ម៉ុនពិសេស</h3>
-                <p>ត្រីសាល់ម៉ុនស្រស់ៗ ផ្សំជាមួយបន្លែបៃតងធម្មជាតិ និងទឹកជ្រលក់រូបមន្តពិសេស…</p>
-                <div class="star-add-cart">
-                    <div class="start">
-                        <mat-icon>star</mat-icon>
-                        <p>4.9(120+)</p>
-                    </div>
-                    <div class="add-cart">
-                        <mat-icon>add_shopping_cart</mat-icon>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="item-diplay">
-            <div class="item-nav">
-                <span>$12.00 / 49,200៛</span>
-                <img src="/assets/tranding.jpg" alt="">
-            </div>
-            <div class="item-body">
-                <h3>សាឡាត់ត្រីសាល់ម៉ុនពិសេស</h3>
-                <p>ត្រីសាល់ម៉ុនស្រស់ៗ ផ្សំជាមួយបន្លែបៃតងធម្មជាតិ និងទឹកជ្រលក់រូបមន្តពិសេស…</p>
-                <div class="star-add-cart">
-                    <div class="start">
-                        <mat-icon>star</mat-icon>
-                        <p>4.9(120+)</p>
-                    </div>
-                    <div class="add-cart">
-                        <mat-icon>add_shopping_cart</mat-icon>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="item-diplay">
-            <div class="item-nav">
-                <span>$12.00 / 49,200៛</span>
-                <img src="/assets/tranding.jpg" alt="">
-            </div>
-            <div class="item-body">
-                <h3>សាឡាត់ត្រីសាល់ម៉ុនពិសេស</h3>
-                <p>ត្រីសាល់ម៉ុនស្រស់ៗ ផ្សំជាមួយបន្លែបៃតងធម្មជាតិ និងទឹកជ្រលក់រូបមន្តពិសេស…</p>
-                <div class="star-add-cart">
-                    <div class="start">
-                        <mat-icon>star</mat-icon>
-                        <p>4.9(120+)</p>
-                    </div>
-                    <div class="add-cart">
-                        <mat-icon>add_shopping_cart</mat-icon>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="item-diplay">
-            <div class="item-nav">
-                <span>$12.00 / 49,200៛</span>
-                <img src="/assets/tranding.jpg" alt="">
-            </div>
-            <div class="item-body">
-                <h3>សាឡាត់ត្រីសាល់ម៉ុនពិសេស</h3>
-                <p>ត្រីសាល់ម៉ុនស្រស់ៗ ផ្សំជាមួយបន្លែបៃតងធម្មជាតិ និងទឹកជ្រលក់រូបមន្តពិសេស…</p>
-                <div class="star-add-cart">
-                    <div class="start">
-                        <mat-icon>star</mat-icon>
-                        <p>4.9(120+)</p>
-                    </div>
-                    <div class="add-cart">
-                        <mat-icon>add_shopping_cart</mat-icon>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="item-diplay">
-            <div class="item-nav">
-                <span>$12.00 / 49,200៛</span>
-                <img src="/assets/tranding.jpg" alt="">
-            </div>
-            <div class="item-body">
-                <h3>សាឡាត់ត្រីសាល់ម៉ុនពិសេស</h3>
-                <p>ត្រីសាល់ម៉ុនស្រស់ៗ ផ្សំជាមួយបន្លែបៃតងធម្មជាតិ និងទឹកជ្រលក់រូបមន្តពិសេស…</p>
-                <div class="star-add-cart">
-                    <div class="start">
-                        <mat-icon>star</mat-icon>
-                        <p>4.9(120+)</p>
-                    </div>
-                    <div class="add-cart">
-                        <mat-icon>add_shopping_cart</mat-icon>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+      }
+
     </div>
+
+  }
+
 </div>

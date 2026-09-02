@@ -1,0 +1,302 @@
+<div class="products-dialog">
+  <div class="dialog-header">
+
+    <div class="header-left">
+
+      <div class="header-icon">
+
+        <mat-icon>
+          restaurant_menu
+        </mat-icon>
+
+      </div>
+
+
+      <div>
+
+        <h2>
+          Ordered Products
+        </h2>
+
+        <p>
+
+          Order #
+
+          {{
+            order?._id
+              ?.slice(-8)
+              ?.toUpperCase()
+          }}
+
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <button
+      mat-icon-button
+      (click)="close()">
+
+      <mat-icon>
+        close
+      </mat-icon>
+
+    </button>
+
+  </div>
+
+  <div class="summary">
+
+    <div class="summary-card">
+
+      <mat-icon>
+        shopping_basket
+      </mat-icon>
+
+      <div>
+
+        <span>
+          Total Items
+        </span>
+
+        <strong>
+          {{ getTotalItems() }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <div class="summary-card">
+
+      <mat-icon>
+        payments
+      </mat-icon>
+
+      <div>
+
+        <span>
+          Total
+        </span>
+
+        <strong>
+          ${{ getTotal() | number:'1.2-2' }}
+        </strong>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="products-body">
+
+    @if (
+      !order?.items ||
+      order.items.length === 0
+    ) {
+
+      <div class="empty">
+
+        <mat-icon>
+          restaurant_menu
+        </mat-icon>
+
+        <h3>
+          No products found
+        </h3>
+
+        <p>
+          This order has no products.
+        </p>
+
+      </div>
+
+    }
+
+
+    @else {
+
+      @for (
+        item of order.items;
+        track $index
+      ) {
+
+        <div class="product-item">
+
+
+          <!-- IMAGE -->
+
+          <div class="product-image">
+
+            @if (item.image) {
+
+              <img
+                [src]="item.image"
+                [alt]="item.productName"
+                loading="lazy">
+
+            }
+
+            @else {
+
+              <mat-icon>
+                restaurant
+              </mat-icon>
+
+            }
+
+          </div>
+
+
+          <!-- PRODUCT INFO -->
+
+          <div class="product-info">
+
+            <div class="product-name-row">
+
+              <h3>
+
+                {{
+                  item.productName ||
+                  item.name ||
+                  'Unknown Product'
+                }}
+
+              </h3>
+
+              <span class="quantity">
+
+                ×
+                {{ item.quantity || 1 }}
+
+              </span>
+
+            </div>
+
+
+            <div class="price-row">
+
+              <span>
+                ${{ item.price | number:'1.2-2' }}
+                ×
+                {{ item.quantity || 1 }}
+              </span>
+
+              <strong>
+
+                ${{ getSubtotal(item)
+                  | number:'1.2-2' }}
+
+              </strong>
+
+            </div>
+
+
+            <!-- OPTIONS -->
+
+            @if (
+              item.selectedOptions &&
+              item.selectedOptions.length > 0
+            ) {
+
+              <div class="options">
+
+                <span class="options-title">
+
+                  Options
+
+                </span>
+
+
+                @for (
+                  option of item.selectedOptions;
+                  track $index
+                ) {
+
+                  <div class="option">
+
+                    <span>
+
+                      {{
+                        option.optionName ||
+                        'Option'
+                      }}
+
+                    </span>
+
+                    <b>
+
+                      {{
+                        option.choiceName ||
+                        option.name ||
+                        '-'
+                      }}
+
+                    </b>
+
+
+                    @if (
+                      option.price &&
+                      option.price > 0
+                    ) {
+
+                      <small>
+
+                        +${{
+                          option.price
+                          | number:'1.2-2'
+                        }}
+
+                      </small>
+
+                    }
+
+                  </div>
+
+                }
+
+              </div>
+
+            }
+
+          </div>
+
+        </div>
+
+      }
+
+    }
+
+  </div>
+
+  <div class="dialog-footer">
+
+    <div class="footer-total">
+
+      <span>
+        Order Total
+      </span>
+
+      <strong>
+        ${{ getTotal() | number:'1.2-2' }}
+      </strong>
+
+    </div>
+
+
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="close()">
+
+      Close
+
+    </button>
+
+  </div>
+
+</div>

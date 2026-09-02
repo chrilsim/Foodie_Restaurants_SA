@@ -1,35 +1,181 @@
 <div class="main-dashboard">
-    <div class="menu-left">
-        <div class="logo">
-            <img src="assets/logo.png" alt="">
+    <aside class="menu-left">
+        <div class="sidebar-top">
+            <div class="logo">
+                <img src="assets/logo.png" alt="Restaurant Logo">
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-title">
+                    MAIN MENU
+                </div>
+                <ul>
+                    <li routerLink="/main-dashboard/dashboard" routerLinkActive="active"[routerLinkActiveOptions]="{ exact: true }">
+                        <mat-icon>dashboard</mat-icon>
+                        <span>Dashboard</span>
+                    </li>
+                    <li routerLink="/main-dashboard/order" routerLinkActive="active">
+                        <mat-icon>receipt_long</mat-icon>
+                        <span>Orders</span>
+                    </li>
+                    <li routerLink="/main-dashboard/inventory-managerment" routerLinkActive="active">
+                        <mat-icon>inventory_2</mat-icon>
+                        <span>Inventory</span>
+                    </li>
+                    <li routerLink="/main-dashboard/menu-management" routerLinkActive="active">
+                        <mat-icon>restaurant_menu</mat-icon>
+                        <span>Menu Management</span>
+                    </li>
+                    <li routerLink="/main-dashboard/user" routerLinkActive="active">
+                        <mat-icon>group</mat-icon>
+                        <span>Customers & Staff</span>
+                    </li>
+                    <li routerLink="/main-dashboard/table-managerment" routerLinkActive="active">
+                        <mat-icon>table_restaurant</mat-icon>
+                        <span>Table Management</span>
+                    </li>
+                    <li routerLink="/main-dashboard/bookig-managerment" routerLinkActive="active">
+                        <mat-icon>event_seat</mat-icon>
+                        <span>Booking Management</span>
+                    </li>
+                    <li routerLink="/main-dashboard/category" routerLinkActive="active">
+                        <mat-icon>category</mat-icon>
+                        <span>Cagtegory</span>
+                    </li>
+
+                </ul>
+
+            </nav>
+
         </div>
-        <ul>
-            <li  routerLink="/main-dashboard/dashboard"><mat-icon>dashboard</mat-icon> Dashboard</li>
-            <li><mat-icon>dashboard</mat-icon> Orders</li>
-            <li><mat-icon>dashboard</mat-icon> Kitchen Display</li>
-            <li><mat-icon>dashboard</mat-icon> Inventory</li>
-            <li routerLink="/main-dashboard/menu-management" ><mat-icon>dashboard</mat-icon> Menu Management</li>
-            <li routerLink="/main-dashboard/staff"><mat-icon>dashboard</mat-icon> Staff Managerment</li>
-            <li routerLink="/main-dashboard/customer"><mat-icon>dashboard</mat-icon>Customer</li>
-        </ul>
-    </div>
-    <div class="contain-right">
-        <div class="header">
+        <div class="sidebar-user">
+            <div class="user-profile">
+                <div class="user-avatar">
+                    <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="Profile">
+                </div>
+                <div class="user-info">
+                    <h4>{{ user.fullName || 'User' }}</h4>
+                    <p>{{ user.role || 'Admin' }}</p>
+                </div>
+                <button mat-icon-button [matMenuTriggerFor]="menu" class="more-btn">
+                    <mat-icon>
+                        more_vert
+                    </mat-icon>
+                </button>
+            </div>
+            <mat-menu #menu="matMenu" class="user-menu">
+                <button mat-menu-item>
+                    <mat-icon>person</mat-icon>
+                    <span>Profile</span>
+                </button>
+                <button mat-menu-item routerLink="/setting">
+                    <mat-icon>
+                        settings
+                    </mat-icon>
+
+                    <span>
+                        Settings
+                    </span>
+
+                </button>
+
+
+                <button mat-menu-item routerLink="/login">
+
+                    <mat-icon>
+                        logout
+                    </mat-icon>
+
+                    <span>
+                        Log out
+                    </span>
+
+                </button>
+
+            </mat-menu>
+
+        </div>
+
+    </aside>
+
+    <main class="contain-right">
+        <header class="header">
+
+
+      
+
             <div class="search">
-                <mat-form-field appearance="outline" class="full-width">
-                    <mat-icon matPrefix>search</mat-icon>
+                <h2>Dashboard</h2>
+                <!-- <mat-form-field appearance="outline" class="full-width">
+
+                    <mat-icon matPrefix>
+                        search
+                    </mat-icon>
+
                     <input matInput type="search" placeholder="Search analytics, orders, or items...">
-                </mat-form-field>
+
+                </mat-form-field> -->
+
             </div>
-            <div class="live-status">
-                <mat-icon>notifications_unread</mat-icon>
-                <mat-icon>storefront</mat-icon>
-                <h3>| Live Status: Open</h3>
+
+
+            <!-- HEADER RIGHT -->
+
+            <div class="header-right">
+
+
+                <!-- NOTIFICATION -->
+                <button mat-icon-button class="header-icon-button" (click)="openNotifications()">
+
+                    <mat-icon>
+                        notifications_none
+                    </mat-icon>
+
+                    <span class="notification-dot"></span>
+
+                </button>
+
+                <!-- STORE -->
+
+                <div class="store-status">
+
+                    <div class="store-icon">
+
+                        <mat-icon>
+                            storefront
+                        </mat-icon>
+
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Live Status
+                        </span>
+
+                        <strong>
+                            <i></i>
+                            Open
+                        </strong>
+
+                    </div>
+
+                </div>
+
             </div>
-        </div>
-        <div style="width: 100%;">
+
+        </header>
+
+
+        <!-- =================================================
+         PAGE CONTENT
+    ================================================== -->
+
+        <section class="content-area">
+
             <router-outlet></router-outlet>
-        </div>
-        
-    </div>
+
+        </section>
+
+    </main>
+
 </div>

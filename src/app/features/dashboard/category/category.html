@@ -1,0 +1,261 @@
+<div class="category-page">
+
+  <!-- HEADER -->
+
+  <div class="page-header">
+
+    <div>
+
+      <h1>
+        Category
+      </h1>
+
+      <p>
+        គ្រប់គ្រងប្រភេទម្ហូបអាហារ
+      </p>
+
+    </div>
+
+    <div class="category-count">
+
+      <mat-icon>
+        category
+      </mat-icon>
+
+      <span>
+        {{ categories.length }}
+        Categories
+      </span>
+
+    </div>
+
+  </div>
+
+
+  <!-- FORM -->
+
+  <div class="category-form">
+
+    <div class="form-title">
+
+      <mat-icon>
+        {{ editingId ? 'edit' : 'add_circle' }}
+      </mat-icon>
+
+      <h2>
+        {{
+          editingId
+            ? 'Edit Category'
+            : 'Create Category'
+        }}
+      </h2>
+
+    </div>
+
+
+    <div class="form-grid">
+
+      <mat-form-field
+        appearance="outline"
+      >
+
+        <mat-label>
+          Category Name
+        </mat-label>
+
+        <mat-icon matPrefix>
+          category
+        </mat-icon>
+
+        <input
+          matInput
+          [(ngModel)]="name"
+          placeholder="Pizza, Burger..."
+        />
+
+      </mat-form-field>
+
+
+      <mat-form-field
+        appearance="outline"
+      >
+
+        <mat-label>
+          Description
+        </mat-label>
+
+        <mat-icon matPrefix>
+          description
+        </mat-icon>
+
+        <input
+          matInput
+          [(ngModel)]="description"
+          placeholder="Category description"
+        />
+
+      </mat-form-field>
+
+    </div>
+
+
+    <div class="form-actions">
+
+      <button
+        mat-button
+        type="button"
+        *ngIf="editingId"
+        (click)="resetForm()"
+      >
+
+        Cancel
+
+      </button>
+
+
+      <button
+        mat-raised-button
+        type="button"
+        [disabled]="loading"
+        (click)="saveCategory()"
+      >
+
+        <mat-icon>
+          {{
+            editingId
+              ? 'save'
+              : 'add'
+          }}
+        </mat-icon>
+
+        {{
+          editingId
+            ? 'Save Changes'
+            : 'Create Category'
+        }}
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- CATEGORY LIST -->
+
+  <div class="category-card">
+
+    <div class="list-header">
+
+      <div>
+
+        <h2>
+          Categories
+        </h2>
+
+        <p>
+          Category ទាំងអស់ក្នុងប្រព័ន្ធ
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div
+      class="category-list"
+      *ngIf="categories.length > 0"
+    >
+
+      <div
+        class="category-item"
+        *ngFor="
+          let category of categories
+        "
+      >
+
+        <div class="category-icon">
+
+          <mat-icon>
+            restaurant_menu
+          </mat-icon>
+
+        </div>
+
+
+        <div class="category-info">
+
+          <h3>
+            {{ category.name }}
+          </h3>
+
+          <p>
+            {{
+              category.description ||
+              'No description'
+            }}
+          </p>
+
+        </div>
+
+
+        <div class="category-actions">
+
+          <button
+            mat-icon-button
+            type="button"
+            title="Edit"
+            (click)="editCategory(category)"
+          >
+
+            <mat-icon>
+              edit
+            </mat-icon>
+
+          </button>
+
+
+          <button
+            mat-icon-button
+            type="button"
+            title="Delete"
+            (click)="deleteCategory(category)"
+          >
+
+            <mat-icon>
+              delete
+            </mat-icon>
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- EMPTY -->
+
+    <div
+      class="empty-state"
+      *ngIf="categories.length === 0"
+    >
+
+      <mat-icon>
+        category
+      </mat-icon>
+
+      <h3>
+        មិនទាន់មាន Category
+      </h3>
+
+      <p>
+        បង្កើត Category ដំបូងរបស់អ្នក។
+      </p>
+
+    </div>
+
+  </div>
+
+</div>

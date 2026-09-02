@@ -17,146 +17,230 @@
     <div class="grid-table">
         <div class="left-table">
             <div class="paty-size">
-                <h4>ចំនួនភ្ញៀវ (Party Size)</h4>
-                <ul>
-                    @for(item of [1,2,3,4,5,6,7,8,9,10,11,12,13]; track item){
-                    <li (click)="selectedParty = item" [class.select-paty-size]="selectedParty === item">{{item}}</li>
-                    }
+                <mat-form-field appearance="outline" class="mat-form-field-1">
+                    <mat-label>ចំនួនភ្ញៀវ</mat-label>
+                    <mat-select [(value)]="selectedParty">
+                        @for(item of [1,2,3,4,5,6,7,8,9,10,11,12,13]; track item){
+                        <mat-option [value]="item">
+                            {{ item }}
+                        </mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
 
-                </ul>
-            </div>
-            <div class="select-date">
-                <h4>ជ្រើសរើសថ្ងៃ (Select Date)</h4>
-                <ul>
-                    @for(item of dates ; track item.date){
-                    <li (click)="selectedDate=item.date" [class.select-date-only]="selectedDate === item.date">
-                        <p>{{ item.label || (item.date | date:'EEEE') }}</p>
-                        <p class="text-2xl font-bold">{{ item.date | date:'dd' }}</p>
-                        <p>{{ item.date | date:'MMMM' }}</p>
-                    </li>
-                    }
+                <mat-form-field appearance="outline" class="mat-form-field-1">
+                    <mat-label>ជ្រើសរើសថ្ងៃ</mat-label>
 
-                </ul>
+                    <mat-select [(value)]="selectedDate">
+                        @for(item of dates; track item.date){
+                        <mat-option [value]="item.date">
+                            {{ item.label || (item.date | date:'EEEE') }}
+                            - {{ item.date | date:'dd MMMM' }}
+                        </mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
             </div>
             <div class="select-time">
-                <h4>ជ្រើសរើសម៉ោង (Select Time)</h4>
-                <div class="select-time-section">
-                    <p>ពេលព្រឹក (morning)</p>
-                    <ul>
-                        @for(item of morningTimes; track item){
-                        <li (click)="selectedTime = item" [class.select-paty-size]="selectedTime === item">{{item}}</li>
-                        }
+                <mat-form-field appearance="outline" class="mat-form-field-2">
+                    <mat-label>ជ្រើសរើសម៉ោង</mat-label>
+                    <mat-select [(value)]="selectedTime">
+                        <mat-optgroup label="ពេលព្រឹក (Morning)">
+                            @for(item of morningTimes; track item){
+                            <mat-option [value]="item">
+                                {{ item }}
+                            </mat-option>
+                            }
+                        </mat-optgroup>
 
-                    </ul>
-                </div>
-                <div class="select-time-section">
-                    <p>ថ្ងៃត្រង់ (afternoon)</p>
-                    <ul>
-                        @for(item of afternoonTimes; track item){
-                        <li (click)="selectedTime = item" [class.select-paty-size]="selectedTime === item">{{item}}</li>
-                        }
+                        <mat-optgroup label="ថ្ងៃត្រង់ (Afternoon)">
+                            @for(item of afternoonTimes; track item){
+                            <mat-option [value]="item">
+                                {{ item }}
+                            </mat-option>
+                            }
+                        </mat-optgroup>
 
-                    </ul>
-                </div>
-                <div class="select-time-section">
-                    <p>ល្ងាច (evening)</p>
-                    <ul>
-                        @for(item of eveningTimes; track item){
-                        <li (click)="selectedTime = item" [class.select-paty-size]="selectedTime === item">{{item}}</li>
-                        }
+                        <mat-optgroup label="ល្ងាច (Evening)">
+                            @for(item of eveningTimes; track item){
+                            <mat-option [value]="item">
+                                {{ item }}
+                            </mat-option>
+                            }
+                        </mat-optgroup>
 
-                    </ul>
-                </div>
-
+                    </mat-select>
+                </mat-form-field>
             </div>
-            <div class="seating-area">
-                <h4>តំបន់អង្គុយ (Seating Area)</h4>
-                <ul>
-                    @for(item of seatingAreas ;track item.id){
-                    <li (click)="setArea(item.id)">
-                        <img [src]="item.image" alt="">
-                        <div class="text-absolud">
-                            <h4>{{item.name}}</h4>
-                            <p>{{item.desc}}</p>
+            <div class="reservation-container">
+
+                <!-- Seating Area -->
+                <section class="reservation-section">
+                    <div class="section-title">
+                        <mat-icon>location_on</mat-icon>
+                        <div>
+                            <h4>តំបន់អង្គុយ</h4>
+                            <span>Seating Area</span>
                         </div>
-                        @if(selectedArea === item.id){
-                        <div class="check-position">
-                            <mat-icon>check_circle</mat-icon>
-                        </div>
-                        }
+                    </div>
+                    <div class="seating-grid">
+                        @for (item of seatingAreas; track item.id) {
+                        <mat-card class="seating-card" [class.active]="selectedArea === item.id"
+                            (click)="setArea(item.id)">
 
-                    </li>
-                    }
+                            <div class="image-wrapper">
+                                <img [src]="item.image" [alt]="item.name">
 
-
-                </ul>
-            </div>
-            <div class="tabl-selection">
-                <h4>ជ្រើសរើសទីតាំងតុ (Table Selection)</h4>
-                <ul>
-                    <li>
-                        <div class="color-table" style="background: rgba(111, 172, 133, 0.63);"></div>
-                        <span>អាចកក់បាន (Available)</span>
-                    </li>
-                    <li>
-                        <div class="color-table" style="background: rgb(223, 223, 223);"></div>
-                        <span>មានភ្ញៀវ (Occupied)</span>
-                    </li>
-                    <li>
-                        <div class="color-table" style="background: var(--bg-green);"></div>
-                        <span>តុដែលបានជ្រើសរើស (Selected)</span>
-                    </li>
-                </ul>
-
-                <div class="main-table-position">
-                    <div class="table-container">
-                        <div class="entrance">
-                            <span>ច្រកចូល (ENTRANCE)</span>
-                        </div>
-
-                        <div class="tables">
-                            @for (table of tables; track table.id) {
-                            <div (click)="selectTable(table)" class="table" [ngClass]="{
-                                'available': table.status === 'available',
-                                'selected': table.status === 'selected',
-                                'disabled': table.status==='occupied'
-                            }">
-
-                                <h3>{{ table.id }}</h3>
-                                <span>{{ table.seats }} នាក់</span>
+                                @if (selectedArea === item.id) {
+                                <div class="selected-icon">
+                                    <mat-icon>check_circle</mat-icon>
+                                </div>
+                                }
                             </div>
+
+                            <mat-card-content>
+                                <h3>{{ item.name }}</h3>
+                                <p>{{ item.desc }}</p>
+                            </mat-card-content>
+
+                        </mat-card>
+                        }
+                    </div>
+                </section>
+                <!-- Table Selection -->
+                <section class="reservation-section">
+
+                    <div class="section-title">
+                        <mat-icon>table_restaurant</mat-icon>
+                        <div>
+                            <h4>ជ្រើសរើសទីតាំងតុ</h4>
+                            <span>Table Selection</span>
+                        </div>
+                    </div>
+                    <!-- Legend -->
+                    <div class="table-legend">
+
+                        <div class="legend-item">
+                            <span class="legend-color available"></span>
+                            <span>អាចកក់បាន</span>
+                        </div>
+
+                        <div class="legend-item">
+                            <span class="legend-color occupied"></span>
+                            <span>មានភ្ញៀវ</span>
+                        </div>
+
+                        <div class="legend-item">
+                            <span class="legend-color selected"></span>
+                            <span>តុដែលបានជ្រើសរើស</span>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Restaurant Layout -->
+                    <mat-card class="restaurant-layout">
+
+                        <div class="entrance">
+                            <mat-icon>door_front</mat-icon>
+                            <span>ច្រកចូល</span>
+                            <small>ENTRANCE</small>
+                        </div>
+                        <div class="tables">
+                            @for (table of filteredTables; track table._id) {
+                            <button mat-fab class="table" [ngClass]="{
+                                'available': table.status === 'available',
+                                'selected': selectedTable?._id === table._id,
+                                'disabled': table.status === 'occupied'
+                                }" [disabled]="table.status === 'occupied'" (click)="selectTable(table)">
+
+                                @if (selectedTable?._id === table._id) {
+
+                                <mat-icon>check</mat-icon>
+                                } @else {
+                                <strong>{{ table.tableNumber }}</strong>
+                                <span>
+                                    {{ table.seats }} នាក់
+                                </span>
+                                }
+                            </button>
                             }
                         </div>
+                    </mat-card>
+                </section>
+            </div>
+            <div class="contact-information">
+                <div class="contact-header">
+                    <div class="header-icon">
+                        <mat-icon>person</mat-icon>
+                    </div>
+                    <div>
+                        <h3>ព័ត៌មានទំនាក់ទំនង</h3>
+                        <p>Contact Information</p>
                     </div>
                 </div>
-            </div>
-            <div class="contect-infomation">
-                <h4>ព័ត៌មានទំនាក់ទំនង (Contact Information)</h4>
-                <form>
-                    <div class="phone-name">
-                        <div class="in-input">
-                            <label for="">ឈ្មោះពេញ (Full Name)</label><br>
-                            <input type="text" placeholder="full name">
+                <div class="contact-body">
+                    <form [formGroup]="bookingForm">
+                        <!-- Full Name + Phone -->
+                        <div class="form-row">
+                            <mat-form-field appearance="outline" class="form-field">
+                                <mat-label>ឈ្មោះពេញ</mat-label>
+                                <mat-icon matPrefix>person_outline</mat-icon>
+                                <input matInput type="text" formControlName="fullName" placeholder="បញ្ចូលឈ្មោះពេញ">
+                                @if (
+                                    bookingForm.get('fullName')?.hasError('required')
+                                    && bookingForm.get('fullName')?.touched
+                                ) {
+                                <mat-error>
+                                    សូមបញ្ចូលឈ្មោះពេញ
+                                </mat-error>
+                                }
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" class="form-field">
+                                <mat-label>លេខទូរស័ព្ទ</mat-label>
+                                <mat-icon matPrefix>phone</mat-icon>
+                                <input matInput type="tel" formControlName="phoneNumber" placeholder="012 345 678">
+                                @if (
+                                bookingForm.get('phoneNumber')?.hasError('required')
+                                && bookingForm.get('phoneNumber')?.touched
+                                ) {
+                                <mat-error>
+                                    សូមបញ្ចូលលេខទូរស័ព្ទ
+                                </mat-error>
+                                }
+                            </mat-form-field>
                         </div>
-                        <div class="in-input">
-                            <label for="">លេខទូរស័ព្ទ (Phone Number)</label><br>
-                            <input type="text" placeholder="Phone Number">
-                        </div>
-                    </div>
-                    <div class="in-input">
-                        <label for="">អ៊ីមែល (Email - Optional)</label><br>
-                        <input type="email" placeholder="Email - Optional">
-                    </div>
-                    <h4 style="margin: 15px 0;">សំណូមពរពិសេស (Special Requests)</h4>
-                    <label for="">ប្រតិកម្មអាហារ ឬ ឱកាសពិសេស (Allergies or Special Occasions)</label><br>
-                    <textarea placeholder="Enter your message..."></textarea>
-                </form>
+                        <!-- Email -->
+                        <mat-form-field appearance="outline" class="form-field full-width">
+                            <mat-label>អ៊ីមែល</mat-label>
+                            <mat-icon matPrefix>email</mat-icon>
+                            <input matInput type="email" formControlName="email" placeholder="example@gmail.com">
+                            <mat-hint>
+                                អ៊ីមែលជាជម្រើស (Optional)
+                            </mat-hint>
+                        </mat-form-field>
+                        <!-- Special Request -->
+                        <mat-form-field appearance="outline" class="form-field full-width">
+                            <mat-label>
+                                សំណូមពរពិសេស
+                            </mat-label>
+                            <mat-icon matPrefix>notes</mat-icon>
+
+                            <textarea matInput rows="5" formControlName="specialRequest"
+                                placeholder="ឧ. ចង់បានតុក្បែរបង្អួច...">
+                            </textarea>
+                            <mat-hint>
+                                Allergies, Birthday, Anniversary ឬសំណូមពរផ្សេងៗ
+                            </mat-hint>
+                        </mat-form-field>
+                    </form>
+                </div>
             </div>
         </div>
         <div class="right-table">
             <div class="main-summary">
                 <h4>សេចក្តីសង្ខេប (Summary)</h4>
-                <hr style="margin: 15px 0 15px 0;  opacity: 40%;"> 
+                <hr style="margin: 15px 0 15px 0;  opacity: 40%;">
                 <ul>
                     <li>
                         <mat-icon>group</mat-icon>
@@ -190,18 +274,20 @@
                         <mat-icon>table_bar</mat-icon>
                         <div class="groups">
                             <h3>លេខតុ</h3>
-                            <p>{{ selectedTable?.id|| 'មិនបានជ្រើសរើស (Not Selected)' }} ({{selectedTable?.seats}} នាក់)</p>
+                            <p>{{ selectedTable?._id|| 'មិនបានជ្រើសរើស (Not Selected)' }} ({{selectedTable?.seats}}
+                                នាក់)
+                            </p>
                         </div>
                     </li>
                 </ul>
-                 <hr style="margin: 15px 0 15px 0;  opacity: 40%;"> 
-                 <div class="bookink-price">
+                <hr style="margin: 15px 0 15px 0;  opacity: 40%;">
+                <div class="bookink-price">
                     <h4>ថ្លៃសេវាកក់ (Booking Fee)</h4>
-                     <span>$0.00 / 0៛</span>
-                 </div>
-                 <button>បញ្ជាក់ការកក់ <mat-icon>arrow_right_alt</mat-icon></button>
-                 <div class="agry">ដោយចុច "បញ្ជាក់ការកក់" អ្នកយល់ព្រមតាមលក្ខខណ្ឌរបស់យើង។</div>
-                
+                    <span>$0.00 / 0៛</span>
+                </div>
+                <button (click)="confirmBooking()">បញ្ជាក់ការកក់ <mat-icon>arrow_right_alt</mat-icon></button>
+                <div class="agry">ដោយចុច "បញ្ជាក់ការកក់" អ្នកយល់ព្រមតាមលក្ខខណ្ឌរបស់យើង។</div>
+
             </div>
             <div class="info-dateline">
                 <mat-icon>info</mat-icon>

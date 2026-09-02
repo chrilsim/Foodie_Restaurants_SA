@@ -1,0 +1,202 @@
+.reservation-page {
+  padding: 24px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.page-header p {
+  margin: 5px 0 0;
+  color: #777;
+}
+
+.refresh-btn {
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 50%;
+  background: #f5f5f5;
+  cursor: pointer;
+}
+
+.booking-list {
+  display: grid;
+  gap: 18px;
+}
+
+.booking-card {
+  background: white;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+}
+
+.booking-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.booking-header h3 {
+  margin: 0;
+}
+
+.booking-number {
+  color: #888;
+  font-size: 13px;
+}
+
+.status {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.status.pending {
+  background: #fff3cd;
+}
+
+.status.confirmed {
+  background: #d1e7dd;
+}
+
+.status.completed {
+  background: #cfe2ff;
+}
+
+.status.cancelled {
+  background: #f8d7da;
+}
+
+.booking-info {
+  display: grid;
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  gap: 15px;
+
+  margin: 20px 0;
+}
+
+.info-item {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.info-item mat-icon {
+  color: #777;
+}
+
+.info-item small,
+.contact small {
+  display: block;
+  color: #888;
+}
+
+.info-item strong {
+  display: block;
+  margin-top: 3px;
+}
+
+.contact {
+  display: flex;
+  gap: 50px;
+  border-top: 1px solid #eee;
+  padding-top: 15px;
+}
+
+.booking-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+  border-top: 1px solid #eee;
+  padding-top: 15px;
+}
+
+.invoice-btn,
+.cancel-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 9px 15px;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+}
+
+.invoice-btn {
+  border: none;
+  background: #222;
+  color: white;
+}
+
+.cancel-btn {
+  border: 1px solid #ddd;
+  background: white;
+}
+
+.loading,
+.empty {
+  align-items: center;
+  text-align: center;
+  padding: 60px;
+  color: #777;
+}
+
+.empty mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+}
+
+@media (max-width: 768px) {
+
+  .booking-info {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+  .contact {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+}
+
+@media (max-width: 500px) {
+
+  .reservation-page {
+    padding: 15px;
+  }
+
+  .booking-info {
+    grid-template-columns: 1fr;
+  }
+
+  .booking-actions {
+    flex-direction: column;
+  }
+
+  .invoice-btn,
+  .cancel-btn {
+    justify-content: center;
+  }
+
+}

@@ -1,109 +1,587 @@
-
 <div class="main">
-    <div class="top-bar">
-        <div class="" style="line-height: 30px;">
-            <h2 style="color: var(--bg-green);">Menu Management</h2>
-            <p>Manage your culinary offerings, pricing, and availability across all stations.</p>
-        </div>
-        <div class="add-item">
-            <button (click)="openAddItem()"><mat-icon>add</mat-icon>Add Food </button>
-        </div>
-    </div>
-    <p>Menu Count: {{ filteredMenuitems.length }}</p>
-    <div class="menu-bar" #menuBar>
-        <ul>
-            <li (click)="filterCategory('all')"> <mat-icon>apps</mat-icon> ទាំងអស់</li>
-            @for (category of categorys; track category._id) {
 
-            <li (click)="filterCategory(category._id!)">
+    <!-- ================================================= -->
+    <!-- TOP BAR -->
+    <!-- ================================================= -->
+
+    <div class="top-bar">
+
+        <div style="line-height: 30px;">
+
+            <h2 style="color: var(--bg-green);">
+                Menu Management
+            </h2>
+
+            <p>
+                Manage your culinary offerings, pricing, and availability across all stations.
+            </p>
+
+        </div>
+
+        <div class="add-item">
+
+            <button
+                type="button"
+                (click)="openAddItem()">
 
                 <mat-icon>
-                    restaurant
+                    add
                 </mat-icon>
 
-                {{ category.name }}
+                Add Food
 
-            </li>
-
-            }
-        </ul>
-    </div>
-
-    <div class="main-grid">
-        @for(item of filteredMenuitems; track item._id){
-        <div class="menu-card">
-            <div class="image-wrapper">
-                <img [src]="item.image" alt="{{ item.name }}">
-                <div class="status" [class.blue]="item.isAvailable" [class.red]="!item.isAvailable">
-                    <span></span>
-                    {{ item.isAvailable ? 'Available' : 'Unavailable' }}
-                </div>
-            </div>
-            <div class="card-content">
-                <div class="title-row">
-                    <div>
-                        <div class="category">
-                            {{item.name}}
-                        </div>
-
-                        <div class="name">
-                            {{item.description}}
-                        </div>
-                    </div>
-
-                    <!-- More -->
-                    <button mat-icon-button [matMenuTriggerFor]="menu" class="more-btn">
-                        <mat-icon>more_vert</mat-icon>
-                    </button>
-                    <mat-menu #menu="matMenu">
-
-                        <button mat-menu-item (click)="openEditDialog(item._id!)">
-                            <mat-icon>edit</mat-icon>
-                            <span>Update</span>
-                        </button>
-                        <button mat-menu-item (click)="deleteItem(item._id)">
-                            <mat-icon>delete</mat-icon>
-                            <span>Delete</span>
-                        </button>
-                    </mat-menu>
-                </div>
-                <div class="price-row">
-                    <div class="price-item">
-                        <div class="label">Sale Price</div>
-                        <div class="price">
-                            {{item.price | currency:'USD'}}
-                        </div>
-                        <div class="riel">
-                            {{ item.price | usdToKhr }}
-                        </div>
-                    </div>
-                    <div class="price-item">
-                        <div class="label">Cost</div>
-                        <div class="price cost">
-                            $4.20 /
-                        </div>
-                        <div class="riel">
-                            17,220៛
-                        </div>
-                    </div>
-                </div>
-                <div class="divider"></div>
-                <div class="card-footer">
-                    <button class="edit-btn">
-                        Edit Details
-                    </button>
-                    <label class="switch">
-                        <input [checked]="item.isAvailable" (change)="toggleAvailability(item)" type="checkbox" checked>
-                        <span class="slider"></span>
-                    </label>
-
-                </div>
-
-            </div>
+            </button>
 
         </div>
+
+    </div>
+<!-- ================================================= -->
+<!-- DASHBOARD STATISTICS -->
+<!-- ================================================= -->
+
+<div class="stats-grid">
+
+    <!-- TOTAL MENU -->
+    <div class="stat-card total">
+
+        <div class="stat-icon">
+            <mat-icon>restaurant_menu</mat-icon>
+        </div>
+
+        <div class="stat-content">
+            <span>Total Menu</span>
+            <strong>{{ totalMenu }}</strong>
+            <small>All food items</small>
+        </div>
+
+    </div>
+
+
+    <!-- AVAILABLE -->
+    <div class="stat-card available">
+
+        <div class="stat-icon">
+            <mat-icon>check_circle</mat-icon>
+        </div>
+
+        <div class="stat-content">
+            <span>Available</span>
+            <strong>{{ availableMenu }}</strong>
+            <small>Ready to order</small>
+        </div>
+
+    </div>
+
+
+    <!-- UNAVAILABLE -->
+    <div class="stat-card unavailable">
+
+        <div class="stat-icon">
+            <mat-icon>cancel</mat-icon>
+        </div>
+
+        <div class="stat-content">
+            <span>Unavailable</span>
+            <strong>{{ unavailableMenu }}</strong>
+            <small>Currently hidden</small>
+        </div>
+
+    </div>
+
+
+    <!-- POPULAR -->
+    <div class="stat-card popular">
+
+        <div class="stat-icon">
+            <mat-icon>local_fire_department</mat-icon>
+        </div>
+
+        <div class="stat-content">
+            <span>Popular</span>
+            <strong>{{ popularMenu }}</strong>
+            <small>Popular food</small>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="menu-toolbar">
+
+
+    <mat-form-field
+        appearance="outline"
+        class="search-field">
+
+        <mat-label>
+            Search food
+        </mat-label>
+
+        <mat-icon matPrefix>
+            search
+        </mat-icon>
+
+        <input
+            matInput
+            [(ngModel)]="searchText"
+            placeholder="Search food name or description">
+
+        @if (searchText) {
+
+            <button
+                mat-icon-button
+                matSuffix
+                type="button"
+                (click)="clearSearch()">
+
+                <mat-icon>
+                    close
+                </mat-icon>
+
+            </button>
+
         }
-        <div (click)="openAddItem()" class="add-item-card">
+
+    </mat-form-field>
+
+
+    <!-- AVAILABILITY FILTER -->
+
+    <mat-form-field
+        appearance="outline"
+        class="availability-filter">
+
+        <mat-label>
+            Status
+        </mat-label>
+
+        <mat-select
+            [(ngModel)]="selectedAvailability">
+
+            <mat-option value="all">
+                All Status
+            </mat-option>
+
+            <mat-option value="available">
+                Available
+            </mat-option>
+
+            <mat-option value="unavailable">
+                Unavailable
+            </mat-option>
+
+            <mat-option value="popular">
+                Popular
+            </mat-option>
+
+        </mat-select>
+
+    </mat-form-field>
+
+
+    <!-- RESULT -->
+
+    <div class="result-count">
+
+        <mat-icon>
+            restaurant
+        </mat-icon>
+
+        <div>
+            <span>Showing</span>
+
+            <strong>
+                {{ displayedMenuitems.length }}
+            </strong>
+
+            <span>items</span>
+        </div>
+
+    </div>
+
+
+    <!-- RESET -->
+
+    <button
+        mat-stroked-button
+        type="button"
+        class="reset-filter-btn"
+        (click)="resetFilters()">
+
+        <mat-icon>
+            filter_alt_off
+        </mat-icon>
+
+        Reset
+
+    </button>
+
+</div>
+<div class="category-header">
+
+    <div>
+
+        <h3>
+            Menu Categories
+        </h3>
+
+        <p>
+            Browse food by category
+        </p>
+
+    </div>
+
+    <span class="category-total">
+        {{ categorys.length }} Categories
+    </span>
+
+</div>
+    <div class="menu-bar" #menuBar>
+        <ul>
+            <li
+                [class.active]="selectedCategoryId === 'all'"
+                (click)="filterCategory('all')">
+
+                <mat-icon>
+                    apps
+                </mat-icon>
+                ទាំងអស់
+            </li>
+
+            @for (
+                category of categorys;
+                track category._id
+            ) {
+
+                <li
+                    [class.active]="selectedCategoryId === category._id"
+                    (click)="filterCategory(category._id!)">
+
+                    <mat-icon>
+                        restaurant
+                    </mat-icon>
+
+                    {{ category.name }}
+
+                </li>
+
+            }
+
+        </ul>
+
+    </div>
+<div class="menu-status-bar">
+
+    <div class="status-left">
+
+        <div class="status-indicator all">
+            <span></span>
+            All
+            <strong>
+                {{ totalMenu }}
+            </strong>
+        </div>
+
+        <div class="status-indicator available">
+            <span></span>
+            Available
+            <strong>
+                {{ availableMenu }}
+            </strong>
+        </div>
+
+        <div class="status-indicator unavailable">
+            <span></span>
+            Unavailable
+            <strong>
+                {{ unavailableMenu }}
+            </strong>
+        </div>
+
+        <div class="status-indicator popular">
+            <span></span>
+            Popular
+            <strong>
+                {{ popularMenu }}
+            </strong>
+        </div>
+
+    </div>
+    <div class="status-right">
+
+        Showing
+        <strong>
+            {{ displayedMenuitems.length }}
+        </strong>
+
+        of
+
+        <strong>
+            {{ totalMenu }}
+        </strong>
+
+        menu items
+
+    </div>
+
+</div>
+
+    <div class="main-grid">
+
+       @for (
+    item of displayedMenuitems;
+    track item._id
+) {
+
+            <div class="menu-card">
+                <div class="image-wrapper">
+
+                    @if (item.image) {
+
+                        <img
+                            [src]="item.image"
+                            [alt]="item.name">
+
+                    } @else {
+
+                        <div class="no-image">
+
+                            <mat-icon>
+                                restaurant
+                            </mat-icon>
+
+                        </div>
+
+                    }
+
+                    <div
+                        class="status"
+                        [class.blue]="item.isAvailable"
+                        [class.red]="!item.isAvailable">
+
+                        <span></span>
+
+                        {{
+                            item.isAvailable
+                                ? 'Available'
+                                : 'Unavailable'
+                        }}
+
+                    </div>
+
+                </div>
+                <div class="card-content">
+
+                    <div class="title-row">
+
+                        <div>
+
+                            <div class="category">
+                                {{ item.name }}
+                            </div>
+
+                            <div class="name">
+                                {{ item.description }}
+                            </div>
+
+                        </div>
+
+
+                        <!-- MORE -->
+
+                        <button
+                            mat-icon-button
+                            [matMenuTriggerFor]="menu"
+                            class="more-btn"
+                            type="button">
+
+                            <mat-icon>
+                                more_vert
+                            </mat-icon>
+
+                        </button>
+
+
+                        <mat-menu #menu="matMenu">
+
+                            <!-- EDIT -->
+
+                            <button
+                                mat-menu-item
+                                type="button"
+                                (click)="openEditDialog(item._id!)">
+
+                                <mat-icon>
+                                    edit
+                                </mat-icon>
+
+                                <span>
+                                    Update
+                                </span>
+
+                            </button>
+
+                            <button
+                                mat-menu-item
+                                type="button"
+                                (click)="deleteItem(item._id)">
+
+                                <mat-icon>
+                                    delete
+                                </mat-icon>
+
+                                <span>
+                                    Delete
+                                </span>
+
+                            </button>
+
+                        </mat-menu>
+
+                    </div>
+
+                    <div class="price-row">
+
+                        <div class="price-item">
+
+                            <div class="label">
+                                Sale Price
+                            </div>
+
+                            <div class="price">
+                                {{ item.price | currency:'USD' }}
+                            </div>
+
+                            <div class="riel">
+                                {{ item.price | usdToKhr }}
+                            </div>
+
+                        </div>
+
+                        <div class="price-item">
+
+                            <div class="label">
+                                Cost
+                            </div>
+
+                            <div class="price cost">
+                                {{ item.cost | currency:'USD' }}
+                            </div>
+
+                            <div class="riel">
+                                {{ item.cost | usdToKhr }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    @if (item.hasStock) {
+
+                        <p class="stock-text">
+
+                            <mat-icon>
+                                inventory_2
+                            </mat-icon>
+
+                            Stock:
+                            {{ item.stock }}
+
+                        </p>
+
+                    }
+                    @if (item.preparationTime) {
+
+                        <p class="preparation-time">
+
+                            <mat-icon>
+                                schedule
+                            </mat-icon>
+
+                            {{ item.preparationTime }}
+                            min
+
+                        </p>
+
+                    }
+                    @if (
+                        item.options &&
+                        item.options.length > 0
+                    ) {
+
+                        <p class="options-count">
+
+                            <mat-icon>
+                                tune
+                            </mat-icon>
+
+                            {{ item.options.length }}
+                            Options
+
+                        </p>
+
+                    }
+
+                    <div class="badges">
+
+                        @if (item.isFeatured) {
+
+                            <span class="badge">
+                                ⭐ Featured
+                            </span>
+
+                        }
+
+                        @if (item.isPopular) {
+
+                            <span class="badge">
+                                🔥 Popular
+                            </span>
+
+                        }
+
+                    </div>
+
+
+                    <div class="divider"></div>
+
+                    <div class="card-footer">
+
+
+                        <button
+                            class="edit-btn"
+                            type="button"
+                            (click)="openEditDialog(item._id!)">
+
+                            Edit Details
+
+                        </button>
+
+
+                        <label class="switch">
+
+                            <input
+                                type="checkbox"
+                                [checked]="item.isAvailable"
+                                (change)="toggleAvailability(item)">
+
+                            <span class="slider"></span>
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        }
+
+
+        <div
+            class="add-item-card"
+            (click)="openAddItem()">
 
             <div class="add-icon">
                 <span>+</span>
@@ -116,123 +594,949 @@
             <div class="add-description">
                 Create a new menu item
             </div>
+
         </div>
+
     </div>
+
 </div>
 
 
 <ng-template #addItemDialog>
     @if (isLoading) {
-  <div class="loading-overlay">
-    <div class="loading-box">
-      <mat-progress-spinner
-        mode="indeterminate"
-        diameter="45">
-      </mat-progress-spinner>
-      <p>Saving item...</p>
-    </div>
-  </div>
-}
-    <h2 mat-dialog-title>Add New Item</h2>
+        <div class="loading-overlay">
+            <div class="loading-box">
+                <mat-progress-spinner
+                    mode="indeterminate"
+                    diameter="45">
+                </mat-progress-spinner>
+
+                <p>
+                    Saving item...
+                </p>
+            </div>
+
+        </div>
+
+    }
+
+    <h2 mat-dialog-title>
+
+        <mat-icon>
+            restaurant
+        </mat-icon>
+
+        Add New Item
+
+    </h2>
+
     <mat-dialog-content>
+
         <form [formGroup]="form">
-            <mat-form-field appearance="outline">
-                <mat-label>Name</mat-label>
-                <input matInput formControlName="name">
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Description</mat-label>
-                <textarea matInput formControlName="description"></textarea>
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Sele Price</mat-label>
-                <input matInput type="number" formControlName="price">
+
+            <h3 class="form-section-title">
+                Basic Information
+            </h3>
+
+            <mat-form-field
+                appearance="outline">
+
+                <mat-label>
+                    Food Name
+                </mat-label>
+
+                <input
+                    matInput
+                    formControlName="name"
+                    placeholder="Enter food name">
+
             </mat-form-field>
 
-            <mat-form-field appearance="outline">
-                <mat-label>Stock</mat-label>
-                <input matInput type="number" formControlName="stock">
+            <mat-form-field
+                appearance="outline">
+
+                <mat-label>
+                    Description
+                </mat-label>
+
+                <textarea
+                    matInput
+                    rows="3"
+                    formControlName="description"
+                    placeholder="Describe the food">
+                </textarea>
+
             </mat-form-field>
 
-            <mat-form-field appearance="outline">
-                <mat-label>Category</mat-label>
-                <mat-select formControlName="categoryId">
-                    @for (category of categorys; track category._id) {
 
-                    <mat-option [value]="category._id">
-                        {{ category.name }}
-                    </mat-option>
+            <!-- CATEGORY -->
+
+            <mat-form-field
+                appearance="outline">
+
+                <mat-label>
+                    Category
+                </mat-label>
+
+                <mat-select
+                    formControlName="categoryId">
+
+                    @for (
+                        category of categorys;
+                        track category._id
+                    ) {
+
+                        <mat-option
+                            [value]="category._id">
+
+                            {{ category.name }}
+
+                        </mat-option>
+
                     }
+
                 </mat-select>
+
             </mat-form-field>
 
-            <mat-slide-toggle formControlName="isAvailable">
+
+            <h3 class="form-section-title">
+                Pricing
+            </h3>
+            <mat-form-field
+                appearance="outline">
+
+                <mat-label>
+                    Sale Price ($)
+                </mat-label>
+
+                <input
+                    matInput
+                    type="number"
+                    min="0"
+                    formControlName="price">
+
+            </mat-form-field>
+
+
+            <!-- COST -->
+
+            <mat-form-field
+                appearance="outline">
+
+                <mat-label>
+                    Cost ($)
+                </mat-label>
+
+                <input
+                    matInput
+                    type="number"
+                    min="0"
+                    formControlName="cost">
+
+            </mat-form-field>
+
+            <h3 class="form-section-title">
+                Inventory
+            </h3>
+            <div class="stock-option">
+
+                <mat-slide-toggle
+                    formControlName="hasStock">
+
+                    Has Stock
+
+                </mat-slide-toggle>
+
+            </div>
+
+            @if (
+                form.get('hasStock')?.value
+            ) {
+
+                <mat-form-field
+                    appearance="outline">
+
+                    <mat-label>
+                        Stock Quantity
+                    </mat-label>
+
+                    <input
+                        matInput
+                        type="number"
+                        min="0"
+                        formControlName="stock">
+
+                </mat-form-field>
+
+            }
+
+
+            <mat-slide-toggle
+                formControlName="isAvailable">
+
                 Available
+
             </mat-slide-toggle>
-            <input type="file" (change)="onFileChange($event)">
+
+            <h3 class="form-section-title">
+
+                <mat-icon>
+                    restaurant
+                </mat-icon>
+
+                Kitchen
+
+            </h3>
+            <mat-form-field
+                appearance="outline">
+
+                <mat-label>
+                    Preparation Time (minutes)
+                </mat-label>
+
+                <input
+                    matInput
+                    type="number"
+                    min="1"
+                    formControlName="preparationTime">
+
+                <mat-icon matSuffix>
+                    schedule
+                </mat-icon>
+
+            </mat-form-field>
+
+            <mat-form-field
+                appearance="outline">
+
+                <mat-label>
+                    Kitchen Note
+                </mat-label>
+
+                <textarea
+                    matInput
+                    rows="3"
+                    formControlName="kitchenNote"
+                    placeholder="Example: Less oil, no onion...">
+                </textarea>
+
+            </mat-form-field>
+
+            <div class="options-header">
+
+                <div>
+
+                    <h3 class="form-section-title">
+                        Food Options
+                    </h3>
+
+                    <p>
+                        Add choices customers can select.
+                    </p>
+
+                </div>
+
+
+                <button
+                    mat-stroked-button
+                    type="button"
+                    (click)="addOption()">
+
+                    <mat-icon>
+                        add
+                    </mat-icon>
+
+                    Add Option
+
+                </button>
+
+            </div>
+
+            @for (
+                option of options;
+                let optionIndex = $index;
+                track optionIndex
+            ) {
+
+                <div class="option-card">
+
+                    <div class="option-header">
+
+                        <strong>
+                            Option {{ optionIndex + 1 }}
+                        </strong>
+
+
+                        <button
+                            mat-icon-button
+                            color="warn"
+                            type="button"
+                            (click)="removeOption(optionIndex)">
+
+                            <mat-icon>
+                                delete
+                            </mat-icon>
+
+                        </button>
+
+                    </div>
+
+                    <mat-form-field
+                        appearance="outline">
+
+                        <mat-label>
+                            Option Name
+                        </mat-label>
+
+                        <input
+                            matInput
+                            [(ngModel)]="option.name"
+                            [ngModelOptions]="{standalone: true}"
+                            placeholder="Example: Spicy Level">
+
+                    </mat-form-field>
+
+                    <mat-form-field
+                        appearance="outline">
+
+                        <mat-label>
+                            Selection Type
+                        </mat-label>
+
+                        <mat-select
+                            [(ngModel)]="option.type"
+                            [ngModelOptions]="{standalone: true}">
+
+                            <mat-option value="single">
+                                Single Choice
+                            </mat-option>
+
+                            <mat-option value="multiple">
+                                Multiple Choice
+                            </mat-option>
+
+                        </mat-select>
+
+                    </mat-form-field>
+
+                    <mat-slide-toggle
+                        [(ngModel)]="option.required"
+                        [ngModelOptions]="{standalone: true}">
+
+                        Required
+
+                    </mat-slide-toggle>
+
+                    <div class="choices-section">
+                        <div class="choices-header">
+
+                            <strong>
+                                Choices
+                            </strong>
+
+
+                            <button
+                                mat-button
+                                type="button"
+                                (click)="addChoice(optionIndex)">
+
+                                <mat-icon>
+                                    add
+                                </mat-icon>
+
+                                Add Choice
+
+                            </button>
+
+                        </div>
+
+
+                        @for (
+                            choice of option.choices;
+                            let choiceIndex = $index;
+                            track choiceIndex
+                        ) {
+
+                            <div class="choice-row">
+
+
+                                <!-- CHOICE NAME -->
+
+                                <mat-form-field
+                                    appearance="outline">
+
+                                    <mat-label>
+                                        Choice
+                                    </mat-label>
+
+                                    <input
+                                        matInput
+                                        [(ngModel)]="choice.name"
+                                        [ngModelOptions]="{standalone: true}"
+                                        placeholder="Example: Normal">
+
+                                </mat-form-field>
+
+
+                                <!-- EXTRA PRICE -->
+
+                                <mat-form-field
+                                    appearance="outline">
+
+                                    <mat-label>
+                                        Extra Price ($)
+                                    </mat-label>
+
+                                    <input
+                                        matInput
+                                        type="number"
+                                        min="0"
+                                        [(ngModel)]="choice.price"
+                                        [ngModelOptions]="{standalone: true}">
+
+                                </mat-form-field>
+
+
+
+                                <button
+                                    mat-icon-button
+                                    color="warn"
+                                    type="button"
+                                    (click)="removeChoice(optionIndex, choiceIndex)">
+
+                                    <mat-icon>
+                                        delete
+                                    </mat-icon>
+
+                                </button>
+
+                            </div>
+
+                        }
+
+                    </div>
+
+                </div>
+
+            }
+
+            <h3 class="form-section-title">
+                Display
+            </h3>
+            <mat-slide-toggle
+                formControlName="isFeatured">
+
+                ⭐ Featured Food
+
+            </mat-slide-toggle>
+
+            <br>
+            <br>
+            <mat-slide-toggle
+                formControlName="isPopular">
+
+                🔥 Popular Food
+
+            </mat-slide-toggle>
+
+            <h3 class="form-section-title">
+                Food Image
+            </h3>
+
+
+            <div class="image-upload">
+
+                <input
+                    type="file"
+                    accept="image/*"
+                    (change)="onFileChange($event)">
+
+            </div>
+
         </form>
+
     </mat-dialog-content>
 
     <mat-dialog-actions align="end">
-        <button mat-button mat-dialog-close>
+
+        <button
+            mat-button
+            mat-dialog-close
+            type="button"
+            [disabled]="isLoading">
+
             Cancel
+
         </button>
-        <button mat-raised-button color="primary" (click)="onSubmit()">
-            Save
+
+
+        <button
+            mat-raised-button
+            color="primary"
+            type="button"
+            [disabled]="isLoading"
+            (click)="onSubmit()">
+
+            @if (isLoading) {
+
+                Saving...
+
+            } @else {
+
+                <mat-icon>
+                    save
+                </mat-icon>
+
+                Save
+
+            }
+
         </button>
+
     </mat-dialog-actions>
+
 </ng-template>
-<!-- ===============update============ -->
 
 <ng-template #editItemDialog>
-    <h2 mat-dialog-title>Edit Menu Item</h2>
 
+    @if (isLoading) {
+
+        <div class="loading-overlay">
+
+            <div class="loading-box">
+
+                <mat-progress-spinner
+                    mode="indeterminate"
+                    diameter="45">
+                </mat-progress-spinner>
+
+                <p>
+                    Updating item...
+                </p>
+
+            </div>
+
+        </div>
+
+    }
+
+    <h2 mat-dialog-title>
+
+        <mat-icon>
+            edit
+        </mat-icon>
+
+        Edit Item
+
+    </h2>
     <mat-dialog-content>
+
         <form [formGroup]="form">
-            <mat-form-field appearance="outline">
-                <mat-label>Name</mat-label>
-                <input matInput formControlName="name">
+
+            <h3 class="form-section-title">
+                Basic Information
+            </h3>
+
+
+            <!-- NAME -->
+
+            <mat-form-field
+                appearance="outline">
+
+                <mat-label>
+                    Food Name
+                </mat-label>
+
+                <input
+                    matInput
+                    formControlName="name">
+
             </mat-form-field>
 
-            <mat-form-field appearance="outline">
-                <mat-label>Description</mat-label>
-                <textarea matInput formControlName="description">
-        </textarea>
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Sale Price</mat-label>
-                <input matInput type="number" formControlName="price">
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Stock</mat-label>
-                <input matInput type="number" formControlName="stock">
+            <mat-form-field
+                appearance="outline">
+
+                <mat-label>
+                    Description
+                </mat-label>
+
+                <textarea
+                    matInput
+                    rows="3"
+                    formControlName="description">
+                </textarea>
+
             </mat-form-field>
 
-            <mat-slide-toggle formControlName="isAvailable">
-                Available
-            </mat-slide-toggle>
-            <mat-form-field appearance="outline">
-                <mat-label>Category</mat-label>
-                <mat-select formControlName="categoryId">
-                    @for (category of categorys; track category._id) {
 
-                    <mat-option [value]="category._id">
-                        {{ category.name }}
-                    </mat-option>
+            <!-- CATEGORY -->
+
+            <mat-form-field
+                appearance="outline">
+
+                <mat-label>
+                    Category
+                </mat-label>
+
+                <mat-select
+                    formControlName="categoryId">
+
+                    @for (
+                        category of categorys;
+                        track category._id
+                    ) {
+
+                        <mat-option
+                            [value]="category._id">
+
+                            {{ category.name }}
+
+                        </mat-option>
+
                     }
+
                 </mat-select>
+
             </mat-form-field>
-            <br><br>
-            <input type="file" accept="image/*" (change)="onFileChange($event)">
+
+            <h3 class="form-section-title">
+                Pricing
+            </h3>
+
+            <mat-form-field
+                appearance="outline">
+
+                <mat-label>
+                    Sale Price ($)
+                </mat-label>
+
+                <input
+                    matInput
+                    type="number"
+                    min="0"
+                    formControlName="price">
+
+            </mat-form-field>
+            <mat-form-field
+                appearance="outline">
+
+                <mat-label>
+                    Cost ($)
+                </mat-label>
+
+                <input
+                    matInput
+                    type="number"
+                    min="0"
+                    formControlName="cost">
+
+            </mat-form-field>
+
+            <h3 class="form-section-title">
+                Inventory
+            </h3>
+            <div class="stock-option">
+
+                <mat-slide-toggle
+                    formControlName="hasStock">
+
+                    Has Stock
+
+                </mat-slide-toggle>
+
+            </div>
+            @if (form.get('hasStock')?.value) {
+                <mat-form-field
+                    appearance="outline">
+
+                    <mat-label>
+                        Stock Quantity
+                    </mat-label>
+
+                    <input
+                        matInput
+                        type="number"
+                        min="0"
+                        formControlName="stock">
+
+                </mat-form-field>
+
+            }
+
+            <mat-slide-toggle
+                formControlName="isAvailable">
+
+                Available
+
+            </mat-slide-toggle>
+            <h3 class="form-section-title">
+
+                <mat-icon>
+                    restaurant
+                </mat-icon>
+
+                Kitchen
+
+            </h3>
+
+            <mat-form-field appearance="outline">
+                <mat-label>
+                    Preparation Time (minutes)
+                </mat-label>
+
+                <input  matInput  type="number"  min="1"  formControlName="preparationTime">
+                <mat-icon matSuffix>
+                    schedule
+                </mat-icon>
+            </mat-form-field>
+            <mat-form-field
+                appearance="outline">
+
+                <mat-label>
+                    Kitchen Note
+                </mat-label>
+
+                <textarea
+                    matInput
+                    rows="3"
+                    formControlName="kitchenNote">
+                </textarea>
+
+            </mat-form-field>
+            <div class="options-header">
+
+                <div>
+
+                    <h3 class="form-section-title">
+                        Food Options
+                    </h3>
+
+                    <p>
+                        Customer customization options.
+                    </p>
+
+                </div>
+
+
+                <button  mat-stroked-button type="button" (click)="addOption()">
+                    <mat-icon>
+                        add
+                    </mat-icon>
+
+                    Add Option
+
+                </button>
+
+            </div>
+
+
+
+            @for (option of options;let optionIndex = $index;track optionIndex ) {
+                <div class="option-card">
+                    <div class="option-header">
+
+                        <strong>
+                            Option {{ optionIndex + 1 }}
+                        </strong>
+                        <button mat-icon-button color="warn" type="button" (click)="removeOption(optionIndex)">
+
+                            <mat-icon>
+                                delete
+                            </mat-icon>
+
+                        </button>
+
+                    </div>
+                    <mat-form-field appearance="outline">
+                        <mat-label>
+                            Option Name
+                        </mat-label>
+
+                        <input matInput  [(ngModel)]="option.name"  [ngModelOptions]="{standalone: true}">
+                    </mat-form-field>
+
+                    <mat-form-field
+                        appearance="outline">
+
+                        <mat-label>
+                            Selection Type
+                        </mat-label>
+
+                        <mat-select
+                            [(ngModel)]="option.type"
+                            [ngModelOptions]="{standalone: true}">
+
+                            <mat-option value="single">
+                                Single Choice
+                            </mat-option>
+
+                            <mat-option value="multiple">
+                                Multiple Choice
+                            </mat-option>
+
+                        </mat-select>
+
+                    </mat-form-field>
+                    <mat-slide-toggle
+                        [(ngModel)]="option.required"
+                        [ngModelOptions]="{standalone: true}">
+
+                        Required
+
+                    </mat-slide-toggle>
+                    <div class="choices-section">
+
+                        <div class="choices-header">
+
+                            <strong>
+                                Choices
+                            </strong>
+
+                            <button
+                                mat-button
+                                type="button"
+                                (click)="addChoice(optionIndex)">
+
+                                <mat-icon>
+                                    add
+                                </mat-icon>
+
+                                Add Choice
+
+                            </button>
+
+                        </div>
+
+
+                        @for (choice of option.choices;let choiceIndex = $index;track choiceIndex) {
+                            <div class="choice-row">
+
+                                <mat-form-field  appearance="outline">
+                                    <mat-label>
+                                        Choice
+                                    </mat-label>
+
+                                    <input
+                                        matInput
+                                        [(ngModel)]="choice.name"
+                                        [ngModelOptions]="{standalone: true}">
+
+                                </mat-form-field>
+
+
+                                <!-- EXTRA PRICE -->
+
+                                <mat-form-field
+                                    appearance="outline">
+
+                                    <mat-label>
+                                        Extra Price ($)
+                                    </mat-label>
+
+                                    <input
+                                        matInput
+                                        type="number"
+                                        min="0"
+                                        [(ngModel)]="choice.price"
+                                        [ngModelOptions]="{standalone: true}">
+
+                                </mat-form-field>
+
+                                <button
+                                    mat-icon-button
+                                    color="warn"
+                                    type="button"
+                                    (click)="removeChoice(optionIndex, choiceIndex)">
+
+                                    <mat-icon>
+                                        delete
+                                    </mat-icon>
+
+                                </button>
+
+                            </div>
+
+                        }
+
+                    </div>
+
+                </div>
+
+            }
+            <h3 class="form-section-title">
+                Display
+            </h3>
+            <mat-slide-toggle
+                formControlName="isFeatured">
+
+                ⭐ Featured Food
+
+            </mat-slide-toggle>
+
+
+            <br>
+            <br>
+
+
+            <!-- POPULAR -->
+
+            <mat-slide-toggle
+                formControlName="isPopular">
+
+                🔥 Popular Food
+
+            </mat-slide-toggle>
+
+            <h3 class="form-section-title">
+                Food Image
+            </h3>
+
+
+            <div class="image-upload">
+
+                <label>
+                    Change Image
+                </label>
+
+                <input
+                    type="file"
+                    accept="image/*"
+                    (change)="onFileChange($event)">
+
+            </div>
+
         </form>
 
     </mat-dialog-content>
+
     <mat-dialog-actions align="end">
-        <button (click)="closeDialog()" mat-button mat-dialog-close>
+
+        <button
+            mat-button
+            type="button"
+            (click)="closeDialog()"
+            [disabled]="isLoading">
+
             Cancel
+
         </button>
-        <button mat-raised-button color="primary" (click)="onUpdate(selectedItem!)">
-            Update
+
+
+        <button  mat-raised-button  color="primary" type="button"  [disabled]="isLoading"  (click)="selectedItem && onUpdate(selectedItem)">
+
+            @if (isLoading) {
+                Updating...
+
+            } @else {
+                <mat-icon>save</mat-icon>
+
+                Update
+
+            }
+
         </button>
+
     </mat-dialog-actions>
+
 </ng-template>

@@ -1,7 +1,23 @@
 import { CommonModule, NgClass } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { MatFormField } from '@angular/material/form-field';
 import { MatIcon } from "@angular/material/icon";
-type AreaKey = 'indoor' | 'terrace' | 'vip';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatOptgroup, MatOption, MatSelect } from '@angular/material/select';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { BookingTableService } from '../../../../core/bookingTable.service';
+import { TableService } from '../../../../core/table.service';
+import { interfaceuser } from '../../../../interface/user';
+import { AuthService } from '../../../../core/auth.service';
+import { BookingInvoice } from '../../../../shared/components/booking-invoice/booking-invoice';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+type AreaKey = 'Indoor' | 'Outdoor' | 'vip';
 
 interface SeatingArea {
   id: AreaKey;
@@ -9,64 +25,108 @@ interface SeatingArea {
   desc: string;
   image: string;
 }
+
+
 interface Table {
-  id: string;
+  _id: string;
+  tableNumber: string;
   seats: number;
-  status: 'available' | 'occupied' | 'selected';
-  x: number;
-  y: number;
+  area: 'Indoor' | 'Outdoor' | 'vip';
+  status: 'available' | 'occupied';
 }
 @Component({
   selector: 'app-table-booking',
-  imports: [NgClass, CommonModule, MatIcon],
+  imports: [NgClass, CommonModule, BookingInvoice, MatIconModule, MatButtonModule, MatSelectModule, MatInputModule, MatCardModule, ReactiveFormsModule, MatIcon, MatFormField, MatFormFieldModule, MatSelect, MatOption, MatOptgroup, CommonModule],
   templateUrl: './table-booking.html',
   styleUrl: './table-booking.css',
 })
-export class TableBooking {
+export class TableBooking implements OnInit {
+  bookingForm!: FormGroup;
+  users: interfaceuser[] = [];
+  user: interfaceuser = {
+    _id: '',
+    fullName: '',
+    email: '',
+    password: '',
+    phone: '',
+    role: '',
+  }
+  tables: Table[] = [];
 
-  selectedParty=2;
+  selectedParty = 2;
   selectedDate: Date | null = null;
-  dates = Array.from({ length: 7 }, (_, i) => {
-    const date = new Date();
-    date.setDate(date.getDate() + i);
+  selectedTime = '';
+  selectedTable: Table | null = null;
+  selectedArea: AreaKey = 'Indoor';
+  constructor(private dialog: MatDialog,
+    private fb: FormBuilder,
+    public bookingService: BookingTableService,
+    private tableService: TableService,
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
-    return {
-      date,
-      label: i === 0 ? 'ថ្ងៃនេះ' : i === 1 ? 'ថ្ងៃស្អែក' : ''
-    };
-  });
- selectedTime = '';
+  ngOnInit(): void {
+    this.user = this.authService.getUser();
+    this.bookingForm = this.fb.group({
+      fullName: [
+        '',
+        Validators.required
+      ],
+
+      phoneNumber: [
+        '',
+        Validators.required
+      ],
+      email: [''],
+
+      specialRequest: ['']
+
+    });
+    this.loadTables();
+
+
+  }
+
+  dates = Array.from( { length: 7 },(_, i) => {
+      const date = new Date();
+      date.setDate(date.getDate() + i);
+      return {
+
+        date,
+        label:i === 0? 'ថ្ងៃនេះ': i === 1? 'ថ្ងៃស្អែក' : ''
+      };
+
+    }
+  );
   morningTimes = [
     '08:00 AM',
     '09:00 AM',
     '10:00 AM',
     '11:00 AM'
   ];
-
   afternoonTimes = [
     '12:00 PM',
     '01:00 PM',
     '02:00 PM',
     '03:00 PM'
   ];
-
   eveningTimes = [
     '05:00 PM',
     '06:00 PM',
     '07:00 PM',
     '08:00 PM'
   ];
- selectedArea: AreaKey = 'indoor';
-   seatingAreas: SeatingArea[] = [
+  seatingAreas: SeatingArea[] = [
     {
-      id: 'indoor',
+      id: 'Indoor',
       name: 'ក្នុងហាង (Indoor)',
       desc: 'បរិយាកាសម៉ាស៊ីនត្រជាក់',
       image: 'assets/bg.png'
     },
     {
-      id: 'terrace',
-      name: 'ខាងក្រៅ (Terrace)',
+      id: 'Outdoor',
+      name: 'ខាងក្រៅ (Outdoor)',
       desc: 'ខ្យល់ធម្មជាតិ',
       image: 'assets/bg.png'
     },
@@ -77,59 +137,147 @@ export class TableBooking {
       image: 'assets/bg.png'
     }
   ];
-  
-get selectedSeatingArea() {
-  return this.seatingAreas.find(area => area.id === this.selectedArea);
-}
-  areas: Record<AreaKey, Table[]> = {
-    indoor: [
-      { id: 'T-01', seats: 2, status: 'available', x: 20, y: 80 },
-      { id: 'T-02', seats: 4, status: 'available', x: 120, y: 80 },
-      { id: 'T-03', seats: 4, status: 'available', x: 220, y: 80 },
-      { id: 'T-04', seats: 4, status: 'available', x: 450, y: 80 },
-      { id: 'T-05', seats: 4, status: 'occupied', x: 550, y: 80 },
-      { id: 'T-05', seats: 4, status: 'occupied', x: 650, y: 80 },
-      { id: 'T-01', seats: 2, status: 'available', x: 20, y: 180 },
-      { id: 'T-02', seats: 4, status: 'available', x: 120, y: 180 },
-      { id: 'T-03', seats: 4, status: 'available', x: 220, y: 180 },
-      { id: 'T-04', seats: 4, status: 'available', x: 450, y: 180 },
-      { id: 'T-05', seats: 4, status: 'occupied', x: 550, y: 180 },
-      { id: 'T-05', seats: 4, status: 'occupied', x: 650, y: 180 },
-    ],
-
-    terrace: [
-      { id: 'T-01', seats: 2, status: 'available', x: 50, y: 60 },
-      { id: 'T-02', seats: 4, status: 'occupied', x: 250, y: 120 }
-    ],
-
-    vip: [
-      { id: 'V-01', seats: 8, status: 'available', x: 150, y: 100 },
-      { id: 'V-02', seats: 10, status: 'selected', x: 450, y: 100 }
-    ]
-  };
-
-  get tables(): Table[] {
-    return this.areas[this.selectedArea];
+  get selectedSeatingArea() {
+    return this.seatingAreas.find(
+      area => area.id === this.selectedArea
+    );
   }
+  loadTables(): void {
+    this.tableService.getTables().subscribe({
+      next: (res) => {
+        this.tables = res.data;
+      },
+      error: (err) => {
+        console.error(
+          'Get tables error:',
+          err
+        );
 
-  setArea(area: AreaKey) {
+      }
+    });
+  }
+  get filteredTables(): Table[] {
+    return this.tables.filter(
+      table =>
+        table.area.toLowerCase() ===
+        this.selectedArea.toLowerCase()
+    );
+  }
+  setArea(area: AreaKey): void {
     this.selectedArea = area;
-  }
-   selectedTable: Table | null = null;
-  selectTable(table: Table) {
+    this.selectedTable = null;
 
-    // មិនអនុញ្ញាតឱ្យជ្រើសតុដែលមានភ្ញៀវ
-    if (table.status === 'occupied') {
+  }
+selectTable(table: Table): void {
+
+  if (table.status === 'occupied') {
+    return;
+  }
+
+  // Check seats
+  if (this.selectedParty > table.seats) {
+
+    alert(
+      `តុនេះមានតែ ${table.seats} កៅអី។ សូមជ្រើសតុធំជាងនេះ។`
+    );
+
+    return;
+  }
+
+  this.selectedTable = table;
+}
+
+
+  confirmBooking(): void {
+    if (!this.selectedDate) {
+
+      alert('សូមជ្រើសរើសថ្ងៃ');
+
+      return;
+    }
+    if (!this.selectedTime) {
+      alert('សូមជ្រើសរើសម៉ោង');
       return;
     }
 
-    // ដក selected ចេញពីតុចាស់
-    if (this.selectedTable) {
-      this.selectedTable.status = 'available';
+    if (!this.selectedTable) {
+      alert('សូមជ្រើសរើសតុ');
+      return;
+    }
+    if (this.bookingForm.invalid) {
+      this.bookingForm.markAllAsTouched();
+      alert(
+        'សូមបំពេញព័ត៌មានទំនាក់ទំនង'
+      );
+      return;
     }
 
-    // ជ្រើសតុថ្មី
-    table.status = 'selected';
-    this.selectedTable = table;
+    const bookingData = {
+      tableId:
+        this.selectedTable._id,
+
+      seatingArea:
+        this.selectedArea,
+
+      partySize:
+        this.selectedParty,
+
+      bookingDate:
+        this.selectedDate,
+
+      bookingTime:
+        this.selectedTime,
+
+      fullName:
+        this.bookingForm.value.fullName,
+
+      phoneNumber:
+        this.bookingForm.value.phoneNumber,
+
+      email:
+        this.bookingForm.value.email,
+
+      specialRequest:
+        this.bookingForm.value.specialRequest
+
+    };
+
+    this.bookingService.create(bookingData).subscribe({
+      next: (res) => { this.router.navigate([ '/my-reservations' ]);
+        const booking = res.data;
+        this.dialog.open(BookingInvoice, {
+          width: '560px', maxWidth: '95vw',  maxHeight: '90vh',
+          data: {
+            bookingNumber:  booking._id  ? booking._id.slice(-6).toUpperCase(): 'N/A',
+            tableNumber: booking.tableId?.tableNumber ?? this.selectedTable?.tableNumber?? 'N/A',
+            partySize:booking.partySize,
+            bookingDate:booking.bookingDate,
+            bookingTime:booking.bookingTime,
+            seatingArea: booking.seatingArea,
+            fullName: booking.fullName,
+            phoneNumber: booking.phoneNumber,
+            email:booking.email,
+            specialRequest: booking.specialRequest,
+            status:  booking.status
+          }
+
+        });
+
+        this.bookingForm.reset();
+        this.selectedTable = null;
+        this.selectedTime = '';
+        this.selectedDate = null;
+      },
+      error: (err) => {
+        console.error(
+          'Booking Error:',
+          err
+        );
+
+      }
+
+    });
+
   }
+
 }

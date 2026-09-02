@@ -1,0 +1,485 @@
+<div class="staff-page">
+  <div class="page-header">
+
+    <div>
+      <h1>Staff Management</h1>
+      <p>Manage your restaurant staff</p>
+    </div>
+
+    <button  mat-flat-button class="add-btn" (click)="openAddForm()">
+      <mat-icon>
+        add
+      </mat-icon>
+
+      Add Staff
+
+    </button>
+
+  </div>
+
+  <div class="toolbar">
+
+    <mat-form-field
+      appearance="outline"
+      class="search-box"
+    >
+
+      <mat-label>
+        Search staff
+      </mat-label>
+
+      <mat-icon matPrefix>
+        search
+      </mat-icon>
+
+      <input
+        matInput
+        [(ngModel)]="searchText"
+        (input)="searchStaff()"
+        placeholder="Name, email, phone..."
+      >
+
+    </mat-form-field>
+
+  </div>
+
+  @if (isLoading) {
+
+    <div class="loading">
+
+      <mat-icon>
+        sync
+      </mat-icon>
+
+      Loading staff...
+
+    </div>
+
+  }
+
+  @else {
+
+    <div class="table-card">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>Staff</th>
+
+            <th>Gender</th>
+
+            <th>Phone</th>
+
+            <th>Email</th>
+
+            <th>Role</th>
+
+            <th>Salary</th>
+
+            <th>Action</th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          @for (
+            staff of filteredStaffs;
+            track staff._id
+          ) {
+
+            <tr>
+
+              <td>
+
+                <div class="staff-info">
+
+                  <div class="avatar">
+
+                    {{ staff.name.charAt(0).toUpperCase() }}
+
+                  </div>
+
+                  <strong>
+                    {{ staff.name }}
+                  </strong>
+
+                </div>
+
+              </td>
+              <td>
+
+                {{ staff.gender }}
+
+              </td>
+
+
+
+              <td>
+
+                {{ staff.phone }}
+
+              </td>
+
+
+              <!-- EMAIL -->
+
+              <td>
+
+                {{ staff.email }}
+
+              </td>
+
+
+              <!-- ROLE -->
+
+              <td>
+
+                <span
+                  class="role-badge"
+                  [class.manager]="staff.role === 'Manager'"
+                  [class.cashier]="staff.role === 'Cashier'"
+                  [class.kitchen]="staff.role === 'Kitchen'"
+                  [class.waiter]="staff.role === 'Waiter'"
+                >
+
+                  {{ staff.role }}
+
+                </span>
+
+              </td>
+
+
+              <!-- SALARY -->
+
+              <td>
+
+                ${{ staff.salary | number:'1.2-2' }}
+
+              </td>
+
+
+              <!-- ACTION -->
+
+              <td>
+
+                <div class="actions">
+
+                  <button
+                    mat-icon-button
+                    class="edit-btn"
+                    (click)="openEditForm(staff)"
+                    matTooltip="Edit"
+                  >
+
+                    <mat-icon>
+                      edit
+                    </mat-icon>
+
+                  </button>
+
+
+                  <button
+                    mat-icon-button
+                    class="delete-btn"
+                    (click)="deleteStaff(staff)"
+                    matTooltip="Delete"
+                  >
+
+                    <mat-icon>
+                      delete
+                    </mat-icon>
+
+                  </button>
+
+                </div>
+
+              </td>
+
+            </tr>
+
+          }
+
+          @if (filteredStaffs.length === 0) {
+
+            <tr>
+
+              <td
+                colspan="7"
+                class="empty"
+              >
+
+                <mat-icon>
+                  people
+                </mat-icon>
+
+                <p>
+                  No staff found
+                </p>
+
+              </td>
+
+            </tr>
+
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  }
+
+
+  @if (showForm) {
+
+    <div
+      class="modal-overlay"
+      (click)="closeForm()"
+    >
+
+      <div
+        class="modal"
+        (click)="$event.stopPropagation()"
+      >
+
+        <div class="modal-header">
+
+          <div>
+
+            <h2>
+              {{
+                isEditMode
+                  ? 'Edit Staff'
+                  : 'Add New Staff'
+              }}
+            </h2>
+
+            <p>
+              {{
+                isEditMode
+                  ? 'Update staff information'
+                  : 'Create a new staff member'
+              }}
+            </p>
+
+          </div>
+
+
+          <button
+            mat-icon-button
+            (click)="closeForm()"
+          >
+
+            <mat-icon>
+              close
+            </mat-icon>
+
+          </button>
+
+        </div>
+
+        <div class="form">
+
+
+          <mat-form-field
+            appearance="outline"
+          >
+
+            <mat-label>
+              Full Name
+            </mat-label>
+
+            <input
+              matInput
+              [(ngModel)]="staffForm.name"
+              placeholder="Enter full name"
+            >
+
+          </mat-form-field>
+
+          <mat-form-field
+            appearance="outline"
+          >
+
+            <mat-label>
+              Gender
+            </mat-label>
+
+            <mat-select
+              [(ngModel)]="staffForm.gender"
+            >
+
+              <mat-option value="Male">
+                Male
+              </mat-option>
+
+              <mat-option value="Female">
+                Female
+              </mat-option>
+
+            </mat-select>
+
+          </mat-form-field>
+
+
+
+          <!-- PHONE -->
+
+          <mat-form-field
+            appearance="outline"
+          >
+
+            <mat-label>
+              Phone
+            </mat-label>
+
+            <input
+              matInput
+              [(ngModel)]="staffForm.phone"
+              placeholder="012 345 678"
+            >
+
+          </mat-form-field>
+
+
+
+          <!-- EMAIL -->
+
+          <mat-form-field
+            appearance="outline"
+          >
+
+            <mat-label>
+              Email
+            </mat-label>
+
+            <input
+              matInput
+              type="email"
+              [(ngModel)]="staffForm.email"
+              placeholder="staff@gmail.com"
+            >
+
+          </mat-form-field>
+
+
+
+          <!-- ROLE -->
+
+          <mat-form-field
+            appearance="outline"
+          >
+
+            <mat-label>
+              Role
+            </mat-label>
+
+            <mat-select
+              [(ngModel)]="staffForm.role"
+            >
+
+              @for (
+                role of roles;
+                track role
+              ) {
+
+                <mat-option [value]="role">
+
+                  {{ role }}
+
+                </mat-option>
+
+              }
+
+            </mat-select>
+
+          </mat-form-field>
+
+
+
+          <!-- SALARY -->
+
+          <mat-form-field
+            appearance="outline"
+          >
+
+            <mat-label>
+              Salary
+            </mat-label>
+
+            <input
+              matInput
+              type="number"
+              min="0"
+              [(ngModel)]="staffForm.salary"
+              placeholder="350"
+            >
+
+            <span
+              matTextPrefix
+            >
+              $
+            </span>
+
+          </mat-form-field>
+
+
+        </div>
+
+
+
+        <!-- BUTTONS -->
+
+        <div class="modal-actions">
+
+          <button
+            mat-button
+            (click)="closeForm()"
+          >
+
+            Cancel
+
+          </button>
+
+
+          <button
+            mat-flat-button
+            class="save-btn"
+            (click)="saveStaff()"
+          >
+
+            <mat-icon>
+
+              {{
+                isEditMode
+                  ? 'save'
+                  : 'add'
+              }}
+
+            </mat-icon>
+
+            {{
+              isEditMode
+                ? 'Update Staff'
+                : 'Add Staff'
+            }}
+
+          </button>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+  }
+
+</div>

@@ -1,0 +1,1634 @@
+<div class="settings-page">
+
+  <div class="settings-sidebar">
+
+    <!-- TITLE -->
+
+    <div class="settings-title">
+
+      <mat-icon>
+        settings
+      </mat-icon>
+
+      <div>
+
+        <h2>
+          Settings
+        </h2>
+
+        <p>
+          Manage your restaurant
+        </p>
+
+      </div>
+
+    </div>
+
+    <ul class="settings-menu">
+
+      <li [class.active]="selectedSetting === 'general'" (click)="selectSetting('general')">
+
+        <mat-icon>
+          store
+        </mat-icon>
+
+        <div>
+
+          <strong>
+            General
+          </strong>
+
+          <span>
+            Restaurant information
+          </span>
+
+        </div>
+
+      </li>
+
+
+      <li [class.active]="selectedSetting === 'restaurant'" (click)="selectSetting('restaurant')">
+
+        <mat-icon>
+          restaurant
+        </mat-icon>
+
+        <div>
+
+          <strong>
+            Restaurant
+          </strong>
+
+          <span>
+            Opening & ordering
+          </span>
+
+        </div>
+
+      </li>
+
+
+      <li [class.active]="selectedSetting === 'orders'" (click)="selectSetting('orders')">
+
+        <mat-icon>
+          receipt_long
+        </mat-icon>
+
+        <div>
+
+          <strong>
+            Orders
+          </strong>
+
+          <span>
+            Order preferences
+          </span>
+
+        </div>
+
+      </li>
+
+
+      <li [class.active]="selectedSetting === 'payments'" (click)="selectSetting('payments')">
+
+        <mat-icon>
+          payments
+        </mat-icon>
+
+        <div>
+
+          <strong>
+            Payments
+          </strong>
+
+          <span>
+            Payment methods
+          </span>
+
+        </div>
+
+      </li>
+
+
+      <li [class.active]="selectedSetting === 'appearance'" (click)="selectSetting('appearance')">
+
+        <mat-icon>
+          palette
+        </mat-icon>
+
+        <div>
+
+          <strong>
+            Appearance
+          </strong>
+
+          <span>
+            Theme & language
+          </span>
+
+        </div>
+
+      </li>
+      <li routerLink="/main-dashboard/dashboard">
+        <button style="width: 100%; cursor: pointer; padding: 5px 0; border: none;">Go To Dashbord</button>
+      </li>
+
+
+
+
+    </ul>
+
+  </div>
+
+
+
+  <div class="settings-content">
+
+    @if (selectedSetting === 'general') {
+
+    <!-- HEADER -->
+
+    <div class="content-header">
+
+      <div>
+
+        <h1>
+          General Settings
+        </h1>
+
+        <p>
+          Manage your restaurant information.
+        </p>
+
+      </div>
+
+
+      <button mat-flat-button color="primary" type="button" (click)="saveGeneralSettings()">
+
+        <mat-icon>
+          save
+        </mat-icon>
+
+        Save Changes
+
+      </button>
+
+    </div>
+
+
+
+    <!-- =================================================
+           RESTAURANT INFORMATION
+      ================================================== -->
+
+    <div class="settings-card">
+
+      <div class="card-title">
+
+        <div class="card-icon">
+
+          <mat-icon>
+            store
+          </mat-icon>
+
+        </div>
+
+        <div>
+
+          <h2>
+            Restaurant Information
+          </h2>
+
+          <p>
+            Basic information about your restaurant.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="form-grid">
+
+
+        <!-- NAME -->
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>
+            Restaurant Name
+          </mat-label>
+
+          <mat-icon matPrefix>
+            restaurant
+          </mat-icon>
+
+          <input matInput [(ngModel)]="restaurantName" placeholder="Enter restaurant name">
+
+        </mat-form-field>
+
+
+        <!-- PHONE -->
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>
+            Phone
+          </mat-label>
+
+          <mat-icon matPrefix>
+            phone
+          </mat-icon>
+
+          <input matInput [(ngModel)]="phone" placeholder="+855 12 345 678">
+
+        </mat-form-field>
+
+
+        <!-- EMAIL -->
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>
+            Email
+          </mat-label>
+
+          <mat-icon matPrefix>
+            email
+          </mat-icon>
+
+          <input matInput type="email" [(ngModel)]="email" placeholder="restaurant@email.com">
+
+        </mat-form-field>
+
+
+        <!-- ADDRESS -->
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>
+            Address
+          </mat-label>
+
+          <mat-icon matPrefix>
+            location_on
+          </mat-icon>
+
+          <input matInput [(ngModel)]="address" placeholder="Enter restaurant address">
+
+        </mat-form-field>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+           BUSINESS HOURS
+      ================================================== -->
+
+    <div class="settings-card">
+
+      <div class="card-title">
+
+        <div class="card-icon">
+
+          <mat-icon>
+            schedule
+          </mat-icon>
+
+        </div>
+
+        <div>
+
+          <h2>
+            Business Hours
+          </h2>
+
+          <p>
+            Set restaurant opening and closing time.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="form-grid">
+
+
+        <!-- OPEN -->
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>
+            Opening Time
+          </mat-label>
+
+          <mat-icon matPrefix>
+            access_time
+          </mat-icon>
+
+          <input matInput type="time" [(ngModel)]="openingTime">
+
+        </mat-form-field>
+
+
+        <!-- CLOSE -->
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>
+            Closing Time
+          </mat-label>
+
+          <mat-icon matPrefix>
+            access_time
+          </mat-icon>
+
+          <input matInput type="time" [(ngModel)]="closingTime">
+
+        </mat-form-field>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+           REGIONAL
+      ================================================== -->
+
+    <div class="settings-card">
+
+      <div class="card-title">
+
+        <div class="card-icon">
+
+          <mat-icon>
+            language
+          </mat-icon>
+
+        </div>
+
+        <div>
+
+          <h2>
+            Regional Settings
+          </h2>
+
+          <p>
+            Currency and timezone used by the system.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="form-grid">
+
+
+        <!-- CURRENCY -->
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>
+            Currency
+          </mat-label>
+
+          <mat-select [(ngModel)]="currency">
+
+            <mat-option value="USD">
+              USD ($)
+            </mat-option>
+
+            <mat-option value="KHR">
+              KHR (៛)
+            </mat-option>
+
+          </mat-select>
+
+        </mat-form-field>
+
+
+        <!-- TIMEZONE -->
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>
+            Timezone
+          </mat-label>
+
+          <mat-select [(ngModel)]="timezone">
+
+            <mat-option value="Asia/Phnom_Penh">
+
+              Asia/Phnom_Penh
+              (UTC+7)
+
+            </mat-option>
+
+            <mat-option value="Asia/Bangkok">
+
+              Asia/Bangkok
+              (UTC+7)
+
+            </mat-option>
+
+          </mat-select>
+
+        </mat-form-field>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- SAVE -->
+
+    <div class="bottom-actions">
+
+      <button mat-stroked-button type="button">
+
+        Cancel
+
+      </button>
+
+
+      <button mat-flat-button color="primary" type="button" (click)="saveGeneralSettings()">
+
+        <mat-icon>
+          save
+        </mat-icon>
+
+        Save Changes
+
+      </button>
+
+    </div>
+
+    }
+
+
+
+    <!-- ===================================================
+         RESTAURANT SETTINGS
+    ==================================================== -->
+
+    @if (selectedSetting === 'restaurant') {
+
+    <div class="content-header">
+
+      <div>
+
+        <h1>
+          Restaurant Settings
+        </h1>
+
+        <p>
+          Manage restaurant operation.
+        </p>
+
+      </div>
+
+
+      <button mat-flat-button color="primary" type="button" (click)="saveRestaurantSettings()">
+
+        <mat-icon>
+          save
+        </mat-icon>
+
+        Save Changes
+
+      </button>
+
+    </div>
+
+
+
+    <!-- RESTAURANT OPERATION -->
+
+    <div class="settings-card">
+
+      <div class="card-title">
+
+        <div class="card-icon">
+
+          <mat-icon>
+            restaurant
+          </mat-icon>
+
+        </div>
+
+        <div>
+
+          <h2>
+            Restaurant Operation
+          </h2>
+
+          <p>
+            Control restaurant availability.
+          </p>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- RESTAURANT OPEN -->
+
+      <div class="setting-row">
+
+        <div>
+
+          <strong>
+            Restaurant Open
+          </strong>
+
+          <span>
+            Allow customers to access the restaurant.
+          </span>
+
+        </div>
+
+
+        <mat-slide-toggle [(ngModel)]="restaurantOpen">
+
+          {{
+          restaurantOpen
+          ? 'Open'
+          : 'Closed'
+          }}
+
+        </mat-slide-toggle>
+
+      </div>
+
+
+
+      <!-- ONLINE ORDERS -->
+
+      <div class="setting-row">
+
+        <div>
+
+          <strong>
+            Accept Online Orders
+          </strong>
+
+          <span>
+            Allow customers to place online orders.
+          </span>
+
+        </div>
+
+
+        <mat-slide-toggle [(ngModel)]="acceptOnlineOrders">
+
+          {{
+          acceptOnlineOrders
+          ? 'Enabled'
+          : 'Disabled'
+          }}
+
+        </mat-slide-toggle>
+
+      </div>
+
+
+
+      <!-- BOOKINGS -->
+
+      <div class="setting-row">
+
+        <div>
+
+          <strong>
+            Accept Bookings
+          </strong>
+
+          <span>
+            Allow customers to reserve tables.
+          </span>
+
+        </div>
+
+
+        <mat-slide-toggle [(ngModel)]="acceptBookings">
+
+          {{
+          acceptBookings
+          ? 'Enabled'
+          : 'Disabled'
+          }}
+
+        </mat-slide-toggle>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- LIMITS -->
+
+    <div class="settings-card">
+
+      <div class="card-title">
+
+        <div class="card-icon">
+
+          <mat-icon>
+            tune
+          </mat-icon>
+
+        </div>
+
+        <div>
+
+          <h2>
+            Restaurant Limits
+          </h2>
+
+          <p>
+            Configure default restaurant values.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="form-grid">
+
+
+        <!-- PREPARATION -->
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>
+            Default Preparation Time
+          </mat-label>
+
+          <input matInput type="number" min="1" [(ngModel)]="defaultPreparationTime">
+
+          <span matSuffix>
+            min
+          </span>
+
+        </mat-form-field>
+
+
+        <!-- MAX GUESTS -->
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>
+            Maximum Booking Guests
+          </mat-label>
+
+          <input matInput type="number" min="1" [(ngModel)]="maximumBookingGuests">
+
+          <span matSuffix>
+            guests
+          </span>
+
+        </mat-form-field>
+
+
+        <!-- MIN ORDER -->
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>
+            Minimum Order Amount
+          </mat-label>
+
+          <span matPrefix>
+            $&nbsp;
+          </span>
+
+          <input matInput type="number" min="0" [(ngModel)]="minimumOrderAmount">
+
+        </mat-form-field>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- SAVE -->
+
+    <div class="bottom-actions">
+
+      <button mat-flat-button color="primary" type="button" (click)="saveRestaurantSettings()">
+
+        <mat-icon>
+          save
+        </mat-icon>
+
+        Save Changes
+
+      </button>
+
+    </div>
+
+    }
+
+
+
+    <!-- ===================================================
+         ORDER SETTINGS
+    ==================================================== -->
+
+    @if (selectedSetting === 'orders') {
+
+    <div class="content-header">
+
+      <div>
+
+        <h1>
+          Order Settings
+        </h1>
+
+        <p>
+          Configure how restaurant orders work.
+        </p>
+
+      </div>
+
+
+      <button mat-flat-button color="primary" type="button" (click)="saveOrderSettings()">
+
+        <mat-icon>
+          save
+        </mat-icon>
+
+        Save Changes
+
+      </button>
+
+    </div>
+
+
+
+    <!-- ORDER OPTIONS -->
+
+    <div class="settings-card">
+
+      <div class="card-title">
+
+        <div class="card-icon">
+
+          <mat-icon>
+            receipt_long
+          </mat-icon>
+
+        </div>
+
+        <div>
+
+          <h2>
+            Order Options
+          </h2>
+
+          <p>
+            Control how customers place orders.
+          </p>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- AUTO CONFIRM -->
+
+      <div class="setting-row">
+
+        <div>
+
+          <strong>
+            Auto Confirm Orders
+          </strong>
+
+          <span>
+            Automatically confirm new customer orders.
+          </span>
+
+        </div>
+
+
+        <mat-slide-toggle [(ngModel)]="autoConfirmOrders">
+
+          {{
+          autoConfirmOrders
+          ? 'Enabled'
+          : 'Disabled'
+          }}
+
+        </mat-slide-toggle>
+
+      </div>
+
+
+
+      <!-- TAKEAWAY -->
+
+      <div class="setting-row">
+
+        <div>
+
+          <strong>
+            Takeaway Orders
+          </strong>
+
+          <span>
+            Allow customers to choose takeaway.
+          </span>
+
+        </div>
+
+
+        <mat-slide-toggle [(ngModel)]="allowTakeaway">
+
+          {{
+          allowTakeaway
+          ? 'Enabled'
+          : 'Disabled'
+          }}
+
+        </mat-slide-toggle>
+
+      </div>
+
+
+
+      <!-- DELIVERY -->
+
+      <div class="setting-row">
+
+        <div>
+
+          <strong>
+            Delivery Orders
+          </strong>
+
+          <span>
+            Allow customers to choose delivery.
+          </span>
+
+        </div>
+
+
+        <mat-slide-toggle [(ngModel)]="allowDelivery">
+
+          {{
+          allowDelivery
+          ? 'Enabled'
+          : 'Disabled'
+          }}
+
+        </mat-slide-toggle>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- DELIVERY FEE -->
+
+    <div class="settings-card">
+
+      <div class="card-title">
+
+        <div class="card-icon">
+
+          <mat-icon>
+            two_wheeler
+          </mat-icon>
+
+        </div>
+
+        <div>
+
+          <h2>
+            Delivery
+          </h2>
+
+          <p>
+            Configure delivery charges.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="form-grid">
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>
+            Delivery Fee
+          </mat-label>
+
+          <span matPrefix>
+            $&nbsp;
+          </span>
+
+          <input matInput type="number" min="0" [(ngModel)]="deliveryFee">
+
+        </mat-form-field>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- SAVE -->
+
+    <div class="bottom-actions">
+
+      <button mat-flat-button color="primary" type="button" (click)="saveOrderSettings()">
+
+        <mat-icon>
+          save
+        </mat-icon>
+
+        Save Changes
+
+      </button>
+
+    </div>
+
+    }
+
+    @if (selectedSetting === 'payments') {
+
+    <!-- =================================================
+       HEADER
+  ================================================== -->
+
+    <div class="content-header">
+
+      <div>
+
+        <h1>
+          Payment Settings
+        </h1>
+
+        <p>
+          Manage payment methods for your restaurant.
+        </p>
+
+      </div>
+
+
+      <button mat-flat-button color="primary" type="button" (click)="savePaymentSettings()">
+
+        <mat-icon>
+          save
+        </mat-icon>
+
+        Save Changes
+
+      </button>
+
+    </div>
+
+
+
+    <!-- =================================================
+       PAYMENT METHODS
+  ================================================== -->
+
+    <div class="settings-card">
+
+      <div class="card-title">
+
+        <div class="card-icon">
+
+          <mat-icon>
+            payments
+          </mat-icon>
+
+        </div>
+
+        <div>
+
+          <h2>
+            Payment Methods
+          </h2>
+
+          <p>
+            Choose which payment methods customers can use.
+          </p>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- CASH -->
+
+      <div class="setting-row">
+
+        <div>
+
+          <strong>
+            Cash
+          </strong>
+
+          <span>
+            Accept cash payments at the restaurant.
+          </span>
+
+        </div>
+
+
+        <mat-slide-toggle [(ngModel)]="paymentMethods.cash">
+
+          {{
+          paymentMethods.cash
+          ? 'Enabled'
+          : 'Disabled'
+          }}
+
+        </mat-slide-toggle>
+
+      </div>
+
+
+
+      <!-- ABA -->
+
+      <div class="setting-row">
+
+        <div>
+
+          <strong>
+            ABA Pay
+          </strong>
+
+          <span>
+            Accept payments through ABA.
+          </span>
+
+        </div>
+
+
+        <mat-slide-toggle [(ngModel)]="paymentMethods.aba">
+
+          {{
+          paymentMethods.aba
+          ? 'Enabled'
+          : 'Disabled'
+          }}
+
+        </mat-slide-toggle>
+
+      </div>
+
+
+
+      <!-- CARD -->
+
+      <div class="setting-row">
+
+        <div>
+
+          <strong>
+            Credit / Debit Card
+          </strong>
+
+          <span>
+            Accept card payments.
+          </span>
+
+        </div>
+
+
+        <mat-slide-toggle [(ngModel)]="paymentMethods.card">
+
+          {{
+          paymentMethods.card
+          ? 'Enabled'
+          : 'Disabled'
+          }}
+
+        </mat-slide-toggle>
+
+      </div>
+
+
+
+      <!-- KHQR -->
+
+      <div class="setting-row">
+
+        <div>
+
+          <strong>
+            KHQR
+          </strong>
+
+          <span>
+            Accept KHQR payments.
+          </span>
+
+        </div>
+
+
+        <mat-slide-toggle [(ngModel)]="paymentMethods.khqr">
+
+          {{
+          paymentMethods.khqr
+          ? 'Enabled'
+          : 'Disabled'
+          }}
+
+        </mat-slide-toggle>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+       ABA INFORMATION
+  ================================================== -->
+
+    <div class="settings-card">
+
+      <div class="card-title">
+
+        <div class="card-icon">
+
+          <mat-icon>
+            account_balance
+          </mat-icon>
+
+        </div>
+
+        <div>
+
+          <h2>
+            ABA Payment Information
+          </h2>
+
+          <p>
+            Account information shown for ABA payments.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="form-grid">
+
+
+        <!-- ACCOUNT NAME -->
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>
+            ABA Account Name
+          </mat-label>
+
+          <mat-icon matPrefix>
+            person
+          </mat-icon>
+
+          <input matInput [(ngModel)]="abaAccountName" placeholder="Restaurant Name">
+
+        </mat-form-field>
+
+
+
+        <!-- ACCOUNT NUMBER -->
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>
+            ABA Account Number
+          </mat-label>
+
+          <mat-icon matPrefix>
+            account_balance
+          </mat-icon>
+
+          <input matInput [(ngModel)]="abaAccountNumber" placeholder="000 000 000">
+
+        </mat-form-field>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+       KHQR
+  ================================================== -->
+
+    <div class="settings-card">
+
+      <div class="card-title">
+
+        <div class="card-icon">
+
+          <mat-icon>
+            qr_code_2
+          </mat-icon>
+
+        </div>
+
+        <div>
+
+          <h2>
+            KHQR Information
+          </h2>
+
+          <p>
+            Configure your KHQR merchant information.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="form-grid">
+
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>
+            KHQR Merchant Name
+          </mat-label>
+
+          <mat-icon matPrefix>
+            store
+          </mat-icon>
+
+          <input matInput [(ngModel)]="khqrMerchantName" placeholder="Restaurant Name">
+
+        </mat-form-field>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+       SAVE
+  ================================================== -->
+
+    <div class="bottom-actions">
+
+      <button mat-flat-button color="primary" type="button" (click)="savePaymentSettings()">
+
+        <mat-icon>
+          save
+        </mat-icon>
+
+        Save Changes
+
+      </button>
+
+    </div>
+
+    }
+    @if (selectedSetting === 'appearance') {
+
+    <!-- =================================================
+       HEADER
+  ================================================== -->
+
+    <div class="content-header">
+
+      <div>
+
+        <h1>
+          Appearance
+        </h1>
+
+        <p>
+          Customize the look and feel of your restaurant system.
+        </p>
+
+      </div>
+
+
+      <button mat-flat-button color="primary" type="button" (click)="saveAppearanceSettings()">
+
+        <mat-icon>
+          save
+        </mat-icon>
+
+        Save Changes
+
+      </button>
+
+    </div>
+
+
+
+    <!-- =================================================
+       THEME
+  ================================================== -->
+
+    <div class="settings-card">
+
+      <div class="card-title">
+
+        <div class="card-icon">
+
+          <mat-icon>
+            palette
+          </mat-icon>
+
+        </div>
+
+        <div>
+
+          <h2>
+            Theme
+          </h2>
+
+          <p>
+            Choose the appearance of the dashboard.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="form-grid">
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>
+            Theme
+          </mat-label>
+
+          <mat-select [(ngModel)]="theme">
+
+            <mat-option value="light">
+
+              ☀️ Light
+
+            </mat-option>
+
+            <mat-option value="dark">
+
+              🌙 Dark
+
+            </mat-option>
+
+            <mat-option value="system">
+
+              💻 System
+
+            </mat-option>
+
+          </mat-select>
+
+        </mat-form-field>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+       LANGUAGE
+  ================================================== -->
+
+    <div class="settings-card">
+
+      <div class="card-title">
+
+        <div class="card-icon">
+
+          <mat-icon>
+            language
+          </mat-icon>
+
+        </div>
+
+        <div>
+
+          <h2>
+            Language
+          </h2>
+
+          <p>
+            Select the system language.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="form-grid">
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>
+            Language
+          </mat-label>
+
+          <mat-select [(ngModel)]="language">
+
+            <mat-option value="km">
+
+              🇰🇭 Khmer
+
+            </mat-option>
+
+            <mat-option value="en">
+
+              🇬🇧 English
+
+            </mat-option>
+
+          </mat-select>
+
+        </mat-form-field>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+       DASHBOARD LAYOUT
+  ================================================== -->
+
+    <div class="settings-card">
+
+      <div class="card-title">
+
+        <div class="card-icon">
+
+          <mat-icon>
+            dashboard
+          </mat-icon>
+
+        </div>
+
+        <div>
+
+          <h2>
+            Dashboard Layout
+          </h2>
+
+          <p>
+            Choose the spacing of dashboard content.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="form-grid">
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>
+            Layout
+          </mat-label>
+
+          <mat-select [(ngModel)]="dashboardLayout">
+
+            <mat-option value="comfortable">
+
+              Comfortable
+
+            </mat-option>
+
+            <mat-option value="compact">
+
+              Compact
+
+            </mat-option>
+
+          </mat-select>
+
+        </mat-form-field>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+       SIDEBAR
+  ================================================== -->
+
+    <div class="settings-card">
+
+      <div class="card-title">
+
+        <div class="card-icon">
+
+          <mat-icon>
+            view_sidebar
+          </mat-icon>
+
+        </div>
+
+        <div>
+
+          <h2>
+            Sidebar
+          </h2>
+
+          <p>
+            Configure the dashboard sidebar.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="setting-row">
+
+        <div>
+
+          <strong>
+            Collapse Sidebar
+          </strong>
+
+          <span>
+            Reduce the sidebar width to show more content.
+          </span>
+
+        </div>
+
+
+        <mat-slide-toggle [(ngModel)]="sidebarCollapsed">
+
+          {{
+          sidebarCollapsed
+          ? 'Collapsed'
+          : 'Expanded'
+          }}
+
+        </mat-slide-toggle>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+       SAVE
+  ================================================== -->
+
+    <div class="bottom-actions">
+
+      <button mat-flat-button color="primary" type="button" (click)="saveAppearanceSettings()">
+
+        <mat-icon>
+          save
+        </mat-icon>
+
+        Save Changes
+
+      </button>
+
+    </div>
+
+    }
+    <!-- ===================================================
+         COMING SOON SETTINGS
+    ==================================================== -->
+
+    
+
+  </div>
+
+</div>

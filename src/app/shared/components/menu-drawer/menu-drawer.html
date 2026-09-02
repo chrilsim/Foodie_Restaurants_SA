@@ -1,23 +1,85 @@
-<div class="main-menu">
-    <div class="acc-users">
-        <div class="profile-img">
-            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="profile image">
-        </div>
-        <div class="profile-name">
-            <h3>user name</h3>
-            <p>user email</p>
-        </div>
-    </div>
-    <ul>
-        <li>
-            <mat-icon>photo_prints</mat-icon>
-            <span>My orders</span>
-        </li>
+<div class="main-menu" #drawer>
 
-        <li>
-            <mat-icon>location_on</mat-icon>
-            <span>Locations</span>
-        </li>
-    </ul>
-    <h4 routerLink="/main-dashboard">Log Out</h4>
+  <!-- Profile -->
+  <div class="profile-card" style="cursor: pointer;" routerLink="/products/user-info" (click)="close()">
+    <div class="profile-img">
+      <img
+        src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+        alt="profile image"
+      />
+    </div>
+
+    <div class="profile-info">
+      @if (user) {
+        <h3>{{ user.fullName }}</h3>
+        <p>{{ user.email }}</p>
+
+        <span class="role-badge">
+          {{ user.role }}
+        </span>
+      } @else {
+        <h3>Guest</h3>
+        <p>Please login</p>
+      }
+    </div>
+  </div>
+
+  <!-- Menu -->
+  <ul class="menu-list">
+
+    @if (user?.role === "Rider") {
+      <li routerLink="/products/myoriderrder" (click)="close()">
+        <div class="menu-icon delivery">
+          <mat-icon>delivery_dining</mat-icon>
+        </div>
+        <span>Delivery</span>
+        <mat-icon class="arrow">chevron_right</mat-icon>
+      </li>
+    }
+
+    @if (user?.role === "Staff") {
+      <li routerLink="/products/kitchen-dashboard" (click)="close()">
+        <div class="menu-icon kitchen">
+          <mat-icon>restaurant</mat-icon>
+        </div>
+        <span>Kitchen</span>
+        <mat-icon class="arrow">chevron_right</mat-icon>
+      </li>
+    }
+
+    <li routerLink="/products/myorder" (click)="close()">
+      <div class="menu-icon orders">
+        <mat-icon>receipt_long</mat-icon>
+      </div>
+      <span>My Orders</span>
+      <mat-icon class="arrow">chevron_right</mat-icon>
+    </li>
+
+    <li routerLink="/products/my-reservations" (click)="close()">
+      <div class="menu-icon booking">
+        <mat-icon>calendar_month</mat-icon>
+      </div>
+      <span>Booking Table</span>
+      <mat-icon class="arrow">chevron_right</mat-icon>
+    </li>
+
+    <li (click)="openLocation(); close()">
+      <div class="menu-icon location">
+        <mat-icon>location_on</mat-icon>
+      </div>
+      <span>Locations</span>
+      <mat-icon class="arrow">chevron_right</mat-icon>
+    </li>
+
+  </ul>
+
+  <!-- Logout -->
+  <div class="logout" (click)="logout()">
+    <div class="logout-icon">
+      <mat-icon>logout</mat-icon>
+    </div>
+
+    <span>Log Out</span>
+  </div>
+
 </div>

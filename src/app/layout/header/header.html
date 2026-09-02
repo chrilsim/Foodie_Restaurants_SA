@@ -2,30 +2,36 @@
     <div class="main-header-diplay">
         <div class="logo-menu">
             <div (click)="openMenu()" class="logo">
-                <mat-icon>menu</mat-icon> 
+                <mat-icon>menu</mat-icon>
             </div>
             <img routerLink="/products/home" src="assets/logo.png" alt="">
 
         </div>
         <!-- ------------search-location-cart------------- -->
         <div class="search-location-cart">
-            <div  (click)="openLocation()" class="curenlocation"> <mat-icon>my_location</mat-icon>
+            <div (click)="openLocation()" class="curenlocation"> <mat-icon>my_location</mat-icon>
                 <p>Can not get current location</p>
             </div>
+            @if (!isSearchPage) {
             <!-- Desktop -->
-            <mat-form-field routerLink="/products/search" appearance="outline" class="search-form-field desktop-search">
+
+            <mat-form-field (click)="goToSearch()" appearance="outline" class="search-form-field desktop-search">
                 <mat-icon matPrefix>search</mat-icon>
                 <input matInput placeholder="Search...">
             </mat-form-field>
 
             <!-- Mobile -->
-            <button mat-icon-button class="mobile-search">
+            <button (click)="goToSearch()" mat-icon-button class="mobile-search" readonly>
                 <mat-icon>search</mat-icon>
             </button>
+            }
 
-            <div   (click)="openCart()" class="cart">
+
+            <div (click)="openCart()" class="cart" [ngClass]="{ 'myclass': ((TotalItem$ | async) || 0) > 0 }">
                 <mat-icon>shopping_cart</mat-icon>
-                <p>Cart</p>
+                <p>
+    Cart {{ (TotalItem$ | async) || 0 }}
+  </p>
             </div>
         </div>
     </div>

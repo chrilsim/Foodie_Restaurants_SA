@@ -1,0 +1,882 @@
+<div class="order-page">
+
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
+
+  <div class="page-header">
+
+    <div class="header-left">
+
+      <div class="header-icon">
+        <mat-icon>receipt_long</mat-icon>
+      </div>
+
+      <div class="header-content">
+
+        <div class="breadcrumb">
+          <span>Admin</span>
+          <mat-icon>chevron_right</mat-icon>
+          <strong>Orders</strong>
+        </div>
+
+        <h1>
+          Order Management
+        </h1>
+
+        <p>
+          Manage and monitor customer orders
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="header-summary">
+
+      <div class="summary-icon">
+        <mat-icon>shopping_bag</mat-icon>
+      </div>
+
+      <div>
+        <strong>
+          {{ filteredOrders.length }}
+        </strong>
+
+        <span>
+          Orders
+        </span>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       STATISTICS
+  ====================================================== -->
+
+<div class="stats-grid">
+
+  <!-- TOTAL ORDERS -->
+
+  <div class="stat-card">
+
+    <div class="stat-icon blue">
+
+      <mat-icon>
+        receipt_long
+      </mat-icon>
+
+    </div>
+
+    <div>
+
+      <span>
+        Total Orders
+      </span>
+
+      <strong>
+        {{ orders.length }}
+      </strong>
+
+    </div>
+
+  </div>
+
+
+  <!-- PENDING -->
+
+  <div class="stat-card">
+
+    <div class="stat-icon orange">
+
+      <mat-icon>
+        schedule
+      </mat-icon>
+
+    </div>
+
+    <div>
+
+      <span>
+        Pending
+      </span>
+
+      <strong>
+        {{
+          orders.filter(
+            o => o.status === 'Pending'
+          ).length
+        }}
+      </strong>
+
+    </div>
+
+  </div>
+
+
+  <!-- PREPARING -->
+
+  <div class="stat-card">
+
+    <div class="stat-icon purple">
+
+      <mat-icon>
+        restaurant
+      </mat-icon>
+
+    </div>
+
+    <div>
+
+      <span>
+        Preparing
+      </span>
+
+      <strong>
+        {{
+          orders.filter(
+            o => o.status === 'Preparing'
+          ).length
+        }}
+      </strong>
+
+    </div>
+
+  </div>
+
+
+  <!-- COMPLETED -->
+
+  <div class="stat-card">
+
+    <div class="stat-icon green">
+
+      <mat-icon>
+        check_circle
+      </mat-icon>
+
+    </div>
+
+    <div>
+
+      <span>
+        Completed
+      </span>
+
+      <strong>
+        {{
+          orders.filter(
+            o => o.status === 'Completed'
+          ).length
+        }}
+      </strong>
+
+    </div>
+
+  </div>
+
+
+  <!-- TODAY SALES -->
+
+  <div class="stat-card sales-card">
+
+    <div class="stat-icon emerald">
+
+      <mat-icon>
+        payments
+      </mat-icon>
+
+    </div>
+
+    <div>
+
+      <span>
+        Today's Sales
+      </span>
+
+      <strong>
+        ${{ getTodayTotal() | number:'1.2-2' }}
+      </strong>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+  <!-- =====================================================
+       TOOLBAR
+  ====================================================== -->
+
+  <div class="toolbar">
+
+    <!-- SEARCH -->
+
+    <div class="search-box">
+
+      <mat-icon>
+        search
+      </mat-icon>
+
+      <input type="text" placeholder="Search order, customer or email..." [(ngModel)]="searchText"
+        (input)="applyFilter()" />
+
+      @if (searchText) {
+
+      <button type="button" class="clear-search" matTooltip="Clear search" (click)="clearSearch()">
+
+        <mat-icon>
+          close
+        </mat-icon>
+
+      </button>
+
+      }
+
+    </div>
+
+
+    <!-- STATUS -->
+
+    <mat-form-field appearance="outline" class="status-filter">
+
+      <mat-label>
+        Order Status
+      </mat-label>
+
+      <mat-icon matPrefix>
+        filter_list
+      </mat-icon>
+
+      <mat-select [(ngModel)]="selectedStatus" (selectionChange)="applyFilter()">
+
+        @for (
+        status of statuses;
+        track status
+        ) {
+
+        <mat-option [value]="status">
+
+          {{ status }}
+
+        </mat-option>
+
+        }
+
+      </mat-select>
+
+    </mat-form-field>
+
+
+    <!-- REFRESH -->
+
+    <button mat-stroked-button class="refresh-button" type="button" (click)="loadOrders()">
+
+      <mat-icon>
+        refresh
+      </mat-icon>
+
+      Refresh
+
+    </button>
+
+  </div>
+
+
+  <!-- =====================================================
+       STATUS BAR
+  ====================================================== -->
+
+  <div class="status-bar">
+
+    <div class="status-left">
+
+      <div class="status-item">
+
+        <span class="dot all"></span>
+
+        <span>
+          All
+        </span>
+
+        <strong>
+          {{ orders.length }}
+        </strong>
+
+      </div>
+
+
+      <div class="status-item">
+
+        <span class="dot pending"></span>
+
+        <span>
+          Pending
+        </span>
+
+        <strong>
+          {{
+          orders.filter(
+          o => o.status === 'Pending'
+          ).length
+          }}
+        </strong>
+
+      </div>
+
+
+      <div class="status-item">
+
+        <span class="dot preparing"></span>
+
+        <span>
+          Preparing
+        </span>
+
+        <strong>
+          {{
+          orders.filter(
+          o => o.status === 'Preparing'
+          ).length
+          }}
+        </strong>
+
+      </div>
+
+
+      <div class="status-item">
+
+        <span class="dot ready"></span>
+
+        <span>
+          Ready
+        </span>
+
+        <strong>
+          {{
+          orders.filter(
+          o => o.status === 'Ready'
+          ).length
+          }}
+        </strong>
+
+      </div>
+
+
+      <div class="status-item">
+
+        <span class="dot delivering"></span>
+
+        <span>
+          Delivering
+        </span>
+
+        <strong>
+          {{
+          orders.filter(
+          o => o.status === 'Delivering'
+          ).length
+          }}
+        </strong>
+
+      </div>
+
+
+      <div class="status-item">
+
+        <span class="dot completed"></span>
+
+        <span>
+          Completed
+        </span>
+
+        <strong>
+          {{
+          orders.filter(
+          o => o.status === 'Completed'
+          ).length
+          }}
+        </strong>
+
+      </div>
+
+    </div>
+
+
+    <div class="status-right">
+
+      Showing
+
+      <strong>
+        {{ filteredOrders.length }}
+      </strong>
+
+      of
+
+      <strong>
+        {{ orders.length }}
+      </strong>
+
+      orders
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       TABLE CARD
+  ====================================================== -->
+
+  <div class="table-card">
+
+
+    <!-- LOADING -->
+
+    @if (isLoading) {
+
+    <div class="loading">
+
+      <div class="loading-spinner">
+
+        <mat-icon class="spin">
+          sync
+        </mat-icon>
+
+      </div>
+
+      <strong>
+        Loading orders...
+      </strong>
+
+      <span>
+        Please wait while we load the latest orders.
+      </span>
+
+    </div>
+
+    }
+
+
+    <!-- TABLE -->
+
+    @if (!isLoading) {
+
+    <div class="table-header">
+
+      <div>
+
+        <h3>
+          Recent Orders
+        </h3>
+
+        <p>
+          Customer order activity
+        </p>
+
+      </div>
+
+      <div class="table-count">
+
+        <mat-icon>
+          list_alt
+        </mat-icon>
+
+        {{ filteredOrders.length }}
+
+      </div>
+
+    </div>
+
+
+    <div class="table-scroll">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>
+              Order
+            </th>
+
+            <th>
+              Date
+            </th>
+
+            <th>
+              Customer
+            </th>
+
+            <th>
+              Type
+            </th>
+
+            <th>
+              Status
+            </th>
+
+            <th>
+              Total
+            </th>
+
+            <th class="action-header">
+              Actions
+            </th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+
+          @for (
+          order of filteredOrders;
+          track order._id
+          ) {
+
+          <tr>
+
+
+            <!-- ORDER -->
+
+            <td>
+
+              <div class="order-cell">
+
+                <div class="order-number">
+
+                  <mat-icon>
+                    receipt
+                  </mat-icon>
+
+                  <strong>
+                    {{ getOrderNumber(order._id) }}
+                  </strong>
+
+                </div>
+
+                <span>
+                  {{ getItemCount(order) }}
+                  {{ getItemCount(order) === 1 ? 'item' : 'items' }}
+                </span>
+
+              </div>
+
+            </td>
+
+
+            <!-- DATE -->
+
+            <td>
+
+              <div class="date-cell">
+
+                <div class="date-icon">
+
+                  <mat-icon>
+                    calendar_today
+                  </mat-icon>
+
+                </div>
+
+                <div>
+
+                  <strong>
+                    {{
+                    order.createdAt
+                    | date:'MMM d, y'
+                    }}
+                  </strong>
+
+                  <span>
+                    {{
+                    order.createdAt
+                    | date:'shortTime'
+                    }}
+                  </span>
+
+                </div>
+
+              </div>
+
+            </td>
+
+
+            <!-- CUSTOMER -->
+
+            <td>
+
+              <div class="customer-cell">
+
+                <div class="avatar">
+
+                  <mat-icon>
+                    person
+                  </mat-icon>
+
+                </div>
+
+                <div class="customer-info">
+
+                  <strong>
+
+                    {{
+                    order.userId?.fullName
+                    || 'Unknown Customer'
+                    }}
+
+                  </strong>
+
+                  <span>
+
+                    {{
+                    order.userId?.email
+                    || 'No email'
+                    }}
+
+                  </span>
+
+                </div>
+
+              </div>
+
+            </td>
+
+
+            <!-- TYPE -->
+
+            <td>
+
+              @if (
+              order.receiveType ===
+              'delivery'
+              ) {
+
+              <span class="type delivery">
+
+                <span class="type-icon">
+
+                  <mat-icon>
+                    local_shipping
+                  </mat-icon>
+
+                </span>
+
+                Delivery
+
+              </span>
+
+              }
+
+              @else {
+
+              <span class="type pickup">
+
+                <span class="type-icon">
+
+                  <mat-icon>
+                    store
+                  </mat-icon>
+
+                </span>
+
+                Pickup
+
+              </span>
+
+              }
+
+            </td>
+
+
+            <!-- STATUS -->
+
+            <td>
+
+              <span class="status" [ngClass]="
+                      getStatusClass(
+                        order.status
+                      )
+                    ">
+
+                <span class="status-dot"></span>
+
+                {{ order.status }}
+
+              </span>
+
+            </td>
+
+
+            <!-- TOTAL -->
+
+            <td>
+
+              <div class="total-cell">
+
+                <strong class="total">
+
+                  {{
+                  order.totalAmount || 0
+                  | currency:'USD'
+                  }}
+
+                </strong>
+
+              </div>
+
+            </td>
+
+
+            <!-- ACTION -->
+
+            <td>
+
+              <div class="actions">
+                <button mat-icon-button title="View Products" (click)="viewProducts(order)">
+
+                  <mat-icon>
+                    restaurant_menu
+                  </mat-icon>
+
+                </button>
+
+                <!-- VIEW ORDER -->
+
+                <button mat-icon-button type="button" matTooltip="View Order" class="action-order"
+                  (click)="viewOrder(order)">
+
+                  <mat-icon>
+                    visibility
+                  </mat-icon>
+
+                </button>
+
+
+                <!-- CUSTOMER -->
+
+                <button mat-icon-button type="button" matTooltip="View Customer" class="action-customer"
+                  (click)="viewCustomer(order)">
+
+                  <mat-icon>
+                    person
+                  </mat-icon>
+
+                </button>
+
+
+                <!-- ADDRESS -->
+
+                <button mat-icon-button type="button" matTooltip="View Address" class="action-address" [disabled]="
+                        !order.deliveryAddress
+                      " (click)="viewAddress(order)">
+
+                  <mat-icon>
+                    location_on
+                  </mat-icon>
+
+                </button>
+
+
+                <!-- PAYMENT -->
+
+                <button mat-icon-button type="button" matTooltip="View Payment" class="action-payment"
+                  (click)="viewPayment(order)">
+
+                  <mat-icon>
+                    payments
+                  </mat-icon>
+
+                </button>
+
+
+                <!-- RIDER -->
+
+                <button mat-icon-button type="button" matTooltip="View Rider" class="action-rider"
+                  (click)="viewRider(order)">
+
+                  <mat-icon>
+                    two_wheeler
+                  </mat-icon>
+
+                </button>
+
+              </div>
+
+            </td>
+
+          </tr>
+
+          }
+
+
+          <!-- EMPTY -->
+
+          @if (
+          filteredOrders.length === 0
+          ) {
+
+          <tr>
+
+            <td colspan="7" class="empty">
+
+              <div class="empty-content">
+
+                <div class="empty-icon">
+
+                  <mat-icon>
+                    receipt_long
+                  </mat-icon>
+
+                </div>
+
+                <strong>
+                  No orders found
+                </strong>
+
+                <span>
+                  Try changing your search
+                  or status filter.
+                </span>
+
+                @if (
+                searchText ||
+                selectedStatus !== 'All'
+                ) {
+
+                <button mat-stroked-button type="button" (click)="clearSearch()">
+
+                  Clear Search
+
+                </button>
+
+                }
+
+              </div>
+
+            </td>
+
+          </tr>
+
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+    }
+
+  </div>
+
+</div>

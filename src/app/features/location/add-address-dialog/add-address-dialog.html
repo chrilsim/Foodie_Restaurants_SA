@@ -1,0 +1,384 @@
+
+<div class="add-location-dialog">
+
+  <!-- ================= HEADER ================= -->
+
+  <div class="dialog-header">
+
+    <div class="header-icon">
+      <mat-icon>add_location_alt</mat-icon>
+    </div>
+
+    <div>
+      <h2>
+        Add New Location
+      </h2>
+
+      <p>
+        បន្ថែមអាសយដ្ឋានសម្រាប់ការដឹកជញ្ជូន
+      </p>
+    </div>
+
+  </div>
+
+
+  <mat-dialog-content>
+
+    <!-- ================= LABEL ================= -->
+
+    <mat-form-field
+      appearance="outline"
+      class="full-width"
+    >
+
+      <mat-label>
+        Label
+      </mat-label>
+
+      <mat-select
+        [(ngModel)]="address.label"
+      >
+
+        <mat-option value="Home">
+          🏠 Home
+        </mat-option>
+
+        <mat-option value="Work">
+          🏢 Work
+        </mat-option>
+
+        <mat-option value="Other">
+          📍 Other
+        </mat-option>
+
+      </mat-select>
+
+    </mat-form-field>
+
+
+    <!-- ================= RECEIVER ================= -->
+
+    <mat-form-field
+      appearance="outline"
+      class="full-width"
+    >
+
+      <mat-label>
+        Receiver Name
+      </mat-label>
+
+      <mat-icon matPrefix>
+        person
+      </mat-icon>
+
+      <input
+        matInput
+        [(ngModel)]="address.receiverName"
+        placeholder="Enter receiver name"
+      >
+
+    </mat-form-field>
+
+
+    <!-- ================= PHONE ================= -->
+
+    <mat-form-field
+      appearance="outline"
+      class="full-width"
+    >
+
+      <mat-label>
+        Phone
+      </mat-label>
+
+      <mat-icon matPrefix>
+        phone
+      </mat-icon>
+
+      <input
+        matInput
+        type="tel"
+        [(ngModel)]="address.phone"
+        placeholder="Phone number"
+      >
+
+    </mat-form-field>
+
+
+    <!-- ================= ADDRESS ================= -->
+
+    <mat-form-field
+      appearance="outline"
+      class="full-width"
+    >
+
+      <mat-label>
+        Address
+      </mat-label>
+
+      <mat-icon matPrefix>
+        home
+      </mat-icon>
+
+      <textarea
+        matInput
+        rows="3"
+        [(ngModel)]="address.address"
+        placeholder="House number, Street..."
+      ></textarea>
+
+    </mat-form-field>
+
+
+    <!-- ================= CITY ================= -->
+
+    <mat-form-field
+      appearance="outline"
+      class="full-width"
+    >
+
+      <mat-label>
+        City
+      </mat-label>
+
+      <input
+        matInput
+        [(ngModel)]="address.city"
+        placeholder="Phnom Penh"
+      >
+
+    </mat-form-field>
+
+
+    <!-- ================= PROVINCE ================= -->
+
+    <mat-form-field
+      appearance="outline"
+      class="full-width"
+    >
+
+      <mat-label>
+        Province
+      </mat-label>
+
+      <input
+        matInput
+        [(ngModel)]="address.province"
+        placeholder="Phnom Penh"
+      >
+
+    </mat-form-field>
+
+
+    <!-- ================= MAP TITLE ================= -->
+
+    <div class="map-header">
+
+      <div>
+
+        <mat-icon>
+          map
+        </mat-icon>
+
+        <strong>
+          កំណត់ទីតាំង
+        </strong>
+
+      </div>
+
+      <span>
+        ចុចលើ Map ដើម្បីដាក់ Pin
+      </span>
+
+    </div>
+
+
+    <!-- ================= SEARCH ================= -->
+
+    <mat-form-field
+      appearance="outline"
+      class="full-width"
+    >
+
+      <mat-label>
+        Search Location
+      </mat-label>
+
+      <mat-icon matPrefix>
+        search
+      </mat-icon>
+
+      <input
+        matInput
+        [(ngModel)]="searchText"
+        (keydown)="onSearchKeydown($event)"
+        placeholder="Search street, building, area..."
+      >
+
+      <button
+        mat-icon-button
+        matSuffix
+        type="button"
+        (click)="searchLocation()"
+        [disabled]="searching"
+      >
+
+        <mat-icon>
+          search
+        </mat-icon>
+
+      </button>
+
+    </mat-form-field>
+
+
+    <!-- ================= CURRENT LOCATION ================= -->
+
+    <button
+      class="current-location"
+      type="button"
+      (click)="getCurrentLocation()"
+      [disabled]="locationLoading"
+    >
+
+      <mat-icon>
+        my_location
+      </mat-icon>
+
+      <div>
+
+        <strong>
+          Use Current Location
+        </strong>
+
+        <span>
+          @if (locationLoading) {
+            Detecting location...
+          } @else {
+            Detect GPS location automatically
+          }
+        </span>
+
+      </div>
+
+    </button>
+
+
+    <!-- ================= MAP ================= -->
+
+    <div class="map-wrapper">
+
+      <div
+        id="add-address-map"
+      ></div>
+
+    </div>
+
+
+    <!-- ================= COORDINATES ================= -->
+
+    @if (
+      address.latitude !== undefined &&
+      address.longitude !== undefined
+    ) {
+
+      <div class="coordinates">
+
+        <div>
+
+          <span>
+            Latitude
+          </span>
+
+          <strong>
+            {{ address.latitude }}
+          </strong>
+
+        </div>
+
+        <div>
+
+          <span>
+            Longitude
+          </span>
+
+          <strong>
+            {{ address.longitude }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    }
+
+
+    <!-- ================= DEFAULT ================= -->
+
+    <div class="default-option">
+
+      <mat-checkbox
+        [(ngModel)]="address.isDefault"
+      >
+
+        Set as default address
+
+      </mat-checkbox>
+
+    </div>
+
+  </mat-dialog-content>
+
+
+  <!-- ================= ACTIONS ================= -->
+
+  <mat-dialog-actions align="end">
+
+    <button
+      mat-button
+      type="button"
+      (click)="cancel()"
+    >
+
+      Cancel
+
+    </button>
+
+
+    <button
+      mat-flat-button
+      color="primary"
+      type="button"
+      [disabled]="
+        saving ||
+        !address.receiverName ||
+        !address.phone ||
+        !address.address
+      "
+      (click)="save()"
+    >
+
+      @if (saving) {
+
+        <mat-icon>
+          sync
+        </mat-icon>
+
+        Saving...
+
+      } @else {
+
+        <mat-icon>
+          save
+        </mat-icon>
+
+        Save Address
+
+      }
+
+    </button>
+
+  </mat-dialog-actions>
+
+</div>
+
