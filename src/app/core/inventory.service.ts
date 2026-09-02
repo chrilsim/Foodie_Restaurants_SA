@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-
+import { API_URL } from '../API_URL';
 import {
   HttpClient
 } from '@angular/common/http';
@@ -20,7 +20,7 @@ export class InventoryService {
   // ==========================================
 
   private apiUrl =
-    'http://localhost:3000/api/inventory';
+    `${API_URL}/inventory`;
 
 
   constructor(

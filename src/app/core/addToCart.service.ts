@@ -12,7 +12,7 @@ import {
 import { tap } from 'rxjs/operators';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { API_URL } from '../API_URL';
 import {
   interfaceitemenu,
   CartItem,
@@ -26,7 +26,7 @@ import {
 export class AddToCartService {
 
 
-  private apiUrl = 'http://localhost:3000/api/cart';
+  private apiUrl = `${API_URL}/cart`;
 
   private cartItemsSubject = new BehaviorSubject<CartItem[]>([]);
   cartItems$ = this.cartItemsSubject.asObservable();

@@ -7,7 +7,7 @@ import {
 import {
   Observable
 } from 'rxjs';
-
+import { API_URL } from '../API_URL';
 
 export interface RestaurantSettings {
 
@@ -94,7 +94,7 @@ export interface SettingsResponse {
 export class SettingsService {
 
    private apiUrl =
-    'http://localhost:3000/api/settings';
+    `${API_URL}/settings`;
 
 
   constructor(

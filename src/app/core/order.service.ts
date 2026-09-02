@@ -5,7 +5,7 @@ import {
 import {
   HttpClient
 } from '@angular/common/http';
-
+import { API_URL } from '../API_URL';
 import {
   Observable
 } from 'rxjs';
@@ -19,7 +19,7 @@ import { CheckoutData } from '../interface/checkout.interface';
 export class OrderService {
 
   private apiUrl =
-    'http://localhost:3000/api/orders';
+    `${API_URL}/orders`;
 
 
   constructor(

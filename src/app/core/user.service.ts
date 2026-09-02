@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
+import { API_URL } from '../API_URL';
 export interface User {
   _id?: string;
 
@@ -30,7 +30,7 @@ export interface User {
 export class UserService {
 
   private apiUrl =
-    'http://localhost:3000/api/users';
+    `${API_URL}/users`;
 
 
   constructor(

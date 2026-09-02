@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { API_URL } from '../API_URL';
 import {
   BehaviorSubject,
   Observable
@@ -16,8 +17,7 @@ import { interfaceCategory }
 })
 export class categoryService {
 
-  private apiUrl =
-    'http://localhost:3000/api/category';
+  private apiUrl = `${API_URL}/category`;
 
 
   private categorySource =

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-
+import { API_URL } from '../API_URL';
 import {
     HttpClient,
     HttpHeaders
@@ -55,7 +55,7 @@ export class UserInformationService {
 
 
     private apiUrl =
-        'http://localhost:3000/api/users';
+        `${API_URL}/users`;
 
 
     constructor(

@@ -2,11 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 
-
-// ==========================================
-// REGISTER DATA
-// ==========================================
-
+import { API_URL } from '../API_URL';
 interface RegisterData {
 
   fullName: string;
@@ -19,11 +15,6 @@ interface RegisterData {
 
 }
 
-
-// ==========================================
-// LOGIN DATA
-// ==========================================
-
 interface LoginData {
 
   identifier: string;
@@ -32,10 +23,6 @@ interface LoginData {
 
 }
 
-
-// ==========================================
-// LOGIN RESPONSE
-// ==========================================
 
 interface LoginResponse {
 
@@ -70,8 +57,7 @@ interface LoginResponse {
 export class AuthService {
 
 
-  private apiUrl =
-    'http://localhost:3000/api/auth';
+  private apiUrl =`${API_URL}/auth`;
 
 
   constructor(
@@ -79,9 +65,6 @@ export class AuthService {
   ) {}
 
 
-  // ==========================================
-  // REGISTER
-  // ==========================================
 
   register(
     data: RegisterData
@@ -96,13 +79,6 @@ export class AuthService {
     );
 
   }
-
-
-  // ==========================================
-  // LOGIN
-  // EMAIL OR PHONE
-  // ==========================================
-
   login(
     data: LoginData
   ): Observable<LoginResponse> {
@@ -120,11 +96,6 @@ export class AuthService {
       .pipe(
 
         tap((response) => {
-
-
-          // ================================
-          // SAVE TOKEN
-          // ================================
 
           localStorage.setItem(
 

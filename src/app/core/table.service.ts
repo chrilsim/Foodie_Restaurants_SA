@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
+import { API_URL } from '../API_URL';
 export interface Table {
 
   _id?: string;
@@ -32,7 +32,7 @@ export interface Table {
 export class TableService {
 
   private apiUrl =
-    'http://localhost:3000/api/tables';
+   `${API_URL}/tables`;
 
 
   constructor(

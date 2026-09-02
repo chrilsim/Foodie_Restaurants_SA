@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
+import { API_URL } from '../API_URL';
 @Injectable({
     providedIn: 'root'
 })
 export class RiderDeliveryService {
 
   private apiUrl =
-    'http://localhost:3000/api/delivery';
+    `${API_URL}/delivery`;
 
 
   constructor(

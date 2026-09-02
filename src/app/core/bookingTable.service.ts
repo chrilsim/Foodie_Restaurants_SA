@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
+import { API_URL } from '../API_URL';
 @Injectable({
   providedIn: 'root'
 })
 export class BookingTableService {
 
-  private apiUrl =
-    'http://localhost:3000/api/bookingtable';
+  private apiUrl =`${API_URL}/bookingtable`;
 
   constructor(
     private http: HttpClient

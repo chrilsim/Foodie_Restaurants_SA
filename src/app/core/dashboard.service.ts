@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-
+import { API_URL } from '../API_URL';
 import {
   HttpClient
 } from '@angular/common/http';
@@ -177,8 +177,7 @@ export interface PopularProduct {
 export class DashboardService {
 
 
-  private apiUrl =
-    'http://localhost:3000/api/dashboard';
+  private apiUrl =`${API_URL}/dashboard`;
 
 
 

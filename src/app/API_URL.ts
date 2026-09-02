@@ -1,0 +1,1 @@
+export const API_URL ='https://foodie-restaurants-sa-backend.onrender.com/api';
