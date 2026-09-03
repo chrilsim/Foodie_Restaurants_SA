@@ -4,10 +4,7 @@ import {
   ChangeDetectorRef
 } from '@angular/core';
 
-import {
-  CommonModule
-} from '@angular/common';
-
+import {CommonModule} from '@angular/common';
 import {
   DashboardService,
   DashboardData,
@@ -17,50 +14,31 @@ import {
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-
-  selector:
-    'app-dashboard',
-
-  standalone:
-    true,
-
-  imports: [
-    CommonModule, MatIconModule
-  ],
-
-  templateUrl:
-    './dashboard.html',
-
-  styleUrl:
-    './dashboard.css'
+  selector:'app-dashboard',
+  standalone:true,
+  imports: [CommonModule, MatIconModule],
+  templateUrl:'./dashboard.html',
+  styleUrl:'./dashboard.css'
 
 })
-
-
 export class Dashboard implements OnInit {
-
   dashboard: DashboardData | null = null;
   isLoading = false;
   errorMessage = '';
   lastUpdated: Date | null = null;
-
   selectedRevenuePeriod: 'today' | 'week' | 'month' = 'today';
-
   constructor(
     private dashboardService: DashboardService,
     private drc: ChangeDetectorRef
   ) { }
-
   ngOnInit(): void {
     this.loadDashboard();
   }
   loadDashboard(): void {
-
     this.isLoading = true;
     this.errorMessage = '';
     this.dashboardService.getDashboardSummary().subscribe({
       next: (response) => {
-
         if (response && response.success) {
           this.dashboard = response.data;
           this.lastUpdated = new Date();
@@ -119,13 +97,10 @@ export class Dashboard implements OnInit {
           0
         );
       case 'month':
-
         return Number(
           this.dashboard.revenue.month ||
           0
         );
-
-
       default:
 
         return Number(
@@ -138,18 +113,13 @@ export class Dashboard implements OnInit {
   }
 
   formatMoney(value: number): string {
-    return Number(
-      value || 0
-    ).toLocaleString(
-      'en-US',
+    return Number(value || 0).toLocaleString('en-US',
       {
         minimumFractionDigits:2,maximumFractionDigits:2
       }
     );
 
   }
-
-
   get revenueChart():RevenueChart[] {
     return (
       this.dashboard
@@ -157,7 +127,6 @@ export class Dashboard implements OnInit {
       []
     );
   }
-
   get dailyProfit() {
     return this.dashboard?.dailyProfit || {
       revenue: 0,
@@ -170,18 +139,9 @@ export class Dashboard implements OnInit {
     if (this.revenueChart.length === 0) {
       return 0;
     }
-    return Math.max(
-      ...this.revenueChart.map(
-        item =>
-          Number(
-            item.revenue || 0
-          )
-      )
-
-    );
+    return Math.max(...this.revenueChart.map(item =>Number(item.revenue || 0)));
 
   }
-
   getChartHeight(revenue: number ): number {
     const max =this.maxRevenue;
     if (max <= 0) {
@@ -189,9 +149,7 @@ export class Dashboard implements OnInit {
     }
     return (Number(revenue || 0) /max) * 100;
   }
-  formatChartDate(
-    date: string
-  ): string {
+  formatChartDate(date: string): string {
     if (!date) {
       return '';
     }
@@ -200,26 +158,21 @@ export class Dashboard implements OnInit {
     ) {
       return date;
     }
-    return parsed.toLocaleDateString(
-      'en-US',
+    return parsed.toLocaleDateString('en-US',
       {
         weekday:'short'
       }
     );
 
   }
-  get popularProducts():
-    PopularProduct[] {
+  get popularProducts():PopularProduct[] {
     return (
       this.dashboard
         ?.popularProducts ||
       []
     );
   }
-  getProductRank(
-    index: number
-  ): string {
-
+  getProductRank(index: number): string {
     return String(
       index + 1
     );
@@ -228,121 +181,45 @@ export class Dashboard implements OnInit {
   get orderStatus() {
     return (
 
-      this.dashboard
-        ?.orderStatus ||
+      this.dashboard?.orderStatus ||
       {
-
-        pending:
-          0,
-
-        confirmed:
-          0,
-
-        preparing:
-          0,
-
-        ready:
-          0,
-
-        delivering:
-          0,
-
-        completed:
-          0,
-
-        cancelled:
-          0
-
+        pending:0,
+        confirmed:0,
+        preparing:0,
+        ready:0,
+        delivering:0,
+        completed:0,
+        cancelled:0
       }
-
     );
-
   }
-
-
-  get activeOrders():
-    number {
-
-    const status =
-      this.orderStatus;
-
-
+  get activeOrders():number {
+    const status =this.orderStatus;
     return (
-
-      status.pending +
-      status.confirmed +
-      status.preparing +
-      status.ready +
-      status.delivering
-
+      status.pending +status.confirmed +status.preparing +status.ready +status.delivering
     );
-
   }
-
-
-  get completionRate():
-    number {
-
-    const status =
-      this.orderStatus;
-
-
-    const total =
-      status.pending +
-      status.confirmed +
-      status.preparing +
-      status.ready +
-      status.delivering +
-      status.completed +
-      status.cancelled;
-
-
-    if (
-      total === 0
-    ) {
-
+  get completionRate():number {
+    const status =this.orderStatus;
+    const total =status.pending +status.confirmed +status.preparing +status.ready +status.delivering +status.completed + status.cancelled;
+    if (total === 0) {
       return 0;
-
     }
-
-
-    return Math.round(
-
-      (
-        status.completed /
-        total
-      ) * 100
-
+    return Math.round((status.completed /total) * 100
     );
-
   }
-
-
-  get inventoryAlerts():
-    any[] {
-
+  get inventoryAlerts():any[] {
     return (
-
-      this.dashboard
-        ?.inventoryAlerts ||
-
-      []
-
+      this.dashboard?.inventoryAlerts ||[]
     );
 
   }
-
-
   isOutOfStock( item: any ): boolean {
     return Number(item?.quantity || 0) <= 0;
   }
-
   isLowStock(item: any): boolean {
     const quantity =Number(item?.quantity || 0);
-    const minimumStock =
-      Number(
-        item?.minimumStock || 0
-      );
+    const minimumStock =Number(item?.minimumStock || 0);
     return (
       quantity > 0 &&
       quantity <=
@@ -350,35 +227,24 @@ export class Dashboard implements OnInit {
     );
 
   }
-
   get tableStatus() {
-    return (
-      this.dashboard?.tableStatus ||
+    return (this.dashboard?.tableStatus ||
       {
         total:0,
         available:0,
         occupied:0,
         maintenance:0
       }
-
     );
-
   }
-
-  get tableOccupancyRate():
-    number {
-
-    const total =
-      this.tableStatus.total;
-
-
+  get tableOccupancyRate():number {
+    const total =this.tableStatus.total;
     if (total === 0) {
       return 0;
     }
     return Math.round((this.tableStatus.occupied /total) * 100);
 
   }
-
   get todayBookings():any[] {
     return (
       this.dashboard?.todayBookings ||[]
@@ -390,7 +256,6 @@ export class Dashboard implements OnInit {
         ?.liveDeliveries ||[]
     );
   }
-
   get paymentOverview() {
     return (
       this.dashboard?.paymentOverview ||
@@ -402,14 +267,9 @@ export class Dashboard implements OnInit {
         paid: 0
 
       }
-
     );
-
   }
-
-
-  get paymentTotal():
-    number {
+  get paymentTotal():number {
     return (
       Number(
         this.paymentOverview.cash ||
@@ -429,7 +289,6 @@ export class Dashboard implements OnInit {
     );
 
   }
-
   getPaymentPercentage(value: number): number {
     const total =this.paymentTotal;
     if (total === 0) {
@@ -457,16 +316,12 @@ export class Dashboard implements OnInit {
       return '#--------';
     }
     return ('#' +id.slice(-8).toUpperCase());
-
   }
   getStatusClass(status: string): string {
     if (!status) {
       return '';
     }
-
-
     return status.toLowerCase().replace(/\s+/g,'-');
-
   }
   getCustomerName(order: any): string {
     return (
@@ -484,9 +339,6 @@ export class Dashboard implements OnInit {
     );
 
   }
-
-
-
   getOrderTotal(order: any): number {
     return Number(
       order?.totalAmount ||
@@ -526,7 +378,6 @@ export class Dashboard implements OnInit {
     );
 
   }
-
   getDeliveryStatusClass( status: string): string {
     return this.getStatusClass(status);
   }
@@ -538,7 +389,6 @@ export class Dashboard implements OnInit {
     );
 
   }
-
   get totalOrders():
     number {
     return Number(
@@ -652,11 +502,7 @@ trackById(index: number,item: any): any {
       index
     );
   }
-
-  trackByDate(
-    index: number,
-    item: RevenueChart
-  ): string {
+  trackByDate(index: number,item: RevenueChart): string {
 
     return (
       item.date ||
@@ -664,13 +510,7 @@ trackById(index: number,item: any): any {
     );
 
   }
-
-
-  trackByProduct(
-    index: number,
-    item: PopularProduct
-  ): string {
-
+  trackByProduct(index: number,item: PopularProduct): string {
     return (
       item.productId ||
       String(index)

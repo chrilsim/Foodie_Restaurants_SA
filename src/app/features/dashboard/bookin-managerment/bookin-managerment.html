@@ -1,33 +1,16 @@
 <div class="booking-page">
-
-  <!-- HEADER -->
   <div class="page-header">
-
     <div>
       <h1>Booking Management</h1>
       <p>Manage customer table reservations</p>
     </div>
 
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="loadBookings()">
-
+    <button  mat-raised-button color="primary" (click)="loadBookings()">
       <mat-icon>refresh</mat-icon>
       Refresh
-
     </button>
-
   </div>
-
-
-  <!-- ========================= -->
-  <!-- BOOKING STATISTICS -->
-  <!-- ========================= -->
-
   <div class="booking-stats">
-
-    <!-- TOTAL -->
     <div class="stat-card total">
 
       <div class="stat-icon">
@@ -40,9 +23,6 @@
       </div>
 
     </div>
-
-
-    <!-- PENDING -->
     <div class="stat-card pending">
 
       <div class="stat-icon">
@@ -55,9 +35,6 @@
       </div>
 
     </div>
-
-
-    <!-- CONFIRMED -->
     <div class="stat-card confirmed">
 
       <div class="stat-icon">
@@ -70,9 +47,6 @@
       </div>
 
     </div>
-
-
-    <!-- COMPLETED -->
     <div class="stat-card completed">
 
       <div class="stat-icon">
@@ -85,9 +59,6 @@
       </div>
 
     </div>
-
-
-    <!-- CANCELLED -->
     <div class="stat-card cancelled">
 
       <div class="stat-icon">
@@ -103,61 +74,23 @@
 
   </div>
 
-
-  <!-- ========================= -->
-  <!-- SEARCH & FILTER -->
-  <!-- ========================= -->
-
   <div class="filter-bar">
-
-    <!-- SEARCH -->
-    <mat-form-field
-      appearance="outline"
+    <mat-form-field  appearance="outline"
       class="search-box">
-
       <mat-label>Search booking</mat-label>
-
-      <mat-icon matPrefix>
-        search
-      </mat-icon>
-
-      <input
-        matInput
-        [(ngModel)]="searchText"
-        (input)="applyFilter()"
-        placeholder="Name, email or phone">
-
+      <mat-icon matPrefix>search</mat-icon>
+      <input  matInput [(ngModel)]="searchText" (input)="applyFilter()" placeholder="Name, email or phone">
       @if (searchText) {
-
-        <button
-          mat-icon-button
-          matSuffix
-          (click)="clearSearch()">
-
+        <button mat-icon-button  matSuffix (click)="clearSearch()">
           <mat-icon>close</mat-icon>
-
         </button>
-
       }
 
     </mat-form-field>
-
-
-    <!-- STATUS FILTER -->
-    <mat-form-field
-      appearance="outline"
-      class="status-filter">
-
+    <mat-form-field  appearance="outline" class="status-filter">
       <mat-label>Status</mat-label>
-
-      <mat-select
-        [(ngModel)]="selectedStatus"
-        (selectionChange)="applyFilter()">
-
-        <mat-option value="all">
-          All Status
-        </mat-option>
-
+      <mat-select [(ngModel)]="selectedStatus" (selectionChange)="applyFilter()">
+        <mat-option value="all">All Status</mat-option>
         <mat-option value="pending">
           Pending
         </mat-option>
@@ -173,23 +106,11 @@
         <mat-option value="cancelled">
           Cancelled
         </mat-option>
-
       </mat-select>
-
     </mat-form-field>
-
-
-    <!-- AREA FILTER -->
-    <mat-form-field
-      appearance="outline"
-      class="area-filter">
-
+    <mat-form-field appearance="outline"  class="area-filter">
       <mat-label>Area</mat-label>
-
-      <mat-select
-        [(ngModel)]="selectedArea"
-        (selectionChange)="applyFilter()">
-
+      <mat-select [(ngModel)]="selectedArea" (selectionChange)="applyFilter()">
         <mat-option value="all">
           All Areas
         </mat-option>
@@ -209,45 +130,21 @@
       </mat-select>
 
     </mat-form-field>
-
-
-    <!-- RESET -->
-    <button
-      mat-stroked-button
-      class="reset-btn"
-      (click)="resetFilter()">
-
+    <button mat-stroked-button class="reset-btn" (click)="resetFilter()">
       <mat-icon>filter_alt_off</mat-icon>
       Reset
-
     </button>
-
   </div>
-
-
-  <!-- ========================= -->
-  <!-- TABLE -->
-  <!-- ========================= -->
-
   @if (isLoading) {
-
-    <div class="loading">
-      Loading bookings...
-    </div>
+    <div class="loading">Loading bookings...</div>
 
   }
-
   @else {
-
     <mat-card>
-
       <div class="table-wrapper">
-
         <table>
-
           <thead>
             <tr>
-
               <th>Customer</th>
               <th>Phone</th>
               <th>Table</th>
@@ -257,57 +154,19 @@
               <th>Time</th>
               <th>Status</th>
               <th>Action</th>
-
             </tr>
           </thead>
-
-
           <tbody>
-
-            @for (
-              booking of filteredBookings;
-              track booking._id
-            ) {
-
+            @for (booking of filteredBookings;track booking._id) {
               <tr>
-
-                <!-- CUSTOMER -->
                 <td>
-
-                  <strong>
-                    {{
-                      booking.fullName
-                      ||
-                      booking.userId?.fullName
-                      ||
-                      'N/A'
-                    }}
-                  </strong>
-
-                  <small>
-                    {{
-                      booking.email
-                      ||
-                      booking.userId?.email
-                      ||
-                      ''
-                    }}
+                  <strong>{{booking.fullName ||  booking.userId?.fullName || 'N/A'}}</strong>
+                  <small>{{ booking.email || booking.userId?.email|| ''}}
                   </small>
-
                 </td>
-
-
-                <!-- PHONE -->
-                <td>
-                  {{
-                    booking.phoneNumber || 'N/A'
-                  }}
+                <td>{{booking.phoneNumber || 'N/A'}}
                 </td>
-
-
-                <!-- TABLE -->
                 <td>
-
                   <strong>
                     {{
                       booking.tableId?.tableNumber
@@ -316,118 +175,36 @@
                   </strong>
 
                 </td>
-
-
-                <!-- AREA -->
+                <td>{{booking.seatingArea || 'N/A'}}</td>
+                <td>{{ booking.partySize }}</td>
+                <td>{{ booking.bookingDate | date:'dd/MM/yyyy'}}</td>
+                <td>{{ booking.bookingTime }}</td>
                 <td>
-                  {{
-                    booking.seatingArea || 'N/A'
-                  }}
+                  <span  class="status" [ngClass]="booking.status"> {{ booking.status }}</span>
                 </td>
-
-
-                <!-- GUESTS -->
                 <td>
-                  {{ booking.partySize }}
-                </td>
-
-
-                <!-- DATE -->
-                <td>
-                  {{
-                    booking.bookingDate
-                    | date:'dd/MM/yyyy'
-                  }}
-                </td>
-
-
-                <!-- TIME -->
-                <td>
-                  {{ booking.bookingTime }}
-                </td>
-
-
-                <!-- STATUS -->
-                <td>
-
-                  <span
-                    class="status"
-                    [ngClass]="booking.status">
-
-                    {{ booking.status }}
-
-                  </span>
-
-                </td>
-
-
-                <!-- ACTION -->
-                <td>
-
                   <div class="actions">
 
-                    @if (
-                      booking.status === 'pending'
-                    ) {
-
-                      <button
-                        mat-icon-button
-                        color="primary"
-                        title="Confirm"
-                        (click)="confirmBooking(booking._id)">
-
+                    @if (booking.status === 'pending') {
+                      <button mat-icon-button color="primary" title="Confirm" (click)="confirmBooking(booking._id)">
                         <mat-icon>check</mat-icon>
-
                       </button>
-
-                      <button
-                        mat-icon-button
-                        color="warn"
-                        title="Cancel"
-                        (click)="cancelBooking(booking._id)">
-
+                      <button mat-icon-button color="warn" title="Cancel" (click)="cancelBooking(booking._id)">
                         <mat-icon>close</mat-icon>
-
                       </button>
-
                     }
-
-
-                    @if (
-                      booking.status === 'confirmed'
-                    ) {
-
-                      <button
-                        mat-icon-button
-                        color="primary"
-                        title="Complete"
-                        (click)="completeBooking(booking._id)">
-
+                    @if (booking.status === 'confirmed') {
+                      <button mat-icon-button color="primary" title="Complete" (click)="completeBooking(booking._id)">
                         <mat-icon>done_all</mat-icon>
-
                       </button>
 
-                      <button
-                        mat-icon-button
-                        color="warn"
-                        title="Cancel"
-                        (click)="cancelBooking(booking._id)">
-
+                      <button mat-icon-button color="warn" title="Cancel" (click)="cancelBooking(booking._id)">
                         <mat-icon>close</mat-icon>
-
                       </button>
 
                     }
-
-
-                    <button
-                      mat-icon-button
-                      color="warn"
-                      title="Delete"
-                      (click)="deleteBooking(booking._id)">
-
+                    <button mat-icon-button color="warn" title="Delete" (click)="deleteBooking(booking._id)">
                       <mat-icon>delete</mat-icon>
-
                     </button>
 
                   </div>
@@ -437,24 +214,13 @@
               </tr>
 
             }
-
-
             @if (filteredBookings.length === 0) {
-
               <tr>
-
-                <td
-                  colspan="9"
-                  class="empty">
-
+                <td colspan="9" class="empty">
                   <mat-icon>event_busy</mat-icon>
-
                   <p>No bookings found</p>
-
                 </td>
-
               </tr>
-
             }
 
           </tbody>

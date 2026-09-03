@@ -15,18 +15,17 @@
       </div>
       <div class="header-actions">
         @if (lastUpdated) {
-          <div class="last-updated">
-            <mat-icon>schedule</mat-icon>
-            <span>
-              Updated
-              {{ lastUpdated | date:'hh:mm a' }}
-            </span>
-          </div>
+        <div class="last-updated">
+          <mat-icon>schedule</mat-icon>
+          <span>
+            Updated
+            {{ lastUpdated | date:'hh:mm a' }}
+          </span>
+        </div>
         }
 
-        <button class="refresh-btn"type="button"(click)="refreshDashboard()"[disabled]="isLoading">
-          <mat-icon
-            [class.spin]="isLoading">
+        <button class="refresh-btn" type="button" (click)="refreshDashboard()" [disabled]="isLoading">
+          <mat-icon [class.spin]="isLoading">
             refresh
           </mat-icon>
 
@@ -42,25 +41,23 @@
 
 
   @if (errorMessage) {
-    <div class="error-box">
-      <mat-icon>error_outline</mat-icon>
-      <div>
-        <strong>Dashboard Error</strong>
-        <p>
-          {{ errorMessage }}
-        </p>
-
-      </div>
-
-      <button
-        type="button"
-        (click)="refreshDashboard()">
-
-        Try Again
-
-      </button>
+  <div class="error-box">
+    <mat-icon>error_outline</mat-icon>
+    <div>
+      <strong>Dashboard Error</strong>
+      <p>
+        {{ errorMessage }}
+      </p>
 
     </div>
+
+    <button type="button" (click)="refreshDashboard()">
+
+      Try Again
+
+    </button>
+
+  </div>
 
   }
 
@@ -68,334 +65,334 @@
 
   @if (isLoading && !dashboard) {
 
-    <div class="dashboard-loading">
+  <div class="dashboard-loading">
 
-      <div class="loading-spinner"></div>
+    <div class="loading-spinner"></div>
 
-      <h3>
-        Loading dashboard...
-      </h3>
+    <h3>
+      Loading dashboard...
+    </h3>
 
-      <p>
-        Please wait while we load restaurant data.
-      </p>
+    <p>
+      Please wait while we load restaurant data.
+    </p>
 
-    </div>
+  </div>
 
   }
 
   @else if (dashboard) {
-    <section class="statistics-grid">
+  <section class="statistics-grid">
 
-      <div class="stat-card orders-card">
+    <div class="stat-card orders-card">
 
-        <div class="stat-top">
+      <div class="stat-top">
 
-          <div class="stat-icon">
-            <mat-icon>
-              receipt_long
-            </mat-icon>
-          </div>
-
-          <span class="stat-label">
-            Total Orders
-          </span>
-
-        </div>
-
-        <div class="stat-value">
-          {{ totalOrders | number }}
-        </div>
-
-
-        <div class="stat-footer">
-
-          <span class="stat-positive">
-            {{ todayOrders | number }} today
-          </span>
-
+        <div class="stat-icon">
           <mat-icon>
-            trending_up
+            receipt_long
           </mat-icon>
-
         </div>
+
+        <span class="stat-label">
+          Total Orders
+        </span>
 
       </div>
 
-
-      <!-- REVENUE -->
-
-      <div class="stat-card revenue-card">
-
-        <div class="stat-top">
-
-          <div class="stat-icon">
-            <mat-icon>
-              payments
-            </mat-icon>
-          </div>
-
-          <span class="stat-label">
-            Today's Revenue
-          </span>
-
-        </div>
-
-
-        <div class="stat-value money">
-          ${{ formatMoney(todayRevenue) }}
-        </div>
-
-
-        <div class="stat-footer">
-
-          <span>
-            Today
-          </span>
-
-          <mat-icon>
-            trending_up
-          </mat-icon>
-
-        </div>
-
+      <div class="stat-value">
+        {{ totalOrders | number }}
       </div>
 
 
-      <!-- BOOKINGS -->
+      <div class="stat-footer">
 
-      <div class="stat-card booking-card">
+        <span class="stat-positive">
+          {{ todayOrders | number }} today
+        </span>
 
-        <div class="stat-top">
-
-          <div class="stat-icon">
-            <mat-icon>
-              event
-            </mat-icon>
-          </div>
-
-          <span class="stat-label">
-            Today's Booking
-          </span>
-
-        </div>
-
-
-        <div class="stat-value">
-          {{ todayBookingsCount | number }}
-        </div>
-
-
-        <div class="stat-footer">
-
-          <span>
-            Reservations today
-          </span>
-
-          <mat-icon>
-            calendar_month
-          </mat-icon>
-
-        </div>
+        <mat-icon>
+          trending_up
+        </mat-icon>
 
       </div>
 
-
-      <!-- MENU -->
-
-      <div class="stat-card menu-card">
-
-        <div class="stat-top">
-
-          <div class="stat-icon">
-            <mat-icon>
-              restaurant_menu
-            </mat-icon>
-          </div>
-
-          <span class="stat-label">
-            Total Menu
-          </span>
-
-        </div>
-
-
-        <div class="stat-value">
-          {{ totalMenu | number }}
-        </div>
-
-
-        <div class="stat-footer">
-
-          <span>
-            {{ availableMenu }} available
-          </span>
-
-          <mat-icon>
-            restaurant
-          </mat-icon>
-
-        </div>
-
-      </div>
-
-
-      <!-- LOW STOCK -->
-
-      <div class="stat-card warning-card">
-
-        <div class="stat-top">
-
-          <div class="stat-icon">
-            <mat-icon>
-              inventory_2
-            </mat-icon>
-          </div>
-
-          <span class="stat-label">
-            Low Stock
-          </span>
-
-        </div>
-
-
-        <div class="stat-value">
-          {{ lowStock | number }}
-        </div>
-
-
-        <div class="stat-footer warning-text">
-
-          <span>
-            Need attention
-          </span>
-
-          <mat-icon>
-            warning
-          </mat-icon>
-
-        </div>
-
-      </div>
-
-<div class="stat-card profit-card">
-
-  <div class="stat-top">
-
-    <div class="stat-icon profit-icon">
-      <mat-icon>
-        trending_up
-      </mat-icon>
     </div>
 
-    <span class="stat-label">
-      ចំណេញប្រចាំថ្ងៃ
-    </span>
 
-  </div>
+    <!-- REVENUE -->
 
+    <div class="stat-card revenue-card">
 
-  <div class="stat-value profit-value">
-    ${{ dailyProfit.profit | number:'1.2-2' }}
-  </div>
+      <div class="stat-top">
 
-
-  <div class="stat-footer">
-
-    <span>
-      ចំណូល:
-      ${{ dailyProfit.revenue | number:'1.2-2' }}
-    </span>
-
-    <span>
-      ថ្លៃដើម:
-      ${{ dailyProfit.cost | number:'1.2-2' }}
-    </span>
-
-  </div>
-
-</div>
-      <!-- OUT OF STOCK -->
-
-      <div class="stat-card danger-card">
-
-        <div class="stat-top">
-
-          <div class="stat-icon">
-            <mat-icon>
-              remove_shopping_cart
-            </mat-icon>
-          </div>
-
-          <span class="stat-label">
-            Out of Stock
-          </span>
-
-        </div>
-
-
-        <div class="stat-value">
-          {{ outOfStock | number }}
-        </div>
-
-
-        <div class="stat-footer danger-text">
-
-          <span>
-            Restock required
-          </span>
-
+        <div class="stat-icon">
           <mat-icon>
-            error
+            payments
           </mat-icon>
-
         </div>
+
+        <span class="stat-label">
+          Today's Revenue
+        </span>
 
       </div>
 
 
-      <!-- DELIVERY -->
-
-      <div class="stat-card delivery-card">
-
-        <div class="stat-top">
-
-          <div class="stat-icon">
-            <mat-icon>
-              two_wheeler
-            </mat-icon>
-          </div>
-
-          <span class="stat-label">
-            Active Delivery
-          </span>
-
-        </div>
+      <div class="stat-value money">
+        ${{ formatMoney(todayRevenue) }}
+      </div>
 
 
-        <div class="stat-value">
-          {{ activeDeliveries | number }}
-        </div>
+      <div class="stat-footer">
+
+        <span>
+          Today
+        </span>
+
+        <mat-icon>
+          trending_up
+        </mat-icon>
+
+      </div>
+
+    </div>
 
 
-        <div class="stat-footer">
+    <!-- BOOKINGS -->
 
-          <span>
-            Currently active
-          </span>
+    <div class="stat-card booking-card">
 
+      <div class="stat-top">
+
+        <div class="stat-icon">
           <mat-icon>
-            local_shipping
+            event
           </mat-icon>
-
         </div>
+
+        <span class="stat-label">
+          Today's Booking
+        </span>
 
       </div>
 
 
-      <!-- CUSTOMERS -->
+      <div class="stat-value">
+        {{ todayBookingsCount | number }}
+      </div>
 
-      <!-- <div class="stat-card customer-card">
+
+      <div class="stat-footer">
+
+        <span>
+          Reservations today
+        </span>
+
+        <mat-icon>
+          calendar_month
+        </mat-icon>
+
+      </div>
+
+    </div>
+
+
+    <!-- MENU -->
+
+    <div class="stat-card menu-card">
+
+      <div class="stat-top">
+
+        <div class="stat-icon">
+          <mat-icon>
+            restaurant_menu
+          </mat-icon>
+        </div>
+
+        <span class="stat-label">
+          Total Menu
+        </span>
+
+      </div>
+
+
+      <div class="stat-value">
+        {{ totalMenu | number }}
+      </div>
+
+
+      <div class="stat-footer">
+
+        <span>
+          {{ availableMenu }} available
+        </span>
+
+        <mat-icon>
+          restaurant
+        </mat-icon>
+
+      </div>
+
+    </div>
+
+
+    <!-- LOW STOCK -->
+
+    <div class="stat-card warning-card">
+
+      <div class="stat-top">
+
+        <div class="stat-icon">
+          <mat-icon>
+            inventory_2
+          </mat-icon>
+        </div>
+
+        <span class="stat-label">
+          Low Stock
+        </span>
+
+      </div>
+
+
+      <div class="stat-value">
+        {{ lowStock | number }}
+      </div>
+
+
+      <div class="stat-footer warning-text">
+
+        <span>
+          Need attention
+        </span>
+
+        <mat-icon>
+          warning
+        </mat-icon>
+
+      </div>
+
+    </div>
+
+    <div class="stat-card profit-card">
+
+      <div class="stat-top">
+
+        <div class="stat-icon profit-icon">
+          <mat-icon>
+            trending_up
+          </mat-icon>
+        </div>
+
+        <span class="stat-label">
+          ចំណេញប្រចាំថ្ងៃ
+        </span>
+
+      </div>
+
+
+      <div class="stat-value profit-value">
+        ${{ dailyProfit.profit | number:'1.2-2' }}
+      </div>
+
+
+      <div class="stat-footer">
+
+        <span>
+          ចំណូល:
+          ${{ dailyProfit.revenue | number:'1.2-2' }}
+        </span>
+
+        <span>
+          ថ្លៃដើម:
+          ${{ dailyProfit.cost | number:'1.2-2' }}
+        </span>
+
+      </div>
+
+    </div>
+    <!-- OUT OF STOCK -->
+
+    <div class="stat-card danger-card">
+
+      <div class="stat-top">
+
+        <div class="stat-icon">
+          <mat-icon>
+            remove_shopping_cart
+          </mat-icon>
+        </div>
+
+        <span class="stat-label">
+          Out of Stock
+        </span>
+
+      </div>
+
+
+      <div class="stat-value">
+        {{ outOfStock | number }}
+      </div>
+
+
+      <div class="stat-footer danger-text">
+
+        <span>
+          Restock required
+        </span>
+
+        <mat-icon>
+          error
+        </mat-icon>
+
+      </div>
+
+    </div>
+
+
+    <!-- DELIVERY -->
+
+    <div class="stat-card delivery-card">
+
+      <div class="stat-top">
+
+        <div class="stat-icon">
+          <mat-icon>
+            two_wheeler
+          </mat-icon>
+        </div>
+
+        <span class="stat-label">
+          Active Delivery
+        </span>
+
+      </div>
+
+
+      <div class="stat-value">
+        {{ activeDeliveries | number }}
+      </div>
+
+
+      <div class="stat-footer">
+
+        <span>
+          Currently active
+        </span>
+
+        <mat-icon>
+          local_shipping
+        </mat-icon>
+
+      </div>
+
+    </div>
+
+
+    <!-- CUSTOMERS -->
+
+    <!-- <div class="stat-card customer-card">
 
         <div class="stat-top">
 
@@ -431,865 +428,211 @@
 
       </div> -->
 
-    </section>
+  </section>
 
-    <section class="analytics-grid">
-      <div class="dashboard-card revenue-chart-card">
-        <div class="card-header">
+  <section class="analytics-grid">
+    <div class="dashboard-card revenue-chart-card">
+      <div class="card-header">
 
-          <div>
-            <div class="card-title">
+        <div>
+          <div class="card-title">
 
-              <mat-icon>
-                show_chart
-              </mat-icon>
+            <mat-icon>
+              show_chart
+            </mat-icon>
 
-              <h2>
-                Revenue Overview
-              </h2>
-
-            </div>
-
-            <p>
-              Restaurant revenue performance
-            </p>
+            <h2>
+              Revenue Overview
+            </h2>
 
           </div>
 
-
-          <div class="period-buttons">
-
-            <button type="button"
-              [class.active]="selectedRevenuePeriod === 'today'"(click)="setRevenuePeriod('today')">
-              Today
-            </button>
-
-            <button type="button"[class.active]="selectedRevenuePeriod === 'week'"(click)="setRevenuePeriod('week')">
-              7 Days
-            </button>
-            <button type="button"[class.active]="selectedRevenuePeriod === 'month'"(click)="setRevenuePeriod('month')">
-              Month
-            </button>
-
-          </div>
-
-        </div>
-
-        <div class="revenue-summary">
-
-          <div>
-            <span>Revenue</span>
-            <strong>${{ formatMoney(currentRevenue) }}</strong>
-          </div>
-          <div>
-            <span>Orders</span>
-            <strong>{{ todayOrders }}</strong>
-          </div>
-        </div>
-
-        <div class="chart">
-          @if (revenueChart.length > 0) {
-            <div class="chart-grid">
-              <div class="chart-line line-1"></div>
-              <div class="chart-line line-2"></div>
-              <div class="chart-line line-3"></div>
-              <div class="chart-line line-4"></div>
-            </div>
-            <div class="bars">
-
-              @for (item of revenueChart;track trackByDate($index, item)) {
-                <div class="bar-column">
-                  <div class="bar-value">
-                    ${{ formatMoney(item.revenue) }}
-                  </div>
-                  <div class="bar-area">
-                    <div class="bar"[style.height.%]="getChartHeight(item.revenue)">
-                    </div>
-                  </div>
-                  <span class="bar-label">{{ formatChartDate(item.date) }}</span>
-                </div>
-              }
-            </div>
-          }
-          @else {
-            <div class="empty-chart">
-              <mat-icon>show_chart</mat-icon>
-              <p>No revenue data available</p>
-            </div>
-          }
-        </div>
-      </div>
-      <div class="dashboard-card order-status-card">
-        <div class="card-header">
-          <div>
-            <div class="card-title">
-              <mat-icon>list_alt</mat-icon>
-              <h2>Order Status</h2>
-            </div>
-            <p>Current order activity</p>
-          </div>
-          <span class="active-orders">
-            {{ activeOrders }}Active
-          </span>
-
-        </div>
-        <div class="status-list">
-          <div class="status-row">
-            <div class="status-name">
-              <span class="status-dot pending"></span>
-              <span>Pending</span>
-            </div>
-            <strong>{{ orderStatus.pending }}</strong>
-
-          </div>
-          <div class="status-row">
-            <div class="status-name">
-              <span class="status-dot confirmed"></span>
-              <span>Confirmed</span>
-
-            </div>
-
-            <strong>
-              {{ orderStatus.confirmed }}
-            </strong>
-
-          </div>
-          <div class="status-row">
-            <div class="status-name">
-              <span class="status-dot preparing"></span>
-              <span>Preparing</span>
-            </div>
-            <strong>{{ orderStatus.preparing }}</strong>
-          </div>
-          <div class="status-row">
-            <div class="status-name">
-              <span class="status-dot ready"></span>
-              <span>Ready</span>
-            </div>
-            <strong>{{ orderStatus.ready }}</strong>
-          </div>
-          <div class="status-row">
-            <div class="status-name">
-              <span class="status-dot delivering"></span>
-              <span>Delivering</span>
-            </div>
-            <strong>
-              {{ orderStatus.delivering }}
-            </strong>
-
-          </div>
-
-
-          <div class="status-row">
-
-            <div class="status-name">
-
-              <span class="status-dot completed"></span>
-
-              <span>
-                Completed
-              </span>
-
-            </div>
-
-            <strong>
-              {{ orderStatus.completed }}
-            </strong>
-
-          </div>
-
-
-          <div class="status-row">
-
-            <div class="status-name">
-
-              <span class="status-dot cancelled"></span>
-
-              <span>
-                Cancelled
-              </span>
-
-            </div>
-
-            <strong>
-              {{ orderStatus.cancelled }}
-            </strong>
-
-          </div>
+          <p>
+            Restaurant revenue performance
+          </p>
 
         </div>
 
 
-        <div class="completion">
+        <div class="period-buttons">
 
-          <div class="completion-header">
+          <button type="button" [class.active]="selectedRevenuePeriod === 'today'" (click)="setRevenuePeriod('today')">
+            Today
+          </button>
 
-            <span>
-              Completion Rate
-            </span>
-
-            <strong>
-              {{ completionRate }}%
-            </strong>
-
-          </div>
-
-          <div class="progress">
-
-            <div
-              class="progress-fill"
-              [style.width.%]="completionRate">
-
-            </div>
-
-          </div>
+          <button type="button" [class.active]="selectedRevenuePeriod === 'week'" (click)="setRevenuePeriod('week')">
+            7 Days
+          </button>
+          <button type="button" [class.active]="selectedRevenuePeriod === 'month'" (click)="setRevenuePeriod('month')">
+            Month
+          </button>
 
         </div>
 
       </div>
 
-    </section>
-    <section class="three-column-grid">
-      <div class="dashboard-card">
+      <div class="revenue-summary">
 
-        <div class="card-header">
-
-          <div>
-
-            <div class="card-title">
-
-              <mat-icon>
-                star
-              </mat-icon>
-
-              <h2>
-                Popular Products
-              </h2>
-
-            </div>
-
-            <p>
-              Top selling menu items
-            </p>
-
-          </div>
-
-          <span class="small-count">
-            {{ popularMenu }}
-          </span>
-
+        <div>
+          <span>Revenue</span>
+          <strong>${{ formatMoney(currentRevenue) }}</strong>
         </div>
-
-
-        <div class="product-list">
-
-          @for (product of popularProducts;track trackByProduct($index, product)) {
-            <div class="product-row">
-              <div class="product-rank">
-                {{ getProductRank($index) }}
-              </div>
-              <div class="product-info">
-                <strong>{{ product.productName }}</strong>
-                <span>{{ product.quantity }} sold</span>
-              </div>
-              <div class="product-revenue">
-                ${{ formatMoney(product.revenue) }}
-              </div>
-            </div>
-
-          }
-
-
-          @if (popularProducts.length === 0) {
-            <div class="empty-state">
-              <mat-icon>restaurant_menu</mat-icon>
-
-              <p>
-                No product sales yet
-              </p>
-
-            </div>
-
-          }
-
+        <div>
+          <span>Orders</span>
+          <strong>{{ todayOrders }}</strong>
         </div>
-
       </div>
 
-      <div class="dashboard-card">
+      <div class="chart">
+        @if (revenueChart.length > 0) {
+        <div class="chart-grid">
+          <div class="chart-line line-1"></div>
+          <div class="chart-line line-2"></div>
+          <div class="chart-line line-3"></div>
+          <div class="chart-line line-4"></div>
+        </div>
+        <div class="bars">
 
-        <div class="card-header">
-
-          <div>
-
-            <div class="card-title">
-
-              <mat-icon>
-                inventory_2
-              </mat-icon>
-
-              <h2>
-                Inventory Alerts
-              </h2>
-
+          @for (item of revenueChart;track trackByDate($index, item)) {
+          <div class="bar-column">
+            <div class="bar-value">
+              ${{ formatMoney(item.revenue) }}
             </div>
-
-            <p>
-              Items requiring attention
-            </p>
-
+            <div class="bar-area">
+              <div class="bar" [style.height.%]="getChartHeight(item.revenue)">
+              </div>
+            </div>
+            <span class="bar-label">{{ formatChartDate(item.date) }}</span>
           </div>
-
-
-          <span class="alert-count">
-            {{ inventoryAlerts.length }}
-          </span>
-
-        </div>
-
-
-        <div class="inventory-list">
-
-          @for (item of inventoryAlerts;track trackById($index, item)) {
-            <div class="inventory-row">
-              <div class="inventory-icon"
-                [class.out]="
-                  isOutOfStock(item)
-                "
-                [class.low]="
-                  isLowStock(item)
-                ">
-
-                <mat-icon>
-
-                  @if (
-                    isOutOfStock(item)
-                  ) {
-
-                    error
-
-                  }
-
-                  @else {
-
-                    warning
-
-                  }
-
-                </mat-icon>
-
-              </div>
-
-
-              <div class="inventory-info">
-
-                <strong>
-                  {{ item.name }}
-                </strong>
-
-                <span>
-
-                  @if (
-                    isOutOfStock(item)
-                  ) {
-
-                    Out of stock
-
-                  }
-
-                  @else {
-
-                    Only
-                    {{ item.quantity }}
-                    {{ item.unit || '' }}
-                    remaining
-
-                  }
-
-                </span>
-
-              </div>
-
-
-              <span
-                class="inventory-badge"
-                [class.out]="
-                  isOutOfStock(item)
-                "
-                [class.low]="
-                  isLowStock(item)
-                ">
-
-                @if (
-                  isOutOfStock(item)
-                ) {
-
-                  OUT
-
-                }
-
-                @else {
-
-                  LOW
-
-                }
-
-              </span>
-
-            </div>
-
           }
-
-
-          @if (
-            inventoryAlerts.length === 0
-          ) {
-
-            <div class="empty-state success">
-
-              <mat-icon>
-                check_circle
-              </mat-icon>
-
-              <p>
-                All inventory levels are healthy
-              </p>
-
-            </div>
-
-          }
-
         </div>
+        }
+        @else {
+        <div class="empty-chart">
+          <mat-icon>show_chart</mat-icon>
+          <p>No revenue data available</p>
+        </div>
+        }
+      </div>
+    </div>
+    <div class="dashboard-card order-status-card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">
+            <mat-icon>list_alt</mat-icon>
+            <h2>Order Status</h2>
+          </div>
+          <p>Current order activity</p>
+        </div>
+        <span class="active-orders">
+          {{ activeOrders }}Active
+        </span>
 
       </div>
+      <div class="status-list">
+        <div class="status-row">
+          <div class="status-name">
+            <span class="status-dot pending"></span>
+            <span>Pending</span>
+          </div>
+          <strong>{{ orderStatus.pending }}</strong>
 
-
-      <!-- TABLE STATUS -->
-
-      <div class="dashboard-card">
-
-        <div class="card-header">
-
-          <div>
-
-            <div class="card-title">
-
-              <mat-icon>
-                table_restaurant
-              </mat-icon>
-
-              <h2>
-                Table Status
-              </h2>
-
-            </div>
-
-            <p>
-              Restaurant seating
-            </p>
+        </div>
+        <div class="status-row">
+          <div class="status-name">
+            <span class="status-dot confirmed"></span>
+            <span>Confirmed</span>
 
           </div>
-
-
-          <span class="small-count">
-            {{ tableStatus.total }}
-          </span>
-
-        </div>
-
-
-        <div class="table-overview">
-
-          <div class="table-circle"  [style.--occupancy]="tableOccupancyRate">
-
-            <div>
-
-              <strong>
-                {{ tableOccupancyRate }}%
-              </strong>
-
-              <span>
-                Occupied
-              </span>
-
-            </div>
-
-          </div>
-
-
-          <div class="table-stats">
-
-            <div>
-
-              <span class="table-status-dot available"></span>
-
-              <span>
-                Available
-              </span>
-
-              <strong>
-                {{ tableStatus.available }}
-              </strong>
-
-            </div>
-
-
-            <div>
-
-              <span class="table-status-dot occupied"></span>
-
-              <span>
-                Occupied
-              </span>
-
-              <strong>
-                {{ tableStatus.occupied }}
-              </strong>
-
-            </div>
-
-
-            <div>
-
-              <span class="table-status-dot maintenance"></span>
-
-              <span>
-                Maintenance
-              </span>
-
-              <strong>
-                {{ tableStatus.maintenance }}
-              </strong>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ===================================================
-         BOOKING / DELIVERY / PAYMENT
-    ==================================================== -->
-
-    <section class="three-column-grid">
-      <div class="dashboard-card">
-        <div class="card-header">
-          <div>
-            <div class="card-title">
-
-              <mat-icon>
-                event
-              </mat-icon>
-
-              <h2>
-                Today's Bookings
-              </h2>
-            </div>
-            <p>Reservations for today</p>
-          </div>
-          <span class="small-count">{{ todayBookings.length }}</span>
-        </div>
-        <div class="booking-list">
-           
-          @for (booking of todayBookings;track trackById($index, booking)) {
-            <div class="booking-row">
-              <div class="booking-time">
-                {{ booking.bookingTime || '--' }}
-              </div>
-
-              <div class="booking-info">
-                <strong>
-                  {{ getBookingCustomer(booking) }}
-                </strong>
-
-                <span>
-                  Table
-                  {{ getBookingTable(booking) }}
-                  ·
-                  {{ booking.partySize || 0 }}
-                  guests
-                </span>
-
-              </div>
-
-              <span
-                class="mini-status"
-                [class.confirmed]="
-                  booking.status === 'confirmed'
-                "
-                [class.pending]="
-                  booking.status === 'pending'
-                "
-                [class.completed]="
-                  booking.status === 'completed'
-                "
-                [class.cancelled]="
-                  booking.status === 'cancelled'
-                ">
-
-                {{ booking.status || 'Pending' }}
-
-              </span>
-
-            </div>
-
-          }
-
-
-          @if (
-            todayBookings.length === 0
-          ) {
-
-            <div class="empty-state">
-
-              <mat-icon>
-                event_busy
-              </mat-icon>
-
-              <p>
-                No bookings today
-              </p>
-
-            </div>
-
-          }
-
-        </div>
-
-      </div>
-
-
-      <!-- LIVE DELIVERY -->
-
-      <div class="dashboard-card">
-
-        <div class="card-header">
-
-          <div>
-
-            <div class="card-title">
-
-              <mat-icon>
-                two_wheeler
-              </mat-icon>
-
-              <h2>
-                Live Delivery
-              </h2>
-
-            </div>
-
-            <p>
-              Active deliveries
-            </p>
-
-          </div>
-
-
-          <span class="live-badge">
-            <i></i>
-            LIVE
-          </span>
-
-        </div>
-
-
-        <div class="delivery-list">
-
-          @for (delivery of liveDeliveries;track trackById($index, delivery)) {
-            <div class="delivery-row">
-              <div class="delivery-icon">
-                <mat-icon>
-                  two_wheeler
-                </mat-icon>
-              </div>
-
-
-              <div class="delivery-info">
-
-                <strong>
-                  {{ getDeliveryOrderNumber(delivery) }}
-                </strong>
-
-                <span>
-                  {{ getRiderName(delivery) }}
-                </span>
-
-              </div>
-
-
-              <span
-                class="delivery-status">
-
-                {{ delivery.status }}
-
-              </span>
-
-            </div>
-
-          }
-
-
-          @if (
-            liveDeliveries.length === 0
-          ) {
-
-            <div class="empty-state">
-
-              <mat-icon>
-                delivery_dining
-              </mat-icon>
-
-              <p>
-                No active deliveries
-              </p>
-
-            </div>
-
-          }
-
-        </div>
-
-      </div>
-
-
-      <!-- PAYMENT -->
-
-      <div class="dashboard-card">
-
-        <div class="card-header">
-          <div>
-
-            <div class="card-title">
-
-              <mat-icon>
-                account_balance_wallet
-              </mat-icon>
-
-              <h2>
-                Payment Overview
-              </h2>
-
-            </div>
-
-            <p>
-              Payment methods
-            </p>
-
-          </div>
-
-        </div>
-
-        <div class="payment-total">
-
-          <span>
-            Total Payments
-          </span>
 
           <strong>
-            ${{ formatMoney(paymentTotal) }}
+            {{ orderStatus.confirmed }}
+          </strong>
+
+        </div>
+        <div class="status-row">
+          <div class="status-name">
+            <span class="status-dot preparing"></span>
+            <span>Preparing</span>
+          </div>
+          <strong>{{ orderStatus.preparing }}</strong>
+        </div>
+        <div class="status-row">
+          <div class="status-name">
+            <span class="status-dot ready"></span>
+            <span>Ready</span>
+          </div>
+          <strong>{{ orderStatus.ready }}</strong>
+        </div>
+        <div class="status-row">
+          <div class="status-name">
+            <span class="status-dot delivering"></span>
+            <span>Delivering</span>
+          </div>
+          <strong>
+            {{ orderStatus.delivering }}
           </strong>
 
         </div>
 
 
-        <div class="payment-list">
+        <div class="status-row">
 
+          <div class="status-name">
 
-          <div class="payment-row">
+            <span class="status-dot completed"></span>
 
-            <div>
-
-              <span class="payment-dot cash"></span>
-
-              <span>
-                Cash
-              </span>
-
-            </div>
-
-            <strong>
-              ${{ formatMoney(paymentOverview.cash) }}
-            </strong>
+            <span>
+              Completed
+            </span>
 
           </div>
 
+          <strong>
+            {{ orderStatus.completed }}
+          </strong>
 
-          <div class="payment-row">
-
-            <div>
-
-              <span class="payment-dot aba"></span>
-
-              <span>
-                ABA
-              </span>
-
-            </div>
-
-            <strong>
-              ${{ formatMoney(paymentOverview.aba) }}
-            </strong>
-
-          </div>
+        </div>
 
 
-          <div class="payment-row">
+        <div class="status-row">
 
-            <div>
+          <div class="status-name">
 
-              <span class="payment-dot card"></span>
+            <span class="status-dot cancelled"></span>
 
-              <span>
-                Card
-              </span>
-
-            </div>
-
-            <strong>
-              ${{ formatMoney(paymentOverview.card) }}
-            </strong>
+            <span>
+              Cancelled
+            </span>
 
           </div>
 
+          <strong>
+            {{ orderStatus.cancelled }}
+          </strong>
 
-          <div class="payment-row unpaid">
+        </div>
 
-            <div>
+      </div>
 
-              <span class="payment-dot unpaid"></span>
 
-              <span >
-                Unpaid
-              </span>
+      <div class="completion">
 
-            </div>
+        <div class="completion-header">
 
-            <strong>
-              ${{ formatMoney(paymentOverview.unpaid) }}
-            </strong>
+          <span>
+            Completion Rate
+          </span>
 
-          </div>
-          <div class="payment-row unpaid">
+          <strong>
+            {{ completionRate }}%
+          </strong>
 
-            <div>
+        </div>
 
-              <span class="payment-dot unpaid" style="background-color: green;"></span>
+        <div class="progress">
 
-              <span style="color: green">
-                Paid
-              </span>
-
-            </div>
-
-            <strong style="color: green">
-              ${{ formatMoney(paymentTotal - paymentOverview.unpaid) }}
-            </strong>
+          <div class="progress-fill" [style.width.%]="completionRate">
 
           </div>
 
@@ -1297,8 +640,11 @@
 
       </div>
 
-    </section>
-    <section class="dashboard-card recent-orders-card">
+    </div>
+
+  </section>
+  <section class="three-column-grid">
+    <div class="dashboard-card">
 
       <div class="card-header">
 
@@ -1307,443 +653,958 @@
           <div class="card-title">
 
             <mat-icon>
-              receipt_long
+              star
             </mat-icon>
 
             <h2>
-              Recent Orders
+              Popular Products
             </h2>
 
           </div>
 
           <p>
-            Latest customer orders
+            Top selling menu items
+          </p>
+
+        </div>
+
+        <span class="small-count">
+          {{ popularMenu }}
+        </span>
+
+      </div>
+
+
+      <div class="product-list">
+
+        @for (product of popularProducts;track trackByProduct($index, product)) {
+        <div class="product-row">
+          <div class="product-rank">
+            {{ getProductRank($index) }}
+          </div>
+          <div class="product-info">
+            <strong>{{ product.productName }}</strong>
+            <span>{{ product.quantity }} sold</span>
+          </div>
+          <div class="product-revenue">
+            ${{ formatMoney(product.revenue) }}
+          </div>
+        </div>
+
+        }
+
+
+        @if (popularProducts.length === 0) {
+        <div class="empty-state">
+          <mat-icon>restaurant_menu</mat-icon>
+
+          <p>
+            No product sales yet
+          </p>
+
+        </div>
+
+        }
+
+      </div>
+
+    </div>
+
+    <div class="dashboard-card">
+
+      <div class="card-header">
+
+        <div>
+
+          <div class="card-title">
+
+            <mat-icon>
+              inventory_2
+            </mat-icon>
+
+            <h2>
+              Inventory Alerts
+            </h2>
+
+          </div>
+
+          <p>
+            Items requiring attention
+          </p>
+
+        </div>
+
+
+        <span class="alert-count">
+          {{ inventoryAlerts.length }}
+        </span>
+
+      </div>
+
+
+      <div class="inventory-list">
+
+        @for (item of inventoryAlerts;track trackById($index, item)) {
+        <div class="inventory-row">
+          <div class="inventory-icon" [class.out]="
+                  isOutOfStock(item)
+                " [class.low]="
+                  isLowStock(item)
+                ">
+
+            <mat-icon>
+
+              @if (
+              isOutOfStock(item)
+              ) {
+
+              error
+
+              }
+
+              @else {
+
+              warning
+
+              }
+
+            </mat-icon>
+
+          </div>
+
+
+          <div class="inventory-info">
+
+            <strong>
+              {{ item.name }}
+            </strong>
+
+            <span>
+
+              @if (
+              isOutOfStock(item)
+              ) {
+
+              Out of stock
+
+              }
+
+              @else {
+
+              Only
+              {{ item.quantity }}
+              {{ item.unit || '' }}
+              remaining
+
+              }
+
+            </span>
+
+          </div>
+
+
+          <span class="inventory-badge" [class.out]="
+                  isOutOfStock(item)
+                " [class.low]="
+                  isLowStock(item)
+                ">
+
+            @if (
+            isOutOfStock(item)
+            ) {
+
+            OUT
+
+            }
+
+            @else {
+
+            LOW
+
+            }
+
+          </span>
+
+        </div>
+
+        }
+
+
+        @if (
+        inventoryAlerts.length === 0
+        ) {
+
+        <div class="empty-state success">
+
+          <mat-icon>
+            check_circle
+          </mat-icon>
+
+          <p>
+            All inventory levels are healthy
+          </p>
+
+        </div>
+
+        }
+
+      </div>
+
+    </div>
+
+
+    <!-- TABLE STATUS -->
+
+    <div class="dashboard-card">
+
+      <div class="card-header">
+
+        <div>
+
+          <div class="card-title">
+
+            <mat-icon>
+              table_restaurant
+            </mat-icon>
+
+            <h2>
+              Table Status
+            </h2>
+
+          </div>
+
+          <p>
+            Restaurant seating
           </p>
 
         </div>
 
 
         <span class="small-count">
-          {{ recentOrders.length }}
+          {{ tableStatus.total }}
         </span>
 
       </div>
 
 
-      <div class="orders-table-wrapper">
+      <div class="table-overview">
 
-        <table class="orders-table">
+        <div class="table-circle" [style.--occupancy]="tableOccupancyRate">
 
-          <thead>
+          <div>
 
-            <tr>
+            <strong>
+              {{ tableOccupancyRate }}%
+            </strong>
 
-              <th>
-                Order
-              </th>
+            <span>
+              Occupied
+            </span>
 
-              <th>
-                Customer
-              </th>
+          </div>
 
-              <th>
-                Type
-              </th>
-
-              <th>
-                Status
-              </th>
-
-              <th>
-                Items
-              </th>
-
-              <th>
-                Total
-              </th>
-
-              <th>
-                Date
-              </th>
-
-            </tr>
-
-          </thead>
+        </div>
 
 
-          <tbody>
+        <div class="table-stats">
 
-            @for (
-              order of recentOrders;
-              track trackById($index, order)
-            ) {
+          <div>
 
-              <tr>
+            <span class="table-status-dot available"></span>
 
-                <td>
+            <span>
+              Available
+            </span>
 
-                  <strong class="order-number">
+            <strong>
+              {{ tableStatus.available }}
+            </strong>
 
-                    {{ getOrderNumber(order._id) }}
+          </div>
 
+
+          <div>
+
+            <span class="table-status-dot occupied"></span>
+
+            <span>
+              Occupied
+            </span>
+
+            <strong>
+              {{ tableStatus.occupied }}
+            </strong>
+
+          </div>
+
+
+          <div>
+
+            <span class="table-status-dot maintenance"></span>
+
+            <span>
+              Maintenance
+            </span>
+
+            <strong>
+              {{ tableStatus.maintenance }}
+            </strong>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="three-column-grid">
+    <div class="dashboard-card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">
+
+            <mat-icon>
+              event
+            </mat-icon>
+
+            <h2>
+              Today's Bookings
+            </h2>
+          </div>
+          <p>Reservations for today</p>
+        </div>
+        <span class="small-count">{{ todayBookings.length }}</span>
+      </div>
+      <div class="booking-list">
+
+        @for (booking of todayBookings;track trackById($index, booking)) {
+        <div class="booking-row">
+          <div class="booking-time">
+            {{ booking.bookingTime || '--' }}
+          </div>
+
+          <div class="booking-info">
+            <strong>
+              {{ getBookingCustomer(booking) }}
+            </strong>
+
+            <span>
+              Table
+              {{ getBookingTable(booking) }}
+              ·
+              {{ booking.partySize || 0 }}
+              guests
+            </span>
+
+          </div>
+
+          <span class="mini-status" [class.confirmed]="
+                  booking.status === 'confirmed'
+                " [class.pending]="
+                  booking.status === 'pending'
+                " [class.completed]="
+                  booking.status === 'completed'
+                " [class.cancelled]="
+                  booking.status === 'cancelled'
+                ">
+
+            {{ booking.status || 'Pending' }}
+
+          </span>
+
+        </div>
+
+        }
+
+
+        @if (
+        todayBookings.length === 0
+        ) {
+
+        <div class="empty-state">
+
+          <mat-icon>
+            event_busy
+          </mat-icon>
+
+          <p>
+            No bookings today
+          </p>
+
+        </div>
+
+        }
+
+      </div>
+
+    </div>
+
+
+    <!-- LIVE DELIVERY -->
+
+    <div class="dashboard-card">
+
+      <div class="card-header">
+
+        <div>
+
+          <div class="card-title">
+
+            <mat-icon>
+              two_wheeler
+            </mat-icon>
+
+            <h2>
+              Live Delivery
+            </h2>
+
+          </div>
+
+          <p>
+            Active deliveries
+          </p>
+
+        </div>
+
+
+        <span class="live-badge">
+          <i></i>
+          LIVE
+        </span>
+
+      </div>
+
+
+      <div class="delivery-list">
+
+        @for (delivery of liveDeliveries;track trackById($index, delivery)) {
+        <div class="delivery-row">
+          <div class="delivery-icon">
+            <mat-icon>
+              two_wheeler
+            </mat-icon>
+          </div>
+
+
+          <div class="delivery-info">
+
+            <strong>
+              {{ getDeliveryOrderNumber(delivery) }}
+            </strong>
+
+            <span>
+              {{ getRiderName(delivery) }}
+            </span>
+
+          </div>
+
+
+          <span class="delivery-status">
+
+            {{ delivery.status }}
+
+          </span>
+
+        </div>
+
+        }
+
+
+        @if (
+        liveDeliveries.length === 0
+        ) {
+
+        <div class="empty-state">
+
+          <mat-icon>
+            delivery_dining
+          </mat-icon>
+
+          <p>
+            No active deliveries
+          </p>
+
+        </div>
+
+        }
+
+      </div>
+
+    </div>
+
+
+    <!-- PAYMENT -->
+
+    <div class="dashboard-card">
+
+      <div class="card-header">
+        <div>
+
+          <div class="card-title">
+
+            <mat-icon>
+              account_balance_wallet
+            </mat-icon>
+
+            <h2>
+              Payment Overview
+            </h2>
+
+          </div>
+
+          <p>
+            Payment methods
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="payment-total">
+
+        <span>
+          Total Payments
+        </span>
+
+        <strong>
+          ${{ formatMoney(paymentTotal) }}
+        </strong>
+
+      </div>
+
+
+      <div class="payment-list">
+
+
+        <div class="payment-row">
+
+          <div>
+
+            <span class="payment-dot cash"></span>
+
+            <span>
+              Cash
+            </span>
+
+          </div>
+
+          <strong>
+            ${{ formatMoney(paymentOverview.cash) }}
+          </strong>
+
+        </div>
+
+
+        <div class="payment-row">
+
+          <div>
+
+            <span class="payment-dot aba"></span>
+
+            <span>
+              ABA
+            </span>
+
+          </div>
+
+          <strong>
+            ${{ formatMoney(paymentOverview.aba) }}
+          </strong>
+
+        </div>
+
+
+        <div class="payment-row">
+
+          <div>
+
+            <span class="payment-dot card"></span>
+
+            <span>
+              Card
+            </span>
+
+          </div>
+
+          <strong>
+            ${{ formatMoney(paymentOverview.card) }}
+          </strong>
+
+        </div>
+
+
+        <div class="payment-row unpaid">
+
+          <div>
+
+            <span class="payment-dot unpaid"></span>
+
+            <span>
+              Unpaid
+            </span>
+
+          </div>
+
+          <strong>
+            ${{ formatMoney(paymentOverview.unpaid) }}
+          </strong>
+
+        </div>
+        <div class="payment-row unpaid">
+
+          <div>
+
+            <span class="payment-dot unpaid" style="background-color: green;"></span>
+
+            <span style="color: green">
+              Paid
+            </span>
+
+          </div>
+
+          <strong style="color: green">
+            ${{ formatMoney(paymentTotal - paymentOverview.unpaid) }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+  <section class="dashboard-card recent-orders-card">
+
+    <div class="card-header">
+
+      <div>
+
+        <div class="card-title">
+
+          <mat-icon>
+            receipt_long
+          </mat-icon>
+
+          <h2>
+            Recent Orders
+          </h2>
+
+        </div>
+
+        <p>
+          Latest customer orders
+        </p>
+
+      </div>
+
+
+      <span class="small-count">
+        {{ recentOrders.length }}
+      </span>
+
+    </div>
+
+
+    <div class="orders-table-wrapper">
+
+      <table class="orders-table">
+
+        <thead>
+
+          <tr>
+
+            <th>
+              Order
+            </th>
+
+            <th>
+              Customer
+            </th>
+
+            <th>
+              Type
+            </th>
+
+            <th>
+              Status
+            </th>
+
+            <th>
+              Items
+            </th>
+
+            <th>
+              Total
+            </th>
+
+            <th>
+              Date
+            </th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          @for (
+          order of recentOrders;
+          track trackById($index, order)
+          ) {
+
+          <tr>
+
+            <td>
+
+              <strong class="order-number">
+
+                {{ getOrderNumber(order._id) }}
+
+              </strong>
+
+            </td>
+
+
+            <td>
+
+              <div class="customer-cell">
+
+                <div class="customer-avatar">
+
+                  {{
+                  getCustomerName(order)
+                  .charAt(0)
+                  .toUpperCase()
+                  }}
+
+                </div>
+
+                <div>
+
+                  <strong>
+                    {{ getCustomerName(order) }}
                   </strong>
 
-                </td>
-
-
-                <td>
-
-                  <div class="customer-cell">
-
-                    <div class="customer-avatar">
-
-                      {{
-                        getCustomerName(order)
-                          .charAt(0)
-                          .toUpperCase()
-                      }}
-
-                    </div>
-
-                    <div>
-
-                      <strong>
-                        {{ getCustomerName(order) }}
-                      </strong>
-
-                      <span>
-                        {{ getCustomerEmail(order) }}
-                      </span>
-
-                    </div>
-
-                  </div>
-
-                </td>
-
-
-                <td>
-
-                  <span class="order-type">
-
-                    <mat-icon>
-
-                      @if (
-                        order.receiveType === 'delivery'
-                      ) {
-
-                        two_wheeler
-
-                      }
-
-                      @else {
-
-                        store
-
-                      }
-
-                    </mat-icon>
-
-                    {{
-                      order.receiveType === 'delivery'
-                        ? 'Delivery'
-                        : 'Pickup'
-                    }}
-
+                  <span>
+                    {{ getCustomerEmail(order) }}
                   </span>
 
-                </td>
+                </div>
+
+              </div>
+
+            </td>
 
 
-                <td>
+            <td>
 
-                  <span
-                    class="order-status"
-                    [ngClass]="
+              <span class="order-type">
+
+                <mat-icon>
+
+                  @if (
+                  order.receiveType === 'delivery'
+                  ) {
+
+                  two_wheeler
+
+                  }
+
+                  @else {
+
+                  store
+
+                  }
+
+                </mat-icon>
+
+                {{
+                order.receiveType === 'delivery'
+                ? 'Delivery'
+                : 'Pickup'
+                }}
+
+              </span>
+
+            </td>
+
+
+            <td>
+
+              <span class="order-status" [ngClass]="
                       getStatusClass(order.status)
                     ">
 
-                    {{ order.status }}
+                {{ order.status }}
 
-                  </span>
+              </span>
 
-                </td>
-
-
-                <td>
-
-                  {{ order.items?.length || 0 }}
-
-                </td>
+            </td>
 
 
-                <td>
+            <td>
 
-                  <strong>
-                    ${{ formatMoney(
-                      getOrderTotal(order)
-                    ) }}
-                  </strong>
+              {{ order.items?.length || 0 }}
 
-                </td>
+            </td>
 
 
-                <td>
+            <td>
 
-                  {{ order.createdAt | date:'dd MMM, hh:mm a' }}
+              <strong>
+                ${{ formatMoney(
+                getOrderTotal(order)
+                ) }}
+              </strong>
 
-                </td>
-
-              </tr>
-
-            }
+            </td>
 
 
-            @if (
-              recentOrders.length === 0
-            ) {
+            <td>
 
-              <tr>
+              {{ order.createdAt | date:'dd MMM, hh:mm a' }}
 
-                <td
-                  colspan="7"
-                  class="table-empty">
+            </td>
 
-                  <mat-icon>
-                    receipt_long
-                  </mat-icon>
+          </tr>
 
-                  <span>
-                    No recent orders
-                  </span>
+          }
 
-                </td>
 
-              </tr>
+          @if (
+          recentOrders.length === 0
+          ) {
 
-            }
+          <tr>
 
-          </tbody>
+            <td colspan="7" class="table-empty">
 
-        </table>
+              <mat-icon>
+                receipt_long
+              </mat-icon>
+
+              <span>
+                No recent orders
+              </span>
+
+            </td>
+
+          </tr>
+
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </section>
+  <section class="bottom-grid">
+
+    <div class="dashboard-card sales-card">
+
+      <div class="card-header">
+
+        <div>
+
+          <div class="card-title">
+
+            <mat-icon>
+              analytics
+            </mat-icon>
+
+            <h2>
+              Sales Comparison
+            </h2>
+
+          </div>
+
+          <p>
+            Revenue performance
+          </p>
+
+        </div>
 
       </div>
 
-    </section>
-    <section class="bottom-grid">
 
-      <div class="dashboard-card sales-card">
+      <div class="sales-comparison">
 
-        <div class="card-header">
+
+        <div class="sales-item">
+
+          <div class="sales-icon today">
+
+            <mat-icon>
+              today
+            </mat-icon>
+
+          </div>
 
           <div>
 
-            <div class="card-title">
+            <span>
+              Today
+            </span>
 
-              <mat-icon>
-                analytics
-              </mat-icon>
-
-              <h2>
-                Sales Comparison
-              </h2>
-
-            </div>
-
-            <p>
-              Revenue performance
-            </p>
+            <strong>
+              ${{ formatMoney(revenue.today) }}
+            </strong>
 
           </div>
 
         </div>
 
 
-        <div class="sales-comparison">
+        <div class="sales-item">
 
+          <div class="sales-icon week">
 
-          <div class="sales-item">
-
-            <div class="sales-icon today">
-
-              <mat-icon>
-                today
-              </mat-icon>
-
-            </div>
-
-            <div>
-
-              <span>
-                Today
-              </span>
-
-              <strong>
-                ${{ formatMoney(revenue.today) }}
-              </strong>
-
-            </div>
+            <mat-icon>
+              date_range
+            </mat-icon>
 
           </div>
-
-
-          <div class="sales-item">
-
-            <div class="sales-icon week">
-
-              <mat-icon>
-                date_range
-              </mat-icon>
-
-            </div>
-
-            <div>
-
-              <span>
-                This Week
-              </span>
-
-              <strong>
-                ${{ formatMoney(revenue.week) }}
-              </strong>
-
-            </div>
-
-          </div>
-
-
-          <div class="sales-item">
-
-            <div class="sales-icon month">
-
-              <mat-icon>
-                calendar_month
-              </mat-icon>
-
-            </div>
-
-            <div>
-
-              <span>
-                This Month
-              </span>
-
-              <strong>
-                ${{ formatMoney(revenue.month) }}
-              </strong>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <!-- RESTAURANT TEAM -->
-
-      <div class="dashboard-card team-card">
-
-        <div class="card-header">
 
           <div>
 
-            <div class="card-title">
+            <span>
+              This Week
+            </span>
 
-              <mat-icon>
-                groups
-              </mat-icon>
-
-              <h2>
-                Restaurant Team
-              </h2>
-
-            </div>
-
-            <p>
-              Staff and riders
-            </p>
+            <strong>
+              ${{ formatMoney(revenue.week) }}
+            </strong>
 
           </div>
 
         </div>
 
 
-        <div class="team-stats">
+        <div class="sales-item">
 
+          <div class="sales-icon month">
 
-          <div class="team-stat">
-
-            <div class="team-icon staff">
-
-              <mat-icon>
-                badge
-              </mat-icon>
-
-            </div>
-
-            <div>
-
-              <strong>
-                {{ totalStaff }}
-              </strong>
-
-              <span>
-                Staff
-              </span>
-
-            </div>
+            <mat-icon>
+              calendar_month
+            </mat-icon>
 
           </div>
 
+          <div>
 
-          <div class="team-stat">
+            <span>
+              This Month
+            </span>
 
-            <div class="team-icon rider">
-
-              <mat-icon>
-                two_wheeler
-              </mat-icon>
-
-            </div>
-
-            <div>
-
-              <strong>
-                {{ totalRiders }}
-              </strong>
-
-              <span>
-                Riders
-              </span>
-
-            </div>
-
-          </div>
-
-
-          <div class="team-stat">
-
-            <div class="team-icon customer">
-
-              <mat-icon>
-                people
-              </mat-icon>
-
-            </div>
-
-            <div>
-
-              <strong>
-                {{ totalCustomers }}
-              </strong>
-
-              <span>
-                Customers
-              </span>
-
-            </div>
+            <strong>
+              ${{ formatMoney(revenue.month) }}
+            </strong>
 
           </div>
 
@@ -1751,7 +1612,120 @@
 
       </div>
 
-    </section>
+    </div>
+
+
+    <!-- RESTAURANT TEAM -->
+
+    <div class="dashboard-card team-card">
+
+      <div class="card-header">
+
+        <div>
+
+          <div class="card-title">
+
+            <mat-icon>
+              groups
+            </mat-icon>
+
+            <h2>
+              Restaurant Team
+            </h2>
+
+          </div>
+
+          <p>
+            Staff and riders
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="team-stats">
+
+
+        <div class="team-stat">
+
+          <div class="team-icon staff">
+
+            <mat-icon>
+              badge
+            </mat-icon>
+
+          </div>
+
+          <div>
+
+            <strong>
+              {{ totalStaff }}
+            </strong>
+
+            <span>
+              Staff
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="team-stat">
+
+          <div class="team-icon rider">
+
+            <mat-icon>
+              two_wheeler
+            </mat-icon>
+
+          </div>
+
+          <div>
+
+            <strong>
+              {{ totalRiders }}
+            </strong>
+
+            <span>
+              Riders
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="team-stat">
+
+          <div class="team-icon customer">
+
+            <mat-icon>
+              people
+            </mat-icon>
+
+          </div>
+
+          <div>
+
+            <strong>
+              {{ totalCustomers }}
+            </strong>
+
+            <span>
+              Customers
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
 
   }
 
