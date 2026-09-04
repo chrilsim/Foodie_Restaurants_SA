@@ -171,7 +171,7 @@ export class KitchenDashboard
            * Preparing
            */
 
-          // this.orders =this.orders.filter(item =>item._id !== order._id);
+          this.orders =this.orders.filter(item =>item._id !== order._id);
           this.actionLoading[order._id] = false;
           this.cdr.detectChanges();
           setTimeout(() => {
